@@ -75,7 +75,7 @@ a {
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    animation: fadeInDown 0.8s ease-out; /* Sayfa yüklendiğinde hafifçe aşağıdan gelsin */
+    animation: fadeInDown 0.8s ease-out;
 }
 
 .main-header .container {
@@ -154,7 +154,7 @@ a {
     z-index: 2;
     max-width: 800px;
     padding: 20px;
-    animation: fadeInUp 1s ease-out; /* İçerik hafifçe yukarıdan gelsin */
+    animation: fadeInUp 1s ease-out;
 }
 
 .hero-content h2 {
@@ -209,7 +209,8 @@ a {
     cursor: pointer;
     overflow: hidden;
     position: relative;
-    transform-style: preserve-3d; /* 3D dönüşüm için gerekli */
+    transform-style: preserve-3d;
+    color: var(--text-color-light);
 }
 
 .model-card:hover {
@@ -217,26 +218,44 @@ a {
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
+/* Video Arka Planı için özel stiller */
 .model-card img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Profesyonel bir geçiş eğrisi */
+    display: none; /* Artık resim kullanmadığımız için gizliyoruz */
 }
 
-.model-card:hover img {
-    transform: scale(1.08) rotate(2deg);
+.card-bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    border-radius: 10px;
 }
 
-.model-card h4 {
-    color: var(--primary-color);
-    font-size: 1.8rem;
-    margin-bottom: 10px;
+.card-bg-video video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    filter: brightness(50%); /* Karartma */
+    transition: filter 0.5s ease;
 }
 
-.model-card p {
-    color: var(--text-color-dark);
-    font-size: 0.95rem;
+.model-card:hover .card-bg-video video {
+    filter: brightness(100%); /* Hover'da aydınlatma */
+}
+
+.model-card h4, .model-card p {
+    position: relative;
+    z-index: 1;
+    color: var(--text-color-light);
 }
 
 /* Image Gallery */
