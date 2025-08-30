@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Dil Değiştirme Fonksiyonu
     const langSwitcher = document.querySelector('.lang-switcher');
     const langElements = document.querySelectorAll('[data-tr]');
-    let currentLang = 'tr'; 
+    let currentLang = 'tr'; // Başlangıç dili Türkçe
 
     function updateLanguage() {
         const newLang = currentLang === 'tr' ? 'en' : 'tr';
@@ -12,8 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
         langElements.forEach(element => {
             if (element.dataset[newLang]) {
                 if (element.tagName === 'TITLE') {
+                    // Title için özel durum
                     document.title = element.dataset[newLang];
                 } else if (element.tagName === 'BUTTON') {
+                    // Buton metni için
                     element.textContent = element.dataset[newLang];
                 } else {
                     element.textContent = element.dataset[newLang];
@@ -21,15 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         currentLang = newLang;
-        localStorage.setItem('lang', currentLang);
+        localStorage.setItem('lang', currentLang); // Kullanıcının dil tercihini kaydet
     }
 
+    // Sayfa yüklendiğinde dil tercihini kontrol et
     const savedLang = localStorage.getItem('lang');
     if (savedLang && savedLang !== currentLang) {
-        currentLang = savedLang === 'en' ? 'tr' : 'en';
+        currentLang = savedLang === 'en' ? 'tr' : 'en'; // Fonksiyonun doğru çalışması için tersine ayarla
         updateLanguage();
     }
 
+    // Buton tıklama olayını dinle
     if (langSwitcher) {
         langSwitcher.addEventListener('click', updateLanguage);
     }
@@ -64,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Galeriye Dinamik Resim Yükleme (Yeni Resim URL'leri)
+    // 3. Galeriye Dinamik Resim Yükleme
     const imageGallery = document.querySelector('.image-gallery');
     const koenigseggImages = [
         'https://images.unsplash.com/photo-1542362543-c0529d380c85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80',
@@ -98,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Model Kartlarına Özel 3D Efekt
+    // 5. Model Kartlarına Özel Hover Efekti
     const modelCards = document.querySelectorAll('.model-card');
     modelCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
@@ -118,4 +122,5 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
         });
     });
+
 });
