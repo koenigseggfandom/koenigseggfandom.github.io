@@ -15,6 +15,7 @@ body {
     color: var(--text-color-dark);
     background-color: #f4f4f4;
     overflow-x: hidden; /* Yatay kaydırmayı engelle */
+    cursor: none; /* Varsayılan mouse imlecini gizle */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -67,6 +68,43 @@ a:hover {
 
 .text-white {
     color: var(--text-color-light);
+}
+
+/* Arka Plan Animasyonu */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 70%), linear-gradient(to right, #000, transparent);
+    z-index: -1;
+    pointer-events: none;
+    animation: pan-background 30s linear infinite;
+    opacity: 0.1;
+}
+
+@keyframes pan-background {
+    0% { background-position: 0% 0; }
+    100% { background-position: 100% 0; }
+}
+
+/* Özel Mouse İmleci */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60px; /* Görselin genişliği */
+    height: 60px; /* Görselin yüksekliği */
+    background: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Koenigsegg_logo.svg') no-repeat center center/contain;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -50%) rotate(0deg); /* Ortalamak için */
+    transition: transform 0.1s ease-out; /* Yumuşak hareket */
+}
+
+.custom-cursor.clicked {
+    transform: translate(-50%, -50%) scale(0.8) rotate(0deg); /* Tıklayınca küçülme efekti */
 }
 
 /* Header */
@@ -127,6 +165,24 @@ a:hover {
     width: 100%;
 }
 
+/* Dil Değiştirme Butonu */
+.lang-switcher {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: none; /* Varsayılan imleci gizle */
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.lang-switcher:hover {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+}
+
 /* Hero Section */
 .hero-section {
     background: url('https://images.unsplash.com/photo-1549447334-035985023a1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80') no-repeat center center/cover;
@@ -137,7 +193,7 @@ a:hover {
     text-align: center;
     color: var(--text-color-light);
     position: relative;
-    overflow: hidden; /* Parlama dışarı taşmasın */
+    overflow: hidden;
 }
 
 .hero-section::before {
@@ -208,7 +264,7 @@ a:hover {
     padding: 25px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+    cursor: none;
     overflow: hidden;
     position: relative;
 }
@@ -265,6 +321,7 @@ a:hover {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    cursor: none;
 }
 
 .gallery-item:hover {
