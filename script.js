@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Galeriye Dinamik Resim Yükleme
+    // 3. Galeriye Dinamik Resim Yükleme (Yeni Resim URL'leri)
     const imageGallery = document.querySelector('.image-gallery');
     const koenigseggImages = [
         'https://images.unsplash.com/photo-1542362543-c0529d380c85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80',
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Model Kartlarına Özel Hover Efekti
+    // 5. Model Kartlarına Özel 3D Efekt
     const modelCards = document.querySelectorAll('.model-card');
     modelCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
