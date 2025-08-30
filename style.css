@@ -15,7 +15,8 @@ body {
     color: var(--text-color-dark);
     background-color: #f4f4f4;
     overflow-x: hidden; /* Yatay kaydırmayı engelle */
-    cursor: none; /* Varsayılan mouse imlecini gizle */
+    /* Özel imleç: url('resim_linki') x_offset y_offset, yedek_imleç */
+    cursor: url('https://raw.githubusercontent.com/koenigseggfandom koenigseggfandom.github.io/main/The_Koenigsegg_Ghost(1).png') 32 32, auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -89,24 +90,6 @@ a:hover {
     100% { background-position: 100% 0; }
 }
 
-/* Özel Mouse İmleci */
-.custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 60px; /* Görselin genişliği */
-    height: 60px; /* Görselin yüksekliği */
-    background: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Koenigsegg_logo.svg') no-repeat center center/contain;
-    z-index: 9999;
-    pointer-events: none;
-    transform: translate(-50%, -50%) rotate(0deg); /* Ortalamak için */
-    transition: transform 0.1s ease-out; /* Yumuşak hareket */
-}
-
-.custom-cursor.clicked {
-    transform: translate(-50%, -50%) scale(0.8) rotate(0deg); /* Tıklayınca küçülme efekti */
-}
-
 /* Header */
 .main-header {
     background: var(--secondary-color);
@@ -172,7 +155,7 @@ a:hover {
     color: var(--primary-color);
     padding: 8px 15px;
     border-radius: 5px;
-    cursor: none; /* Varsayılan imleci gizle */
+    cursor: url('https://raw.githubusercontent.com/[KULLANICI_ADINIZ]/[KULLANICI_ADINIZ].github.io/main/images/koenigsegg-imlec.png') 32 32, auto;
     font-weight: bold;
     transition: background 0.3s ease, color 0.3s ease;
     font-family: 'Montserrat', sans-serif;
@@ -264,7 +247,7 @@ a:hover {
     padding: 25px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: none;
+    cursor: url('https://raw.githubusercontent.com/[KULLANICI_ADINIZ]/[KULLANICI_ADINIZ].github.io/main/images/koenigsegg-imlec.png') 32 32, auto;
     overflow: hidden;
     position: relative;
 }
@@ -321,7 +304,7 @@ a:hover {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
-    cursor: none;
+    cursor: url('https://raw.githubusercontent.com/[KULLANICI_ADINIZ]/[KULLANICI_ADINIZ].github.io/main/images/koenigsegg-imlec.png') 32 32, auto;
 }
 
 .gallery-item:hover {
