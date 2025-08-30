@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const relativeX = mouseX - heroRect.left;
             const relativeY = mouseY - heroRect.top;
             mouseGlow.style.left = `${relativeX}px`;
-            mouseGlow.style.top = `${relativeY}px`;
+    mouseGlow.style.top = `${relativeY}px`;
         });
 
         heroSection.addEventListener('mouseleave', () => {
