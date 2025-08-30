@@ -16,7 +16,7 @@ body {
     background-color: #f4f4f4;
     overflow-x: hidden; /* Yatay kaydırmayı engelle */
     /* Özel imleç: url('resim_linki') x_offset y_offset, yedek_imleç */
-    cursor: url('https://raw.githubusercontent.com/koenigseggfandom/koenigseggfandom.github.io/main/The_Koenigsegg_Ghost(1).png') 32 32, auto;
+    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -52,6 +52,7 @@ a:hover {
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 1px;
+    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
 }
 
 .btn:hover {
@@ -131,6 +132,7 @@ a:hover {
     padding: 5px 0;
     position: relative;
     transition: color 0.3s ease;
+    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
 }
 
 .main-header nav ul li a::after {
@@ -155,7 +157,7 @@ a:hover {
     color: var(--primary-color);
     padding: 8px 15px;
     border-radius: 5px;
-    cursor: url('https://raw.githubusercontent.com/koenigseggfandom/koenigseggfandom.github.io/main/The_Koenigsegg_Ghost(1).png') 32 32, auto;
+    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
     font-weight: bold;
     transition: background 0.3s ease, color 0.3s ease;
     font-family: 'Montserrat', sans-serif;
@@ -177,6 +179,7 @@ a:hover {
     color: var(--text-color-light);
     position: relative;
     overflow: hidden;
+    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
 }
 
 .hero-section::before {
@@ -247,7 +250,7 @@ a:hover {
     padding: 25px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: url('https://raw.githubusercontent.com/koenigseggfandom/koenigseggfandom.github.io/main/The_Koenigsegg_Ghost(1).png') 32 32, auto;
+    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
     overflow: hidden;
     position: relative;
 }
@@ -304,7 +307,7 @@ a:hover {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
-    cursor: url('https://raw.githubusercontent.com/koenigseggfandom/koenigseggfandom.github.io/main/The_Koenigsegg_Ghost(1).png') 32 32, auto;
+    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
 }
 
 .gallery-item:hover {
