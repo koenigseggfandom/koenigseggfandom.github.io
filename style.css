@@ -1,338 +1,48 @@
-/* Genel Stil Ayarları */
-:root {
-    --primary-color: #FF2E63; /* Canlı bir kırmızı */
-    --secondary-color: #0E1626; /* Koyu lacivert */
-    --text-color-light: #f4f4f4;
-    --text-color-dark: #333;
-    --bg-dark: #1a1a2e; /* Koyu arka plan */
-    --glow-color: #00BCD4; /* Mavi-turkuaz ışıltı */
-}
+/* --- YENİ EKLENEN ANİMASYON VE STİLLER --- */
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    line-height: 1.6;
-    color: var(--text-color-dark);
-    background-color: #f4f4f4;
-    overflow-x: hidden; /* Yatay kaydırmayı engelle */
-    /* Özel imleç: url('resim_linki') x_offset y_offset, yedek_imleç */
-    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oswald', sans-serif;
-    color: var(--secondary-color);
-    margin-bottom: 1rem;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #FF6B8B; /* Daha açık kırmızı */
-}
-
-.btn {
-    display: inline-block;
-    background: var(--primary-color);
-    color: var(--text-color-light);
-    padding: 12px 25px;
-    border-radius: 5px;
-    margin-top: 15px;
-    transition: background 0.3s ease, transform 0.3s ease;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
-    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
-}
-
-.btn:hover {
-    background: #FF6B8B;
-    transform: translateY(-3px);
-}
-
-.section-padding {
-    padding: 80px 0;
-}
-
-.bg-dark {
-    background-color: var(--bg-dark);
-}
-
-.text-white {
-    color: var(--text-color-light);
-}
-
-/* Arka Plan Animasyonu */
-.background-animation {
+/* Parçacık Arka Planı */
+.particle-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 70%), linear-gradient(to right, #000, transparent);
-    z-index: -1;
+    z-index: -2;
+    background: linear-gradient(135deg, #0e1626 0%, #1a1a2e 100%);
     pointer-events: none;
-    animation: pan-background 30s linear infinite;
-    opacity: 0.1;
 }
 
-@keyframes pan-background {
-    0% { background-position: 0% 0; }
-    100% { background-position: 100% 0; }
-}
-
-/* Header */
-.main-header {
-    background: var(--secondary-color);
-    color: var(--text-color-light);
-    padding: 15px 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.main-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.main-header .logo {
-    margin: 0;
-    font-size: 1.8rem;
-    color: var(--primary-color);
-    letter-spacing: 2px;
-}
-
-.main-header nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-.main-header nav ul li {
-    margin-left: 25px;
-}
-
-.main-header nav ul li a {
-    color: var(--text-color-light);
-    font-weight: 600;
-    padding: 5px 0;
-    position: relative;
-    transition: color 0.3s ease;
-    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
-}
-
-.main-header nav ul li a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 2px;
-    background: var(--primary-color);
-    transition: width 0.3s ease;
-}
-
-.main-header nav ul li a:hover::after {
-    width: 100%;
-}
-
-/* Dil Değiştirme Butonu */
-.lang-switcher {
-    background: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
-    font-weight: bold;
-    transition: background 0.3s ease, color 0.3s ease;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.lang-switcher:hover {
-    background: var(--primary-color);
-    color: var(--secondary-color);
-}
-
-/* Hero Section */
-.hero-section {
-    background: url('https://images.unsplash.com/photo-1549447334-035985023a1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80') no-repeat center center/cover;
-    height: 70vh; /* Ekran yüksekliğinin %70'i */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: var(--text-color-light);
-    position: relative;
-    overflow: hidden;
-    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
-}
-
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Hafif karartma */
-    z-index: 1;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-    padding: 20px;
-}
-
-.hero-content h2 {
-    font-size: 3.5rem;
-    margin-bottom: 15px;
-    color: var(--text-color-light);
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-}
-
-.hero-content p {
-    font-size: 1.3rem;
-    margin-bottom: 25px;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-}
-
-/* Mouse Glow Effect (JavaScript ile hareket edecek) */
-.mouse-glow {
-    position: absolute;
-    width: 150px; /* Büyüklüğü */
-    height: 150px;
-    background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
-    border-radius: 50%;
-    filter: blur(40px); /* Bulanıklık */
-    opacity: 0.7;
-    pointer-events: none; /* Fare etkileşimini engellemesin */
-    transform: translate(-50%, -50%); /* Ortalamak için */
-    z-index: 0; /* İçeriğin arkasında kalsın */
-    transition: transform 0.1s ease-out, opacity 0.3s ease; /* Yumuşak hareket */
-}
-
-
-/* Model Grid */
-#models h3 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    color: var(--primary-color);
-}
-
-.model-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.model-card {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    padding: 25px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
-    overflow: hidden;
-    position: relative;
-}
-
-.model-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-.model-card img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    transition: transform 0.5s ease;
-}
-
-.model-card:hover img {
-    transform: scale(1.05); /* Hover'da resmin büyümesi */
-}
-
-.model-card h4 {
-    color: var(--primary-color);
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-}
-
-.model-card p {
-    color: var(--text-color-dark);
-    font-size: 0.95rem;
-}
-
-/* Image Gallery */
-#gallery h3, #gallery p {
-    text-align: center;
-    color: var(--text-color-light);
-}
-
-#gallery h3 {
-    font-size: 2.5rem;
-    color: var(--glow-color); /* Galeri başlığı için farklı renk */
-}
-
-.image-gallery {
+/* Tarihçe Bölümü */
+.history-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 30px;
     margin-top: 40px;
 }
 
-.gallery-item {
-    background: var(--secondary-color);
-    border-radius: 8px;
-    overflow: hidden;
+.history-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    cursor: url('https://github.com/koenigseggfandom/koenigseggfandom.github.io/blob/main/The_Koenigsegg_Ghost(1).png?raw=true') 32 32, auto;
 }
 
-.gallery-item:hover {
-    transform: translateY(-5px) scale(1.02);
+.history-item:hover {
+    transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-.gallery-item img {
-    width: 100%;
-    height: 250px; /* Sabit yükseklik */
-    object-fit: cover; /* Resimleri kırpıp sığdır */
-    display: block;
-    transition: transform 0.5s ease;
+.history-item h4 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
 }
 
-.gallery-item:hover img {
-    transform: scale(1.1); /* Hover'da resmi büyüt */
-}
-
-/* Footer */
-.main-footer {
-    background: var(--secondary-color);
+.history-item p {
     color: var(--text-color-light);
-    text-align: center;
-    padding: 30px 0;
-    margin-top: 50px;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
+
+/* --- YENİ EKLENEN ANİMASYON VE STİLLER SONU --- */
