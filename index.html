@@ -65,4 +65,53 @@ Bu en önemli adımdır. Var olan CSS dosyanıza yeni animasyonlar, resimler ve 
     background: url('https://images.unsplash.com/photo-1594247849641-766324a0d923?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80') no-repeat center center/cover;
 }
 .model-card[data-model="regera"] img {
-    background: url('https://images.unsplash.com/photo-1579737158315-998edc2627e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80') no-
+    background: url('https://images.unsplash.com/photo-1579737158315-998edc2627e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80') no-repeat center center/cover;
+}
+.model-card[data-model="agera"] img {
+    background: url('https://images.unsplash.com/photo-1588661730419-482a85e44a42?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80') no-repeat center center/cover;
+}
+
+.model-card img {
+    /* Artık src özelliğine gerek yok, resimler CSS'den geliyor */
+    content: ''; /* CSS'den arka plan eklemek için */
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: transform 0.5s ease;
+}
+
+/* Tarihçe Bölümü */
+.history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.history-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.history-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.history-item h4 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.history-item p {
+    color: var(--text-color-light);
+    font-size: 0.95rem;
+}
+
+/* --- YENİ EKLENEN ANİMASYON VE STİLLER SONU --- */
