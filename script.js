@@ -3,41 +3,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Dil Değiştirme Fonksiyonu
     const langSwitcher = document.querySelector('.lang-switcher');
     const langElements = document.querySelectorAll('[data-tr]');
-    let currentLang = 'tr'; // Başlangıç dili Türkçe
+    let currentLang = 'tr';
 
     function updateLanguage() {
         const newLang = currentLang === 'tr' ? 'en' : 'tr';
         document.documentElement.lang = newLang;
 
         langElements.forEach(element => {
-            if (element.dataset[newLang]) {
+            const translationKey = newLang === 'tr' ? 'tr' : 'en';
+            const translation = element.dataset[translationKey];
+            if (translation) {
                 if (element.tagName === 'TITLE') {
-                    // Title için özel durum
-                    document.title = element.dataset[newLang];
+                    document.title = translation;
                 } else if (element.tagName === 'BUTTON') {
-                    // Buton metni için
-                    element.textContent = element.dataset[newLang];
+                    element.textContent = translation;
                 } else {
-                    element.textContent = element.dataset[newLang];
+                    element.textContent = translation;
                 }
             }
         });
         currentLang = newLang;
-        localStorage.setItem('lang', currentLang); // Kullanıcının dil tercihini kaydet
+        localStorage.setItem('lang', currentLang);
     }
 
-    // Sayfa yüklendiğinde dil tercihini kontrol et
     const savedLang = localStorage.getItem('lang');
     if (savedLang && savedLang !== currentLang) {
-        currentLang = savedLang === 'en' ? 'tr' : 'en'; // Fonksiyonun doğru çalışması için tersine ayarla
+        currentLang = savedLang === 'en' ? 'tr' : 'en';
         updateLanguage();
     }
 
-    // Buton tıklama olayını dinle
     if (langSwitcher) {
         langSwitcher.addEventListener('click', updateLanguage);
     }
-    
+
     // 2. Mouse Takip Eden Işıltı Efekti (Hero Bölümünde)
     const mouseGlow = document.querySelector('.mouse-glow');
     const heroSection = document.getElementById('hero');
@@ -51,12 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const relativeY = mouseY - heroRect.top;
             mouseGlow.style.left = `${relativeX}px`;
             mouseGlow.style.top = `${relativeY}px`;
-            const edgeDistanceX = Math.min(relativeX, heroRect.width - relativeX);
-            const edgeDistanceY = Math.min(relativeY, heroRect.height - relativeY);
-            const minEdgeDistance = Math.min(edgeDistanceX, edgeDistanceY);
-            const maxOpacityDistance = 100;
-            const opacity = Math.min(0.7, 0.2 + (minEdgeDistance / maxOpacityDistance) * 0.5);
-            mouseGlow.style.opacity = opacity;
         });
 
         heroSection.addEventListener('mouseleave', () => {
@@ -64,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         heroSection.addEventListener('mouseenter', () => {
-            mouseGlow.style.opacity = '0.7';
+            mouseGlow.style.opacity = '0.8';
         });
     }
 
@@ -102,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Model Kartlarına Özel Hover Efekti
+    // 5. Model Kartlarına Özel Hover Efekti (3D Tilt)
     const modelCards = document.querySelectorAll('.model-card');
     modelCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
@@ -122,5 +114,4 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
         });
     });
-
 });
