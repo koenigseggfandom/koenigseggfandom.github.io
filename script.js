@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Dil Değiştirme Fonksiyonu
     const langSwitcher = document.querySelector('.lang-switcher');
     const langElements = document.querySelectorAll('[data-tr]');
-    let currentLang = 'tr'; // Başlangıç dili Türkçe
+    let currentLang = 'tr'; 
 
     function updateLanguage() {
         const newLang = currentLang === 'tr' ? 'en' : 'tr';
@@ -12,10 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
         langElements.forEach(element => {
             if (element.dataset[newLang]) {
                 if (element.tagName === 'TITLE') {
-                    // Title için özel durum
                     document.title = element.dataset[newLang];
                 } else if (element.tagName === 'BUTTON') {
-                    // Buton metni için
                     element.textContent = element.dataset[newLang];
                 } else {
                     element.textContent = element.dataset[newLang];
@@ -23,22 +21,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         currentLang = newLang;
-        localStorage.setItem('lang', currentLang); // Kullanıcının dil tercihini kaydet
+        localStorage.setItem('lang', currentLang);
     }
 
-    // Sayfa yüklendiğinde dil tercihini kontrol et
     const savedLang = localStorage.getItem('lang');
     if (savedLang && savedLang !== currentLang) {
-        currentLang = savedLang === 'en' ? 'tr' : 'en'; // Fonksiyonun doğru çalışması için tersine ayarla
+        currentLang = savedLang === 'en' ? 'tr' : 'en';
         updateLanguage();
     }
 
-    // Buton tıklama olayını dinle
     if (langSwitcher) {
         langSwitcher.addEventListener('click', updateLanguage);
     }
-    
-    // 2. Mouse Takip Eden Işıltı Efekti (Hero Bölümünde)
+
+    // 2. Özel Mouse İmleci Efekti
+    const customCursor = document.querySelector('.custom-cursor');
+
+    document.addEventListener('mousemove', (e) => {
+        // İmleci fare pozisyonuna göre hareket ettir
+        customCursor.style.left = `${e.clientX}px`;
+        customCursor.style.top = `${e.clientY}px`;
+    });
+
+    // Mouse tıklaması için
+    document.addEventListener('mousedown', () => {
+        customCursor.classList.add('clicked');
+    });
+
+    document.addEventListener('mouseup', () => {
+        customCursor.classList.remove('clicked');
+    });
+
+    // 3. Mouse Takip Eden Işıltı Efekti (Hero Bölümünde)
     const mouseGlow = document.querySelector('.mouse-glow');
     const heroSection = document.getElementById('hero');
 
@@ -68,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Galeriye Dinamik Resim Yükleme
+    // 4. Galeriye Dinamik Resim Yükleme
     const imageGallery = document.querySelector('.image-gallery');
     const koenigseggImages = [
         'https://images.unsplash.com/photo-1542362543-c0529d380c85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80',
@@ -92,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Smooth Scrolling
+    // 5. Smooth Scrolling
     document.querySelectorAll('nav ul li a').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -102,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Model Kartlarına Özel Hover Efekti
+    // 6. Model Kartlarına Özel Hover Efekti
     const modelCards = document.querySelectorAll('.model-card');
     modelCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
@@ -122,5 +136,4 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
         });
     });
-
 });
