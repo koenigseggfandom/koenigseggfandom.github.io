@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dash Coaching - Valorant Koçluk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,6 +17,27 @@
             background: #0a0e27;
             color: #fff;
             overflow-x: hidden;
+        }
+
+        /* Logo */
+        .site-logo {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 100;
+            font-family: 'Gruppo', cursive;
+            font-size: 48px;
+            font-weight: 400;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .site-logo:hover {
+            transform: scale(1.05);
         }
 
         .animated-bg {
@@ -91,11 +113,6 @@
             text-align: center;
         }
 
-        .hero-logo {
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-
         .hero-title {
             font-size: 72px;
             font-weight: 800;
@@ -110,6 +127,18 @@
             font-size: 28px;
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 40px;
+            min-height: 40px;
+        }
+
+        /* Typewriter Effect */
+        .typewriter {
+            display: inline-block;
+            border-right: 3px solid #6366f1;
+            animation: blink 0.7s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
         }
 
         .hero-description {
@@ -370,6 +399,72 @@
             color: #6366f1;
             font-weight: 500;
             margin: 10px 0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Tooltip for Tracker */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 8px;
+            cursor: help;
+        }
+
+        .tooltip-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: rgba(99, 102, 241, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.5);
+            border-radius: 50%;
+            font-size: 12px;
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: 280px;
+            background: rgba(15, 23, 42, 0.98);
+            border: 1px solid rgba(99, 102, 241, 0.5);
+            color: #fff;
+            text-align: left;
+            border-radius: 12px;
+            padding: 12px 16px;
+            position: absolute;
+            z-index: 100;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -140px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+            line-height: 1.6;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(15, 23, 42, 0.98) transparent transparent transparent;
+        }
+
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
         }
 
         .age-warning {
@@ -394,7 +489,7 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 18px 22px;
             font-size: 17px;
@@ -406,7 +501,12 @@
             font-family: inherit;
         }
 
-        input:focus, select:focus {
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #6366f1;
             background: rgba(255, 255, 255, 0.12);
@@ -479,6 +579,9 @@
     </style>
 </head>
 <body>
+    <!-- Logo -->
+    <div class="site-logo">AURA</div>
+
     <div class="animated-bg">
         <div class="orb orb1"></div>
         <div class="orb orb2"></div>
@@ -488,9 +591,8 @@
     <!-- Hero Section -->
     <div class="section">
         <div class="section-content hero-section">
-            <div class="hero-logo">🎯</div>
-            <h1 class="hero-title">DASH COACHING</h1>
-            <p class="hero-subtitle">Valorant'ta Zirveye Taşıyoruz</p>
+            <h1 class="hero-title">AURA COACHING</h1>
+            <p class="hero-subtitle"><span class="typewriter" id="typewriter"></span></p>
             <p class="hero-description">Profesyonel koçluk hizmetimiz ile oyun içi performansını maksimuma çıkar. Aim, game sense, pozisyon alma ve iletişim becerilerinde uzman koçlarımız seni hedeflerine ulaştırmak için burada.</p>
             
             <div class="features-grid">
@@ -527,11 +629,11 @@
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">👤</div>
                         <div class="testimonial-info">
-                            <h4>Ahmet K.</h4>
-                            <div class="testimonial-rank">Gold 2 → Immortal 1</div>
+                            <h4>Aerica</h4>
+                            <div class="testimonial-rank">Plat 2 → Yücelik 2</div>
                         </div>
                     </div>
-                    <p class="testimonial-text">"Dash ile çalışmaya başladığımda Gold 2'deydim. Sadece 3 ay içinde Immortal 1'e ulaştım. Aim ve game sense konusundaki gelişimim inanılmazdı. Kesinlikle tavsiye ederim!"</p>
+                    <p class="testimonial-text">Koçluğa plat 2'de başladım; aimime ve movementıma güvenmiyordum. İlk haftadan itibaren antrenmanların etkisini hissettim, özgüvenim arttı. Smoke, skill kullanımı, peek ve movementım belirgin şekilde gelişti. 2. haftada dia1 oldum, sonra iniş çıkışlarla dia2'ye çıktım. Oyun bilgim, ajan ve skill farkındalığım ciddi şekilde arttı. 2 hafta ara verip rank düşsem de çalışmaya dönünce sezon bitmeden yüceliğe ulaştım.</p>
                     <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
                 </div>
                 
@@ -539,11 +641,11 @@
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">👤</div>
                         <div class="testimonial-info">
-                            <h4>Zeynep Y.</h4>
-                            <div class="testimonial-rank">Platinum 3 → Ascendant 2</div>
+                            <h4>Nhifty</h4>
+                            <div class="testimonial-rank">Plat 3 → Yücelik 1</div>
                         </div>
                     </div>
-                    <p class="testimonial-text">"Crosshair placement ve pozisyon alma konusunda çok eksiklerim vardı. Dash'in verdiği özel derslerle bu açıklarımı kapattım ve rank atlayışım hızlandı. Çok memnunum!"</p>
+                    <p class="testimonial-text">Koçlar her derste birebir ilgilenip eksiklerinizi tespit ediyor ve samimi yaklaşarak gelişimi kolaylaştırıyor. Başta tereddüt etsem de iyi ki almışım; aimim, movementım ve gamesense'im ilk günlerde inanılmaz gelişti. VOD dersleri sayesinde hatalarımı görüp düzeltmeye başladım. Gönül rahatlığıyla söyleyebilirim ki kesinlikle pişman olmazsınız, eski halinizden çok daha iyi olursunuz.</p>
                     <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
                 </div>
                 
@@ -551,11 +653,11 @@
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">👤</div>
                         <div class="testimonial-info">
-                            <h4>Mehmet S.</h4>
-                            <div class="testimonial-rank">Silver 1 → Diamond 3</div>
+                            <h4>Eno</h4>
+                            <div class="testimonial-rank">Yücelik 2 → Immortal 2</div>
                         </div>
                     </div>
-                    <p class="testimonial-text">"İlk başta şüpheliydim ama Dash'in profesyonelliği ve sabırlı yaklaşımı sayesinde oyunumu tamamen değiştirdim. Artık takımıma liderlik edebiliyorum!"</p>
+                    <p class="testimonial-text">Koçluk sistemi oldukça stabil ve tamamen kişiye özel işliyor. Aim, movement, game sense gibi konuları basit ve anlaşılır bir dille anlatıyorlar; anlamadığınız yerleri rahatça sorabiliyorsunuz. Koçluğu almadan önce Yücelik 2'ydim, aldıktan 1 ay sonra Immortal 2'ye kadar çıktım. Gerçekten başarı istiyorsanız düzenli çalışıp koçları iyi dinlemeniz gerekiyor.</p>
                     <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
                 </div>
             </div>
@@ -632,9 +734,9 @@
                 <p class="form-description">Aim, oyun bilgisi, pozisyon alma, iletişim, crosshair placement gibi konularda birebir çalışacağımız bu süreç tamamen sana özel ilerleyecek.</p>
                 
                 <div class="price-info">
-                    <p class="price-title">💸 Fiyatlandırma</p>
+                    <p class="price-title">Fiyatlandırma</p>
                     <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.8;">Koçluk ücreti mevcut rank ve hedef rankına göre değişiklik gösteriyor. Formda verdiğin bilgilere göre sana özel fiyatlandırmayı ileteceğim.</p>
-                    <p style="margin-top: 20px; color: rgba(255, 255, 255, 0.7);">Herhangi bir sorun olursa <span class="contact-info">@dashcoaching</span> hesabından bize ulaşabilirsin 😊</p>
+                    <p style="margin-top: 20px; color: rgba(255, 255, 255, 0.7);">Herhangi bir sorun olursa Discord sunucumuz: <a href="https://discord.gg/srKYEKXUYW" target="_blank" class="contact-info">discord.gg/srKYEKXUYW</a> 😊</p>
                 </div>
 
                 <div class="age-warning">
@@ -648,7 +750,7 @@
                     <input type="hidden" name="_template" value="box">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="text" name="_honey" style="display:none">
-                    <input type="hidden" name="_next" value="https://koenigseggfandom.github.io/tesekkurler.html">
+                    <input type="hidden" name="_next" value="https://dashcoaching.com/tesekkurler.html">
                     
                     <div class="form-group">
                         <label for="name">İsim</label>
@@ -697,12 +799,51 @@
                         </select>
                     </div>
 
-                    <!-- Opsiyonel İletişim Bilgileri -->
                     <div class="form-group">
-                        <label for="email">E-posta (Opsiyonel)</label>
-                        <input type="email" id="email" name="📧 E-posta" placeholder="ornek@mail.com">
+                        <label for="targetRank">Hedef Rank</label>
+                        <select id="targetRank" name="🎯 Hedef Rank" required>
+                            <option value="">Hedef rank seçiniz</option>
+                            <option value="Iron">Iron</option>
+                            <option value="Bronze">Bronze</option>
+                            <option value="Silver">Silver</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Platinum">Platinum</option>
+                            <option value="Diamond">Diamond</option>
+                            <option value="Ascendant">Ascendant</option>
+                            <option value="Immortal">Immortal</option>
+                            <option value="Radiant">Radiant</option>
+                        </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="tracker">
+                            Tracker.gg Linki
+                            <span class="tooltip-container">
+                                <span class="tooltip-icon">i</span>
+                                <span class="tooltip-text">
+                                    Tracker.gg, Valorant istatistiklerinizi gösteren bir platformdur. 
+                                    <br><br>
+                                    <strong>Nasıl bulunur?</strong><br>
+                                    1. tracker.gg/valorant adresine git<br>
+                                    2. Oyun adını ara<br>
+                                    3. Profil URL'ini buraya yapıştır<br>
+                                </span>
+                            </span>
+                        </label>
+                        <input type="url" id="tracker" name="📊 Tracker Link" required placeholder="https://tracker.gg/valorant/profile/...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expectations">Koçluktan Beklentin</label>
+                        <textarea id="expectations" name="💭 Koçluktan Beklenti" required placeholder="Örn: Aimimi geliştirmek, game sense kazanmak, takım oyunumu iyileştirmek istiyorum..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="introduction">Kendini Bize Tanıt</label>
+                        <textarea id="introduction" name="👋 Kendini Tanıt" required placeholder="Örn: Valorant'a 1 yıldır oynuyorum, genelde Duelist/Controller oynuyorum. Hafta içi akşamları ve hafta sonları aktifim..."></textarea>
+                    </div>
+
+                    <!-- Opsiyonel İletişim -->
                     <div class="form-group">
                         <label for="discord">Discord (Opsiyonel)</label>
                         <input type="text" id="discord" name="💬 Discord" placeholder="kullaniciadi#1234">
@@ -719,13 +860,51 @@
     </div>
 
     <script>
-        // Form validation
+        // ============ TYPEWRITER EFFECT ============
+        const text = "Hadi Beraber En Tepeye";
+        const typewriterElement = document.getElementById('typewriter');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                typewriterElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Start typewriter effect when page loads
+        window.addEventListener('load', function() {
+            setTimeout(typeWriter, 500);
+        });
+
+        // ============ FORM VALIDATION ============
         document.getElementById('coachingForm').addEventListener('submit', function(e) {
             const age = parseInt(document.getElementById('age').value);
             
             if (age < 16) {
                 e.preventDefault();
                 alert('Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.');
+                return false;
+            }
+
+            const currentRank = document.getElementById('rank').value;
+            const targetRank = document.getElementById('targetRank').value;
+            
+            const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Ascendant', 'Immortal', 'Radiant'];
+            const currentIndex = ranks.indexOf(currentRank);
+            const targetIndex = ranks.indexOf(targetRank);
+            
+            if (targetIndex <= currentIndex) {
+                e.preventDefault();
+                alert('Hedef rank, mevcut rankınızdan yüksek olmalıdır.');
+                return false;
+            }
+
+            const tracker = document.getElementById('tracker').value;
+            if (!tracker.includes('tracker.gg')) {
+                e.preventDefault();
+                alert('Lütfen geçerli bir Tracker.gg linki giriniz.');
                 return false;
             }
         });
