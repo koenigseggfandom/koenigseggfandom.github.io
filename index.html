@@ -145,13 +145,14 @@
             font-size: 20px;
             line-height: 1.8;
             color: rgba(255, 255, 255, 0.6);
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto 60px;
+            padding: 0 20px;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin-top: 60px;
         }
@@ -239,6 +240,13 @@
             font-size: 32px;
             margin-right: 20px;
             border: 3px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .testimonial-info h4 {
@@ -560,10 +568,193 @@
             display: block;
         }
 
+        /* Lesson Types Section */
+        .lesson-types {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .lesson-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-card:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+        }
+
+        .lesson-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .lesson-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .lesson-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .lesson-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .lesson-features li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .lesson-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #6366f1;
+            font-weight: bold;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+        }
+
+        .comparison-table {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 40px;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 20px;
+            text-align: left;
+            font-size: 18px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table td:first-child {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .comparison-table td:last-child {
+            color: #6366f1;
+            font-weight: 500;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faq-container {
+            margin-top: 40px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            background: rgba(99, 102, 241, 0.05);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #6366f1;
+        }
+
+        .faq-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 30px 25px 30px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
         @media (max-width: 1200px) {
             .features-grid { grid-template-columns: repeat(2, 1fr); }
             .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
             .coaches-grid { grid-template-columns: repeat(2, 1fr); }
+            .lesson-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
@@ -575,6 +766,7 @@
             .coaches-grid { grid-template-columns: 1fr; }
             .form-container { padding: 40px 30px; }
             .section { padding: 80px 20px; }
+            .site-logo { font-size: 36px; left: 20px; top: 20px; }
         }
     </style>
 </head>
@@ -591,16 +783,11 @@
     <!-- Hero Section -->
     <div class="section">
         <div class="section-content hero-section">
-            <h1 class="hero-title">AURA COACHING</h1>
+            <h1 class="hero-title">DASH COACHING</h1>
             <p class="hero-subtitle"><span class="typewriter" id="typewriter"></span></p>
-            <p class="hero-description">Profesyonel koçluk hizmetimiz ile oyun içi performansını maksimuma çıkar. Aim, game sense, pozisyon alma ve iletişim becerilerinde uzman koçlarımız seni hedeflerine ulaştırmak için burada.</p>
+            <p class="hero-description">Profesyonel koçluk hizmetimizle oyun içi performansını en üst seviyeye taşı! Aim, oyun bilgisi, movement, pozisyon alma, iletişim becerileri ve daha birçok konuda uzman koçlarımız; güçlü yönlerini ortaya çıkarıp zayıf noktalarını geliştirmek için seninle birebir ilgilenir. Hedeflerine daha hızlı ve daha bilinçli bir şekilde ulaşman için her adımda yanında oluruz. Tek başına değil, güçlü bir ekiple gelişmeye hazır mısın?</p>
             
             <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">🎮</div>
-                    <div class="feature-title">Birebir Koçluk</div>
-                    <div class="feature-desc">Tamamen sana özel hazırlanmış koçluk programı</div>
-                </div>
                 <div class="feature-item">
                     <div class="feature-icon">📊</div>
                     <div class="feature-title">Detaylı Analiz</div>
@@ -620,6 +807,43 @@
         </div>
     </div>
 
+    <!-- Lesson Types Section -->
+    <div class="section">
+        <div class="section-content">
+            <h2>Sınıf ve Birebir Ders 📚</h2>
+            <div class="lesson-types">
+                <div class="lesson-grid">
+                    <div class="lesson-card">
+                        <div class="lesson-icon">🎯</div>
+                        <h3 class="lesson-title">Birebir Koçluk Dersleri</h3>
+                        <p class="lesson-description">Birebir dersler, tamamen kişiye özel olarak tasarlanan en kapsamlı gelişim modelimizdir. Koçunuz yalnızca sizin oyununuza odaklanır ve tüm ders boyunca birebir ilgilenir.</p>
+                        <ul class="lesson-features">
+                            <li>Oyun tarzınıza uygun özel bir gelişim planı oluşturulur</li>
+                            <li>Eksik olduğunuz noktalar anında tespit edilir ve size özel çözüm yolları sunulur</li>
+                            <li>Aim, game sense, movement, pozisyon alma, iletişim becerileri detaylı şekilde incelenir</li>
+                            <li>Her ders, sizin gelişiminize göre yön değiştiren dinamik bir yapıya sahiptir</li>
+                            <li>Maksimum odaklı, tamamen sana özel ve en hızlı gelişimi sağlayan koçluk türüdür</li>
+                        </ul>
+                    </div>
+
+                    <div class="lesson-card">
+                        <div class="lesson-icon">🧠</div>
+                        <h3 class="lesson-title">Sınıf (Grup) Dersleri</h3>
+                        <p class="lesson-description">Sınıf dersleri, sizinle aynı seviyedeki oyuncularla birlikte ilerlenen, kapsamlı ve öğretici bir eğitim sistemidir. Bu derslerde amaç, oyunun temel ve ileri seviye mekaniklerini birlikte işlemek, tartışmak ve farklı bakış açılarıyla gelişmeyi hızlandırmaktır.</p>
+                        <ul class="lesson-features">
+                            <li>Oyun içi ekonomi yönetimi ve makro-mikro kararlar</li>
+                            <li>Pasif aim geliştirme yöntemleri</li>
+                            <li>Harita kontrolü ve takım içi roller</li>
+                            <li>İletişim, koordinasyon ve takım oyunu disiplinleri</li>
+                            <li>Meta'ya uygun oynayış biçimleri ve karşı stratejiler</li>
+                            <li>Sınıfça toplu VOD değerlendirmeleri ve grup tartışmaları</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Testimonials -->
     <div class="section">
         <div class="section-content">
@@ -627,7 +851,9 @@
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-header">
-                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-avatar">
+                            <img src="https://cdn.discordapp.com/avatars/488239515664908288/5a95dfdc2660b8766e43e8848e05a487.webp?size=128" alt="Aerica">
+                        </div>
                         <div class="testimonial-info">
                             <h4>Aerica</h4>
                             <div class="testimonial-rank">Plat 2 → Yücelik 2</div>
@@ -639,7 +865,9 @@
                 
                 <div class="testimonial-card">
                     <div class="testimonial-header">
-                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-avatar">
+                            <img src="https://cdn.discordapp.com/avatars/366964861818634242/51ee7c33af54c24cd71f123e08a896eb.webp?size=128" alt="Nhifty">
+                        </div>
                         <div class="testimonial-info">
                             <h4>Nhifty</h4>
                             <div class="testimonial-rank">Plat 3 → Yücelik 1</div>
@@ -651,7 +879,9 @@
                 
                 <div class="testimonial-card">
                     <div class="testimonial-header">
-                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-avatar">
+                            <img src="https://cdn.discordapp.com/avatars/1407657952831340586/ef6894b06aac69c77f635f0a5bf5df61.webp?size=128" alt="Eno">
+                        </div>
                         <div class="testimonial-info">
                             <h4>Eno</h4>
                             <div class="testimonial-rank">Yücelik 2 → Immortal 2</div>
@@ -723,6 +953,55 @@
         </div>
     </div>
 
+    <!-- Comparison Section -->
+    <div class="section">
+        <div class="section-content">
+            <h2>Diğer Koçluklar vs AURA Coaching ⚔️</h2>
+            <div class="comparison-section">
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Eski / Yetersiz Sistem</th>
+                                <th>Gelişmiş ve Profesyonel Sistem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tek koç ile sınırlı kalmak</td>
+                                <td>Rolünde ve uzmanlık alanında yetkin birden fazla koçla çalışma imkânı</td>
+                            </tr>
+                            <tr>
+                                <td>Aynı videolar üzerinden yüzeysel dersler</td>
+                                <td>Dersin konusunu en ince detayına kadar işleyen derin ve yapılandırılmış eğitimler</td>
+                            </tr>
+                            <tr>
+                                <td>Tek seferlik, yüzeysel VOD incelemeleri</td>
+                                <td>Ders süresince her hafta düzenli ve kapsamlı VOD analizleri</td>
+                            </tr>
+                            <tr>
+                                <td>Topluluk eksikliği, yalnız çalışma</td>
+                                <td>Birlikte oyun oynayan, iletişimde bulunan yüzlerce öğrenci ve koçtan oluşan aktif topluluk</td>
+                            </tr>
+                            <tr>
+                                <td>Gelişim takibinin yapılmaması</td>
+                                <td>Sürekli takip, geri bildirim ve kişiye özel gelişim analizi</td>
+                            </tr>
+                            <tr>
+                                <td>Ders bittikten sonra iletişimin kesilmesi</td>
+                                <td>Ders dışında da koçlarla sohbet etme, soru sorma ve rehberlik alma fırsatı</td>
+                            </tr>
+                            <tr>
+                                <td>Ekipman konusunda bilinmezlik ve yanlış seçimler</td>
+                                <td>Size uygun ekipmanı belirlemede uzman yönlendirmesi</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Form Section -->
     <div class="section">
         <div class="section-content">
@@ -736,7 +1015,7 @@
                 <div class="price-info">
                     <p class="price-title">Fiyatlandırma</p>
                     <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.8;">Koçluk ücreti mevcut rank ve hedef rankına göre değişiklik gösteriyor. Formda verdiğin bilgilere göre sana özel fiyatlandırmayı ileteceğim.</p>
-                    <p style="margin-top: 20px; color: rgba(255, 255, 255, 0.7);">Herhangi bir sorun olursa Discord sunucumuz: <a href="https://discord.gg/srKYEKXUYW" target="_blank" class="contact-info">discord.gg/srKYEKXUYW</a> 😊</p>
+                    <p style="margin-top: 20px; color: rgba(255, 255, 255, 0.7);">Herhangi bir sorun olursa <a href="https://discord.gg/srKYEKXUYW" target="_blank" class="contact-info" style="text-decoration: none;">Discord</a>'dan bize ulaşabilirsin 😊</p>
                 </div>
 
                 <div class="age-warning">
@@ -827,6 +1106,8 @@
                                     1. tracker.gg/valorant adresine git<br>
                                     2. Oyun adını ara<br>
                                     3. Profil URL'ini buraya yapıştır<br>
+                                    <br>
+                                    Örnek: tracker.gg/valorant/profile/riot/OyuncuAdi%23TAG
                                 </span>
                             </span>
                         </label>
@@ -859,6 +1140,110 @@
         </div>
     </div>
 
+    <!-- FAQ Section -->
+    <div class="section">
+        <div class="section-content">
+            <h2>⭐ Sıkça Sorulan Sorular</h2>
+            <div class="faq-section">
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Dersler birebir mi, yoksa grup şeklinde mi yapılıyor?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Dersleri isterseniz birebir, isterseniz sınıf mantığıyla grup dersi şeklinde alabilirsiniz.
+                                <br><br>
+                                <strong>Birebir dersler:</strong> Tamamen kişiye özel ilerler; oyun tarzınıza, hatalarınıza ve hedeflerinize göre şekillenir.
+                                <br><br>
+                                <strong>Grup dersleri:</strong> Belirli bir müfredat doğrultusunda ilerler, kendi seviyenizle eşit öğrencilerle eğitim alırsınız ve her öğrencinin gelişimine göre içerik uyarlanır.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Haftalık ders sayısı ve süreleri nasıl planlanıyor?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Haftada en az 4 ders almanızı öneriyoruz. Her ders standard olarak 1 saat sürer ve ders programı organizatör ile size en uygun zamanlara göre ayarlanır.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>VOD analizleri nasıl gerçekleştiriliyor?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Oyunlarınızı kaydedip koçunuza iletiyorsunuz. Koçunuzla birlikte VOD'u baştan sona izleyerek:
+                                <br><br>
+                                • Hatalarınız<br>
+                                • Kaçırdığınız fırsatlar<br>
+                                • Konum alma, karar verme ve mekanikleriniz
+                                <br><br>
+                                detaylı şekilde analiz edilir.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Koçlarla ders dışında iletişim kurabilir miyim?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Evet. Ders dışında da koçlarınızla konuşabilir, soru sorabilir veya tavsiye alabilirsiniz. Destek sadece derste sınırlı kalmaz.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Topluluk ortamı nasıl? Oyun arkadaşları bulabilir miyim?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Oldukça canlı ve aktif bir topluluğumuz var. Diğer öğrencilerle sohbet edebilir, scrim'lere katılabilir, kendinize oyun arkadaşları bulabilir veya toplulukla birlikte aktiviteler yapabilirsiniz.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Ödemeler ve abonelik sistemi nasıl işliyor?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Ödemeler Discord üzerinden, organizatörün yönlendirdiği adımlar ile güvenli bir şekilde gerçekleştirilmektedir.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Koçluk sistemi ne kadar sürede gelişim sağlar?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Net bir gelişim için en az 1 ay (16 ders) almanızı öneriyoruz. Tıpkı spor gibi: Ne kadar düzenli gelirseniz, o kadar hızlı ve kalıcı gelişirsiniz.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ============ TYPEWRITER EFFECT ============
         const text = "Hadi Beraber En Tepeye";
@@ -877,6 +1262,22 @@
         window.addEventListener('load', function() {
             setTimeout(typeWriter, 500);
         });
+
+        // ============ FAQ TOGGLE ============
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const allFaqs = document.querySelectorAll('.faq-item');
+            
+            // Close all other FAQs
+            allFaqs.forEach(item => {
+                if (item !== faqItem && item.classList.contains('active')) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ
+            faqItem.classList.toggle('active');
+        }
 
         // ============ FORM VALIDATION ============
         document.getElementById('coachingForm').addEventListener('submit', function(e) {
