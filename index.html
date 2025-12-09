@@ -3,88 +3,732 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-tr="Koenigsegg Fan Sayfası - Hız ve Sanatın Dansı" data-en="Koenigsegg Fan Page - A Dance of Speed and Art">Koenigsegg Fan Sayfası - Hız ve Sanatın Dansı</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <title>Dash Coaching - Valorant Koçluk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, #ec4899, #f43f5e);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 5s;
+        }
+
+        .orb3 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #14b8a6, #06b6d4);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, 100px) scale(1.1); }
+            50% { transform: translate(-50px, 50px) scale(0.9); }
+            75% { transform: translate(100px, -50px) scale(1.05); }
+        }
+
+        .section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 40px;
+        }
+
+        .section-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-section {
+            text-align: center;
+        }
+
+        .hero-logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #6366f1, #ec4899, #14b8a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+        }
+
+        .hero-description {
+            font-size: 20px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 1000px;
+            margin: 0 auto 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-10px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .feature-desc {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            text-align: center;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-10px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .testimonial-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-right: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .testimonial-info h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .testimonial-rank {
+            font-size: 15px;
+            color: #ec4899;
+            font-weight: 500;
+        }
+
+        .testimonial-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-rating {
+            font-size: 22px;
+        }
+
+        .coaches-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .coach-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .coach-card:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-10px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+        }
+
+        .coach-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 56px;
+            margin: 0 auto 25px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .coach-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .coach-rank {
+            font-size: 18px;
+            color: #ec4899;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .coach-specialty {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .coach-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .coach-stat {
+            text-align: center;
+        }
+
+        .coach-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #6366f1;
+        }
+
+        .coach-stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-description {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .price-info {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .price-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #6366f1;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: #6366f1;
+            font-weight: 500;
+            margin: 10px 0;
+        }
+
+        .age-warning {
+            background: rgba(236, 72, 153, 0.15);
+            border-left: 4px solid #ec4899;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 18px 22px;
+            font-size: 17px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #fff;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #fff;
+            border: none;
+            padding: 20px 40px;
+            font-size: 19px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            color: #4ade80;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @media (max-width: 1200px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+            .coaches-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 42px; }
+            .hero-subtitle { font-size: 20px; }
+            h2 { font-size: 36px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .coaches-grid { grid-template-columns: 1fr; }
+            .form-container { padding: 40px 30px; }
+            .section { padding: 80px 20px; }
+        }
+    </style>
 </head>
 <body>
+    <div class="animated-bg">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+    </div>
 
-    <header class="main-header">
-        <div class="container">
-            <h1 class="logo">Koenigsegg Fandom</h1>
-            <nav>
-                <ul>
-                    <li><a href="#home" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a></li>
-                    <li><a href="#models" data-tr="Modeller" data-en="Models">Modeller</a></li>
-                    <li><a href="#history" data-tr="Tarihçe" data-en="History">Tarihçe</a></li>
-                    <li><a href="#gallery" data-tr="Galeri" data-en="Gallery">Galeri</a></li>
-                    <li><a href="#contact" data-tr="İletişim" data-en="Contact">İletişim</a></li>
-                </ul>
-            </nav>
-            <button class="lang-switcher" data-tr="English" data-en="Türkçe">English</button>
-        </div>
-    </header>
-
-    <section id="hero" class="hero-section">
-        <div class="hero-content">
-            <h2 data-tr="Koenigsegg Dünyasına Hoş Geldiniz" data-en="Welcome to the World of Koenigsegg">Koenigsegg Dünyasına Hoş Geldiniz</h2>
-            <p data-tr="İsveç Mühendisliğinin ve Hiper Otomobil Sanatının Doruk Noktası" data-en="The Pinnacle of Swedish Engineering and Hypercar Art">İsveç Mühendisliğinin ve Hiper Otomobil Sanatının Doruk Noktası</p>
-            <a href="#models" class="btn" data-tr="Modelleri Keşfet" data-en="Explore Models">Modelleri Keşfet</a>
-        </div>
-        <div class="mouse-glow"></div>
-    </section>
-
-    <section id="models" class="section-padding">
-        <div class="container">
-            <h3 data-tr="Öne Çıkan Modeller" data-en="Featured Models">Öne Çıkan Modeller</h3>
-            <div class="model-grid">
-                
-                <div class="model-card" data-model="jesko">
-                    <div class="card-bg-video">
-                        <video src="https://koenigsegg.com/assets/video/jesko-absinthe.mp4" muted loop playsinline></video>
-                    </div>
-                    <img src="https://via.placeholder.com/300x200?text=Jesko" alt="Koenigsegg Jesko">
-                    <h4 data-tr="Jesko" data-en="Jesko">Jesko</h4>
-                    <p data-tr="Agresif aerodinamik ve 1600+ HP gücüyle pistlerin efendisi." data-en="The master of the track with aggressive aerodynamics and 1600+ HP.">Agresif aerodinamik ve 1600+ HP gücüyle pistlerin efendisi.</p>
+    <!-- Hero Section -->
+    <div class="section">
+        <div class="section-content hero-section">
+            <div class="hero-logo">🎯</div>
+            <h1 class="hero-title">DASH COACHING</h1>
+            <p class="hero-subtitle">Valorant'ta Zirveye Taşıyoruz</p>
+            <p class="hero-description">Profesyonel koçluk hizmetimiz ile oyun içi performansını maksimuma çıkar. Aim, game sense, pozisyon alma ve iletişim becerilerinde uzman koçlarımız seni hedeflerine ulaştırmak için burada.</p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🎮</div>
+                    <div class="feature-title">Birebir Koçluk</div>
+                    <div class="feature-desc">Tamamen sana özel hazırlanmış koçluk programı</div>
                 </div>
-                
-                <div class="model-card" data-model="regera">
-                    <div class="card-bg-video">
-                        <video src="https://koenigsegg.com/assets/video/regera-on-road.mp4" muted loop playsinline></video>
-                    </div>
-                    <img src="https://via.placeholder.com/300x200?text=Regera" alt="Koenigsegg Regera">
-                    <h4 data-tr="Regera" data-en="Regera">Regera</h4>
-                    <p data-tr="Devrim niteliğindeki doğrudan tahrik sistemiyle lüks ve performansın birleşimi." data-en="A fusion of luxury and performance with its revolutionary direct drive system.">Devrim niteliğindeki doğrudan tahrik sistemiyle lüks ve performansın birleşimi.</p>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Detaylı Analiz</div>
+                    <div class="feature-desc">Oyunlarının derinlemesine incelenmesi ve raporlanması</div>
                 </div>
-                
-                <div class="model-card" data-model="agera">
-                    <div class="card-bg-video">
-                        <video src="https://koenigsegg.com/assets/video/agera-rs.mp4" muted loop playsinline></video>
-                    </div>
-                    <img src="https://via.placeholder.com/300x200?text=Agera RS" alt="Koenigsegg Agera RS">
-                    <h4 data-tr="Agera RS" data-en="Agera RS">Agera RS</h4>
-                    <p data-tr="Çok sayıda hız rekoruna imza atmış efsanevi hiper otomobil." data-en="A legendary hypercar that has set numerous speed records.">Çok sayıda hız rekoruna imza atmış efsanevi hiper otomobil.</p>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Hızlı İlerleme</div>
+                    <div class="feature-desc">Kanıtlanmış metodlarla hızlı rank yükseltme</div>
                 </div>
-                
+                <div class="feature-item">
+                    <div class="feature-icon">🏆</div>
+                    <div class="feature-title">Profesyonel Destek</div>
+                    <div class="feature-desc">High elo oyunculardan sürekli geri bildirim</div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="gallery" class="section-padding bg-dark text-white">
-        <div class="container">
-            <h3 data-tr="Muhteşem Galeri" data-en="Stunning Gallery">Muhteşem Galeri</h3>
-            <p data-tr="Koenigsegg'in nefes kesen tasarımlarına yakından bakın." data-en="Take a closer look at Koenigsegg's breathtaking designs.">Koenigsegg'in nefes kesen tasarımlarına yakından bakın.</p>
-            <div class="image-gallery">
+    <!-- Testimonials -->
+    <div class="section">
+        <div class="section-content">
+            <h2>Öğrencilerimizden Geri Bildirimler 💬</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-info">
+                            <h4>Ahmet K.</h4>
+                            <div class="testimonial-rank">Gold 2 → Immortal 1</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"Dash ile çalışmaya başladığımda Gold 2'deydim. Sadece 3 ay içinde Immortal 1'e ulaştım. Aim ve game sense konusundaki gelişimim inanılmazdı. Kesinlikle tavsiye ederim!"</p>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
                 </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-info">
+                            <h4>Zeynep Y.</h4>
+                            <div class="testimonial-rank">Platinum 3 → Ascendant 2</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"Crosshair placement ve pozisyon alma konusunda çok eksiklerim vardı. Dash'in verdiği özel derslerle bu açıklarımı kapattım ve rank atlayışım hızlandı. Çok memnunum!"</p>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-info">
+                            <h4>Mehmet S.</h4>
+                            <div class="testimonial-rank">Silver 1 → Diamond 3</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"İlk başta şüpheliydim ama Dash'in profesyonelliği ve sabırlı yaklaşımı sayesinde oyunumu tamamen değiştirdim. Artık takımıma liderlik edebiliyorum!"</p>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
 
-    <footer class="main-footer">
-        <div class="container">
-            <p data-tr="&copy; 2023 Koenigsegg Fandom. Tüm Hakları Saklıdır." data-en="&copy; 2023 Koenigsegg Fandom. All Rights Reserved.">&copy; 2023 Koenigsegg Fandom. Tüm Hakları Saklıdır.</p>
+    <!-- Coaches -->
+    <div class="section">
+        <div class="section-content">
+            <h2>Koçlarımızla Tanışın 👥</h2>
+            <div class="coaches-grid">
+                <div class="coach-card">
+                    <div class="coach-avatar">🎯</div>
+                    <div class="coach-name">Dash</div>
+                    <div class="coach-rank">Radiant • Baş Koç</div>
+                    <p class="coach-specialty">Aim, game sense ve stratejik oyun konusunda uzman. 5+ yıl profesyonel deneyim.</p>
+                    <div class="coach-stats">
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">200+</div>
+                            <div class="coach-stat-label">Öğrenci</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">95%</div>
+                            <div class="coach-stat-label">Başarı</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="coach-card">
+                    <div class="coach-avatar">⚡</div>
+                    <div class="coach-name">Storm</div>
+                    <div class="coach-rank">Immortal 3 • Koç</div>
+                    <p class="coach-specialty">Duel mekanik ve crosshair placement konusunda specialist. Agresif oyun tarzı eğitimi.</p>
+                    <div class="coach-stats">
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">150+</div>
+                            <div class="coach-stat-label">Öğrenci</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">92%</div>
+                            <div class="coach-stat-label">Başarı</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="coach-card">
+                    <div class="coach-avatar">🛡️</div>
+                    <div class="coach-name">Shield</div>
+                    <div class="coach-rank">Immortal 2 • Koç</div>
+                    <p class="coach-specialty">Takım oyunu, iletişim ve pozisyon alma konusunda uzman. Sentinel main.</p>
+                    <div class="coach-stats">
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">120+</div>
+                            <div class="coach-stat-label">Öğrenci</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">90%</div>
+                            <div class="coach-stat-label">Başarı</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
 
-    <script src="script.js"></script>
+    <!-- Form Section -->
+    <div class="section">
+        <div class="section-content">
+            <div class="form-container">
+                <h1 class="form-title">Başvuru Formu 🎮</h1>
+                
+                <p class="form-description">Bu form, senin oyun içi durumunu, hedeflerini ve hangi alanlarda gelişmek istediğini daha iyi anlayabilmem için hazırlandı.</p>
+                
+                <p class="form-description">Aim, oyun bilgisi, pozisyon alma, iletişim, crosshair placement gibi konularda birebir çalışacağımız bu süreç tamamen sana özel ilerleyecek.</p>
+                
+                <div class="price-info">
+                    <p class="price-title">💸 Fiyatlandırma</p>
+                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.8;">Koçluk ücreti mevcut rank ve hedef rankına göre değişiklik gösteriyor. Formda verdiğin bilgilere göre sana özel fiyatlandırmayı ileteceğim.</p>
+                    <p style="margin-top: 20px; color: rgba(255, 255, 255, 0.7);">Herhangi bir sorun olursa <span class="contact-info">@dashcoaching</span> hesabından bize ulaşabilirsin 😊</p>
+                </div>
+
+                <div class="age-warning">
+                    ⚠️ Koçluk için yaş sınırı 16'dır
+                </div>
+
+                <!-- FORMSUBMIT İLE MAİL GÖNDERİMİ -->
+                <form id="coachingForm" action="https://formsubmit.co/mehmetakifkaraman248@gmail.com" method="POST">
+                    <!-- FormSubmit Gizli Ayarları -->
+                    <input type="hidden" name="_subject" value="🎮 YENİ KOÇLUK BAŞVURUSU - Dash Coaching">
+                    <input type="hidden" name="_template" value="box">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="text" name="_honey" style="display:none">
+                    <input type="hidden" name="_next" value="https://dashcoaching.com/tesekkurler.html">
+                    
+                    <div class="form-group">
+                        <label for="name">İsim</label>
+                        <input type="text" id="name" name="👤 İsim" required placeholder="Adınızı giriniz">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="surname">Soyisim</label>
+                        <input type="text" id="surname" name="👤 Soyisim" required placeholder="Soyadınızı giriniz">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Yaş</label>
+                        <input type="number" id="age" name="🎂 Yaş" min="16" required placeholder="16 veya üzeri">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country">Ülke</label>
+                        <select id="country" name="🌍 Ülke" required>
+                            <option value="">Ülke seçiniz</option>
+                            <option value="Türkiye">Türkiye</option>
+                            <option value="Almanya">Almanya</option>
+                            <option value="Hollanda">Hollanda</option>
+                            <option value="Belçika">Belçika</option>
+                            <option value="Avusturya">Avusturya</option>
+                            <option value="Fransa">Fransa</option>
+                            <option value="İngiltere">İngiltere</option>
+                            <option value="ABD">ABD</option>
+                            <option value="Diğer">Diğer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rank">Mevcut Rank</label>
+                        <select id="rank" name="🎯 Mevcut Rank" required>
+                            <option value="">Rank seçiniz</option>
+                            <option value="Iron">Iron</option>
+                            <option value="Bronze">Bronze</option>
+                            <option value="Silver">Silver</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Platinum">Platinum</option>
+                            <option value="Diamond">Diamond</option>
+                            <option value="Ascendant">Ascendant</option>
+                            <option value="Immortal">Immortal</option>
+                            <option value="Radiant">Radiant</option>
+                        </select>
+                    </div>
+
+                    <!-- Opsiyonel İletişim Bilgileri -->
+                    <div class="form-group">
+                        <label for="email">E-posta (Opsiyonel)</label>
+                        <input type="email" id="email" name="📧 E-posta" placeholder="ornek@mail.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="discord">Discord (Opsiyonel)</label>
+                        <input type="text" id="discord" name="💬 Discord" placeholder="kullaniciadi#1234">
+                    </div>
+
+                    <button type="submit" class="button">Başvuruyu Gönder</button>
+                </form>
+
+                <div class="success-message" id="successMessage">
+                    ✅ Form başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form validation
+        document.getElementById('coachingForm').addEventListener('submit', function(e) {
+            const age = parseInt(document.getElementById('age').value);
+            
+            if (age < 16) {
+                e.preventDefault();
+                alert('Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.');
+                return false;
+            }
+        });
+    </script>
 </body>
 </html>
