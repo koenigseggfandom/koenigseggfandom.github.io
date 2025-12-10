@@ -48,6 +48,15 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
+            animation: bgColorShift 30s ease-in-out infinite;
+        }
+
+        @keyframes bgColorShift {
+            0% { background: #0a0e27; }
+            25% { background: #0d1129; }
+            50% { background: #0a0e27; }
+            75% { background: #0e1230; }
+            100% { background: #0a0e27; }
         }
 
         .orb {
@@ -64,7 +73,7 @@
             background: linear-gradient(45deg, #6366f1, #8b5cf6);
             top: -100px;
             left: -100px;
-            animation-delay: 0s;
+            animation: float 20s infinite ease-in-out, colorShift1 25s ease-in-out infinite;
         }
 
         .orb2 {
@@ -73,7 +82,7 @@
             background: linear-gradient(45deg, #ec4899, #f43f5e);
             bottom: -100px;
             right: -100px;
-            animation-delay: 5s;
+            animation: float 20s infinite ease-in-out 5s, colorShift2 28s ease-in-out infinite;
         }
 
         .orb3 {
@@ -82,7 +91,25 @@
             background: linear-gradient(45deg, #14b8a6, #06b6d4);
             top: 50%;
             left: 50%;
-            animation-delay: 10s;
+            animation: float 20s infinite ease-in-out 10s, colorShift3 32s ease-in-out infinite;
+        }
+
+        @keyframes colorShift1 {
+            0%, 100% { background: linear-gradient(45deg, #6366f1, #8b5cf6); }
+            33% { background: linear-gradient(45deg, #8b5cf6, #a78bfa); }
+            66% { background: linear-gradient(45deg, #7c3aed, #6366f1); }
+        }
+
+        @keyframes colorShift2 {
+            0%, 100% { background: linear-gradient(45deg, #ec4899, #f43f5e); }
+            33% { background: linear-gradient(45deg, #f43f5e, #fb7185); }
+            66% { background: linear-gradient(45deg, #db2777, #ec4899); }
+        }
+
+        @keyframes colorShift3 {
+            0%, 100% { background: linear-gradient(45deg, #14b8a6, #06b6d4); }
+            33% { background: linear-gradient(45deg, #06b6d4, #0891b2); }
+            66% { background: linear-gradient(45deg, #0d9488, #14b8a6); }
         }
 
         @keyframes float {
@@ -121,6 +148,10 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero-subtitle {
@@ -128,6 +159,7 @@
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 40px;
             min-height: 40px;
+            display: none;
         }
 
         /* Typewriter Effect */
@@ -135,19 +167,38 @@
             display: inline-block;
             border-right: 3px solid #6366f1;
             animation: blink 0.7s step-end infinite;
+            padding-right: 5px;
         }
 
         @keyframes blink {
             50% { border-color: transparent; }
         }
 
+        .fade-out {
+            animation: fadeOut 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .hero-description {
-            font-size: 20px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 22px;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.7);
             max-width: 1100px;
             margin: 0 auto 60px;
             padding: 0 20px;
+            font-weight: 400;
         }
 
         .features-grid {
@@ -307,6 +358,13 @@
             font-size: 56px;
             margin: 0 auto 25px;
             border: 4px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .coach-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .coach-name {
@@ -325,33 +383,9 @@
 
         .coach-specialty {
             font-size: 16px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
             margin-bottom: 25px;
-        }
-
-        .coach-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .coach-stat {
-            text-align: center;
-        }
-
-        .coach-stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #6366f1;
-        }
-
-        .coach-stat-label {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 8px;
         }
 
         .form-container {
@@ -783,8 +817,8 @@
     <!-- Hero Section -->
     <div class="section">
         <div class="section-content hero-section">
-            <h1 class="hero-title">DASH COACHING</h1>
-            <p class="hero-subtitle"><span class="typewriter" id="typewriter"></span></p>
+            <h1 class="hero-title"><span class="typewriter" id="typewriter"></span></h1>
+            <p class="hero-subtitle"></p>
             <p class="hero-description">Profesyonel koçluk hizmetimizle oyun içi performansını en üst seviyeye taşı! Aim, oyun bilgisi, movement, pozisyon alma, iletişim becerileri ve daha birçok konuda uzman koçlarımız; güçlü yönlerini ortaya çıkarıp zayıf noktalarını geliştirmek için seninle birebir ilgilenir. Hedeflerine daha hızlı ve daha bilinçli bir şekilde ulaşman için her adımda yanında oluruz. Tek başına değil, güçlü bir ekiple gelişmeye hazır mısın?</p>
             
             <div class="features-grid">
@@ -835,7 +869,7 @@
                             <li>Pasif aim geliştirme yöntemleri</li>
                             <li>Harita kontrolü ve takım içi roller</li>
                             <li>İletişim, koordinasyon ve takım oyunu disiplinleri</li>
-                            <li>Meta'ya uygun oynayış biçimleri ve karşı stratejiler</li>
+                            <li>Meta'ya uygun oynayış biçimleri ve karşı strategiler</li>
                             <li>Sınıfça toplu VOD değerlendirmeleri ve grup tartışmaları</li>
                         </ul>
                     </div>
@@ -900,37 +934,21 @@
             <h2>Koçlarımızla Tanışın 👥</h2>
             <div class="coaches-grid">
                 <div class="coach-card">
-                    <div class="coach-avatar">🎯</div>
+                    <div class="coach-avatar">
+                        <img src="https://cdn.discordapp.com/attachments/1446902131758993449/1448319753889517588/image.jpg?ex=693ad461&is=693982e1&hm=3e8df68f27ef480e1bc6edcf992bf64f4720e91633d3af9d712f5fdfd59e6b8b&" alt="Dash">
+                    </div>
                     <div class="coach-name">Dash</div>
                     <div class="coach-rank">Radiant • Baş Koç</div>
-                    <p class="coach-specialty">Aim, game sense ve stratejik oyun konusunda uzman. 5+ yıl profesyonel deneyim.</p>
-                    <div class="coach-stats">
-                        <div class="coach-stat">
-                            <div class="coach-stat-value">200+</div>
-                            <div class="coach-stat-label">Öğrenci</div>
-                        </div>
-                        <div class="coach-stat">
-                            <div class="coach-stat-value">95%</div>
-                            <div class="coach-stat-label">Başarı</div>
-                        </div>
-                    </div>
+                    <p class="coach-specialty">Saf aim odaklı oyun mekanikleri, movement ve mikro karar süreçlerinde uzmanım. Tier 2 takımlar ve yüzlerce oyuncuya koçluk yaptım. Koçluk yaklaşımım; oyun takibini, hızlı ve etkili karar verme becerilerini ve oyun içinde soğukkanlığı korumayı geliştirmeye yöneliktir.</p>
                 </div>
                 
                 <div class="coach-card">
-                    <div class="coach-avatar">⚡</div>
-                    <div class="coach-name">Storm</div>
-                    <div class="coach-rank">Immortal 3 • Koç</div>
-                    <p class="coach-specialty">Duel mekanik ve crosshair placement konusunda specialist. Agresif oyun tarzı eğitimi.</p>
-                    <div class="coach-stats">
-                        <div class="coach-stat">
-                            <div class="coach-stat-value">150+</div>
-                            <div class="coach-stat-label">Öğrenci</div>
-                        </div>
-                        <div class="coach-stat">
-                            <div class="coach-stat-value">92%</div>
-                            <div class="coach-stat-label">Başarı</div>
-                        </div>
+                    <div class="coach-avatar">
+                        <img src="https://cdn.discordapp.com/attachments/1446902131758993449/1448321175146201271/a63e6c8a-1a82-4962-9cf7-b58ad0414828.jpg?ex=693ad5b4&is=69398434&hm=8d13a46368bc328ebaccbd0e8553a2b3b5041b16e7daf1474dbd94fc52767a44&" alt="Dowsie">
                     </div>
+                    <div class="coach-name">Dowsie</div>
+                    <div class="coach-rank">Immortal 3 • Koç</div>
+                    <p class="coach-specialty">Game sense ve IGL olmak konusunda uzmanlaşmış bir oyuncuyum. Tier 2 ve Tier 3 takımlarda oynadım, peak'im Immortal 3. Koçluk yaklaşımım netlik, sabır ve oyuncuyu gerçek potansiyeline taşımaya odaklanır.</p>
                 </div>
                 
                 <div class="coach-card">
@@ -938,16 +956,6 @@
                     <div class="coach-name">Shield</div>
                     <div class="coach-rank">Immortal 2 • Koç</div>
                     <p class="coach-specialty">Takım oyunu, iletişim ve pozisyon alma konusunda uzman. Sentinel main.</p>
-                    <div class="coach-stats">
-                        <div class="coach-stat">
-                            <div class="coach-stat-value">120+</div>
-                            <div class="coach-stat-label">Öğrenci</div>
-                        </div>
-                        <div class="coach-stat">
-                            <div class="coach-stat-value">90%</div>
-                            <div class="coach-stat-label">Başarı</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1014,7 +1022,7 @@
                 
                 <div class="price-info">
                     <p class="price-title">Fiyatlandırma</p>
-                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.8;">Koçluk ücreti mevcut rank ve hedef rankına göre değişiklik gösteriyor. Formda verdiğin bilgilere göre sana özel fiyatlandırmayı ileteceğiz.</p>
+                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.8;">Koçluk ücreti mevcut rank ve hedef rankına göre değişiklik gösteriyor. Formda verdiğin bilgilere göre sana özel fiyatlandırmayı ileteceğim.</p>
                     <p style="margin-top: 20px; color: rgba(255, 255, 255, 0.7);">Herhangi bir sorun olursa <a href="https://discord.gg/srKYEKXUYW" target="_blank" class="contact-info" style="text-decoration: none;">Discord</a>'dan bize ulaşabilirsin 😊</p>
                 </div>
 
@@ -1029,7 +1037,7 @@
                     <input type="hidden" name="_template" value="box">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="text" name="_honey" style="display:none">
-                    <input type="hidden" name="_next" value="https://koenigseggfandom.github.io/tesekkurler.html">
+                    <input type="hidden" name="_next" value="https://dashcoaching.com/tesekkurler.html">
                     
                     <div class="form-group">
                         <label for="name">İsim</label>
@@ -1106,6 +1114,8 @@
                                     1. tracker.gg/valorant adresine git<br>
                                     2. Oyun adını ara<br>
                                     3. Profil URL'ini buraya yapıştır<br>
+                                    <br>
+                                    Örnek: tracker.gg/valorant/profile/riot/OyuncuAdi%23TAG
                                 </span>
                             </span>
                         </label>
@@ -1124,7 +1134,7 @@
 
                     <!-- Opsiyonel İletişim -->
                     <div class="form-group">
-                        <label for="discord">Discord </label>
+                        <label for="discord">Discord (Opsiyonel)</label>
                         <input type="text" id="discord" name="💬 Discord" placeholder="kullaniciadi#1234">
                     </div>
 
@@ -1243,16 +1253,88 @@
     </div>
 
     <script>
-        // ============ TYPEWRITER EFFECT ============
-        const text = "Hadi Beraber En Tepeye";
+        // ============ TYPEWRITER EFFECT WITH INFINITE LOOP ============
+        const words = ["Hadi", "Beraber", "En", "Tepeye"];
+        const fullSentence = "Hadi Beraber En Tepeye";
         const typewriterElement = document.getElementById('typewriter');
-        let index = 0;
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let isWritingFullSentence = false;
+        let isDeletingFullSentence = false;
+        let cycleCount = 0;
 
         function typeWriter() {
-            if (index < text.length) {
-                typewriterElement.textContent += text.charAt(index);
-                index++;
+            if (!isWritingFullSentence && !isDeletingFullSentence) {
+                // Individual words phase
+                const currentWord = words[wordIndex];
+                
+                if (isDeleting) {
+                    typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                    
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        wordIndex++;
+                        
+                        if (wordIndex === words.length) {
+                            // All individual words have been shown and deleted
+                            isWritingFullSentence = true;
+                            charIndex = 0;
+                            setTimeout(typeWriter, 500);
+                            return;
+                        }
+                        
+                        setTimeout(typeWriter, 300);
+                        return;
+                    }
+                    
+                    setTimeout(typeWriter, 50);
+                } else {
+                    typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+                    charIndex++;
+                    
+                    if (charIndex === currentWord.length) {
+                        setTimeout(() => {
+                            isDeleting = true;
+                            setTimeout(typeWriter, 1000);
+                        }, 1000);
+                        return;
+                    }
+                    
+                    setTimeout(typeWriter, 150);
+                }
+            } else if (isWritingFullSentence) {
+                // Writing full sentence
+                typewriterElement.textContent = fullSentence.substring(0, charIndex + 1);
+                charIndex++;
+                
+                if (charIndex === fullSentence.length) {
+                    setTimeout(() => {
+                        isWritingFullSentence = false;
+                        isDeletingFullSentence = true;
+                        setTimeout(typeWriter, 2000);
+                    }, 2000);
+                    return;
+                }
+                
                 setTimeout(typeWriter, 100);
+            } else if (isDeletingFullSentence) {
+                // Deleting full sentence
+                typewriterElement.textContent = fullSentence.substring(0, charIndex - 1);
+                charIndex--;
+                
+                if (charIndex === 0) {
+                    isDeletingFullSentence = false;
+                    wordIndex = 0;
+                    cycleCount++;
+                    
+                    // Restart the cycle
+                    setTimeout(typeWriter, 500);
+                    return;
+                }
+                
+                setTimeout(typeWriter, 50);
             }
         }
 
