@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dash Coaching - Admin Panel</title>
+    <title>AURA Coaching - Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -79,19 +80,21 @@
         }
 
         .login-logo {
-            font-size: 64px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .login-title {
-            font-size: 32px;
-            font-weight: 700;
+            font-family: 'Gruppo', cursive;
+            font-size: 72px;
             text-align: center;
             margin-bottom: 10px;
             background: linear-gradient(135deg, #6366f1, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .login-title {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .login-subtitle {
@@ -193,15 +196,10 @@
         }
 
         .sidebar-logo {
-            font-size: 40px;
+            font-family: 'Gruppo', cursive;
+            font-size: 48px;
             text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .sidebar-title {
-            font-size: 20px;
-            font-weight: 700;
-            text-align: center;
+            margin-bottom: 5px;
             background: linear-gradient(135deg, #6366f1, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -231,10 +229,6 @@
             background: rgba(99, 102, 241, 0.2);
             color: #fff;
             border-left: 3px solid #6366f1;
-        }
-
-        .menu-icon {
-            font-size: 20px;
         }
 
         .logout-btn {
@@ -303,11 +297,6 @@
             background: rgba(255, 255, 255, 0.08);
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
-        }
-
-        .stat-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
         }
 
         .stat-value {
@@ -386,6 +375,7 @@
 
         tbody tr {
             transition: background 0.2s ease;
+            cursor: pointer;
         }
 
         tbody tr:hover {
@@ -437,6 +427,32 @@
 
         .btn-delete:hover {
             background: rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-add-student {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+        }
+
+        .btn-add-student:hover {
+            background: rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-download {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-download:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
         }
 
         /* Calendar */
@@ -698,122 +714,6 @@
             font-weight: 500;
         }
 
-        .schedule-section {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .schedule-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #6366f1;
-            margin-bottom: 15px;
-        }
-
-        .schedule-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .schedule-item {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            padding: 12px 16px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .schedule-day {
-            font-weight: 600;
-            color: #6366f1;
-        }
-
-        .schedule-time {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Weekly Schedule View */
-        .weekly-schedule {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-            overflow-x: auto;
-        }
-
-        .schedule-grid {
-            display: grid;
-            grid-template-columns: 80px repeat(7, 1fr);
-            gap: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            overflow: hidden;
-            min-width: 900px;
-        }
-
-        .schedule-header {
-            background: rgba(99, 102, 241, 0.2);
-            padding: 15px 10px;
-            text-align: center;
-            font-weight: 600;
-            color: #6366f1;
-            font-size: 14px;
-        }
-
-        .time-cell {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px 10px;
-            text-align: center;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .schedule-cell {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 8px;
-            min-height: 60px;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .schedule-cell:hover {
-            background: rgba(99, 102, 241, 0.05);
-        }
-
-        .lesson-block {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3));
-            border: 1px solid rgba(99, 102, 241, 0.5);
-            border-radius: 6px;
-            padding: 8px;
-            font-size: 12px;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .lesson-block:hover {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(139, 92, 246, 0.5));
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        .lesson-student {
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-
-        .lesson-time {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
         .stats-badge {
             display: inline-block;
             background: rgba(99, 102, 241, 0.2);
@@ -831,9 +731,116 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        .empty-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
+        /* Student Cards Grid */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .student-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .student-card:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .student-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .student-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .student-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .info-value {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* Weekly Schedule View */
+        .schedule-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .day-schedule {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .day-column {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 200px;
+        }
+
+        .day-header {
+            font-weight: 600;
+            color: #6366f1;
+            margin-bottom: 15px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .time-slot {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .time-slot-time {
+            font-weight: 600;
+            color: #6366f1;
+            margin-bottom: 5px;
+        }
+
+        .time-slot-duration {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
         }
 
         @media (max-width: 768px) {
@@ -855,6 +862,14 @@
             .search-box {
                 width: 100%;
             }
+
+            .students-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .day-schedule {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -867,12 +882,12 @@
         </div>
         
         <div class="login-box">
-            <div class="login-logo">🔐</div>
+            <div class="login-logo">AURA</div>
             <h1 class="login-title">Admin Panel</h1>
-            <p class="login-subtitle">Dash Coaching Yönetim Sistemi</p>
+            <p class="login-subtitle">Yönetim Sistemi</p>
             
             <div class="error-message" id="errorMessage">
-                ❌ Kullanıcı adı veya şifre hatalı!
+                Kullanıcı adı veya şifre hatalı!
             </div>
             
             <form id="loginForm">
@@ -886,7 +901,7 @@
                     <input type="password" id="password" placeholder="Şifrenizi girin" required>
                 </div>
                 
-                <button type="submit" class="login-btn">🚀 Giriş Yap</button>
+                <button type="submit" class="login-btn">Giriş Yap</button>
             </form>
         </div>
     </div>
@@ -896,35 +911,29 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">🎯</div>
-                <div class="sidebar-title">Dash Coaching</div>
+                <div class="sidebar-logo">AURA</div>
             </div>
             
             <div class="sidebar-menu">
                 <div class="menu-item active" onclick="showSection('overview')">
-                    <span class="menu-icon">📊</span>
                     <span>Genel Bakış</span>
                 </div>
+                <div class="menu-item" onclick="showSection('applications')">
+                    <span>Başvurular</span>
+                </div>
                 <div class="menu-item" onclick="showSection('students')">
-                    <span class="menu-icon">👥</span>
                     <span>Öğrenciler</span>
                 </div>
                 <div class="menu-item" onclick="showSection('schedule')">
-                    <span class="menu-icon">📅</span>
                     <span>Haftalık Program</span>
                 </div>
                 <div class="menu-item" onclick="showSection('calendar')">
-                    <span class="menu-icon">🗓️</span>
                     <span>Aylık Takvim</span>
-                </div>
-                <div class="menu-item" onclick="showSection('settings')">
-                    <span class="menu-icon">⚙️</span>
-                    <span>Ayarlar</span>
                 </div>
             </div>
             
             <div class="logout-btn" onclick="logout()">
-                🚪 Çıkış Yap
+                Çıkış Yap
             </div>
         </div>
 
@@ -933,28 +942,24 @@
             <!-- Overview Section -->
             <div class="content-section active" id="overviewSection">
                 <div class="page-header">
-                    <h1 class="page-title">📊 Genel Bakış</h1>
-                    <p class="page-subtitle">Dash Coaching istatistikleri ve özet bilgiler</p>
+                    <h1 class="page-title">Genel Bakış</h1>
+                    <p class="page-subtitle">AURA Coaching istatistikleri ve özet bilgiler</p>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon">👥</div>
                         <div class="stat-value" id="totalStudents">0</div>
                         <div class="stat-label">Toplam Öğrenci</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">📅</div>
+                        <div class="stat-value" id="totalApplications">0</div>
+                        <div class="stat-label">Bekleyen Başvuru</div>
+                    </div>
+                    <div class="stat-card">
                         <div class="stat-value" id="totalLessons">0</div>
                         <div class="stat-label">Bu Ay Ders</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">⭐</div>
-                        <div class="stat-value">4.9</div>
-                        <div class="stat-label">Ortalama Puan</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📈</div>
                         <div class="stat-value">95%</div>
                         <div class="stat-label">Başarı Oranı</div>
                     </div>
@@ -962,7 +967,7 @@
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">🔥 Son Başvurular</h3>
+                        <h3 class="table-title">Son Başvurular</h3>
                     </div>
                     <table>
                         <thead>
@@ -974,10 +979,44 @@
                                 <th>Tarih</th>
                             </tr>
                         </thead>
-                        <tbody id="recentStudentsBody">
+                        <tbody id="recentApplicationsBody">
                             <tr>
                                 <td colspan="5" class="empty-state">
-                                    <div class="empty-icon">📭</div>
+                                    <div>Henüz başvuru yok</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Applications Section -->
+            <div class="content-section" id="applicationsSection">
+                <div class="page-header">
+                    <h1 class="page-title">Başvurular <span class="stats-badge" id="applicationCount">0</span></h1>
+                    <p class="page-subtitle">Tüm başvuruları görüntüleyin ve öğrenci ekleyin</p>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3 class="table-title">Başvuru Listesi</h3>
+                        <input type="text" class="search-box" id="applicationSearch" placeholder="Başvuru ara...">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ad Soyad</th>
+                                <th>Yaş</th>
+                                <th>Ülke</th>
+                                <th>Mevcut Rank</th>
+                                <th>Hedef Rank</th>
+                                <th>Tarih</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTableBody">
+                            <tr>
+                                <td colspan="7" class="empty-state">
                                     <div>Henüz başvuru yok</div>
                                 </td>
                             </tr>
@@ -989,59 +1028,42 @@
             <!-- Students Section -->
             <div class="content-section" id="studentsSection">
                 <div class="page-header">
-                    <h1 class="page-title">👥 Öğrenciler <span class="stats-badge" id="studentCount">0</span></h1>
-                    <p class="page-subtitle">Tüm kayıtlı öğrencileri görüntüleyin ve detaylı bilgilerine erişin</p>
+                    <h1 class="page-title">Öğrenciler <span class="stats-badge" id="studentCount">0</span></h1>
+                    <p class="page-subtitle">Tüm kayıtlı öğrencileri görüntüleyin</p>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
                         <h3 class="table-title">Öğrenci Listesi</h3>
-                        <input type="text" class="search-box" id="studentSearch" placeholder="🔍 Öğrenci ara...">
+                        <input type="text" class="search-box" id="studentSearch" placeholder="Öğrenci ara...">
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ad Soyad</th>
-                                <th>Yaş</th>
-                                <th>Ülke</th>
-                                <th>Mevcut Rank</th>
-                                <th>Hedef Rank</th>
-                                <th>Ders Sayısı</th>
-                                <th>Kayıt Tarihi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentsDetailTableBody">
-                            <tr>
-                                <td colspan="7" class="empty-state">
-                                    <div class="empty-icon">📭</div>
-                                    <div>Henüz kayıtlı öğrenci yok</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="students-grid" id="studentsGrid">
+                        <!-- Students will be populated here -->
+                    </div>
                 </div>
             </div>
 
             <!-- Weekly Schedule Section -->
             <div class="content-section" id="scheduleSection">
                 <div class="page-header">
-                    <h1 class="page-title">📅 Haftalık Ders Programı</h1>
-                    <p class="page-subtitle">Tüm derslerin haftalık görünümü</p>
+                    <h1 class="page-title">Haftalık Program</h1>
+                    <p class="page-subtitle">Öğrencilerin haftalık ders programları</p>
                 </div>
 
-                <div class="weekly-schedule">
-                    <div class="schedule-grid" id="weeklyScheduleGrid">
-                        <!-- Will be populated by JavaScript -->
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3 class="table-title">Öğrenci Seç</h3>
+                    </div>
+                    <div class="students-grid" id="scheduleStudentsGrid">
+                        <!-- Students will be populated here -->
                     </div>
                 </div>
-
-                <button class="add-lesson-btn" onclick="openAddLessonModal()" style="margin-top: 30px;">➕ Yeni Ders Ekle</button>
             </div>
 
             <!-- Calendar Section -->
             <div class="content-section" id="calendarSection">
                 <div class="page-header">
-                    <h1 class="page-title">📅 Ders Takvimi</h1>
+                    <h1 class="page-title">Aylık Takvim</h1>
                     <p class="page-subtitle">Ders programını görüntüleyin ve yeni dersler ekleyin</p>
                 </div>
 
@@ -1056,32 +1078,7 @@
                     
                     <div class="calendar-grid" id="calendarGrid"></div>
                     
-                    <button class="add-lesson-btn" onclick="openAddLessonModal()">➕ Yeni Ders Ekle</button>
-                </div>
-            </div>
-
-            <!-- Settings Section -->
-            <div class="content-section" id="settingsSection">
-                <div class="page-header">
-                    <h1 class="page-title">⚙️ Ayarlar</h1>
-                    <p class="page-subtitle">Sistem ayarlarını yönetin</p>
-                </div>
-
-                <div class="data-table">
-                    <div class="table-header">
-                        <h3 class="table-title">Genel Ayarlar</h3>
-                    </div>
-                    <div style="padding: 40px;">
-                        <div class="form-group">
-                            <label>Mail Adresi</label>
-                            <input type="email" id="settingsEmail" placeholder="admin@dashcoaching.com" value="admin@dashcoaching.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Koçluk Ücreti (Saat Başı)</label>
-                            <input type="number" id="settingsPrice" placeholder="500" value="500">
-                        </div>
-                        <button class="add-lesson-btn" onclick="saveSettings()">💾 Ayarları Kaydet</button>
-                    </div>
+                    <button class="add-lesson-btn" onclick="openAddLessonModal()">Yeni Ders Ekle</button>
                 </div>
             </div>
         </div>
@@ -1090,7 +1087,7 @@
     <!-- Add Lesson Modal -->
     <div class="modal" id="addLessonModal">
         <div class="modal-content">
-            <h3 class="modal-title">📚 Yeni Ders Ekle</h3>
+            <h3 class="modal-title">Yeni Ders Ekle</h3>
             <form id="addLessonForm">
                 <div class="form-group">
                     <label for="lessonStudent">Öğrenci Seç</label>
@@ -1129,7 +1126,7 @@
     <!-- Student Detail Modal -->
     <div class="modal student-detail-modal" id="studentDetailModal">
         <div class="modal-content">
-            <h3 class="modal-title">📋 Öğrenci Detayları</h3>
+            <h3 class="modal-title">Öğrenci Detayları</h3>
             <div id="studentDetailContent">
                 <!-- Will be populated by JavaScript -->
             </div>
@@ -1139,11 +1136,61 @@
         </div>
     </div>
 
+    <!-- Application Detail Modal -->
+    <div class="modal" id="applicationDetailModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <h3 class="modal-title">Başvuru Detayları</h3>
+            <div id="applicationDetailContent">
+                <!-- Will be populated by JavaScript -->
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="modal-btn btn-secondary" onclick="closeApplicationModal()">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly Schedule Modal -->
+    <div class="modal" id="weeklyScheduleModal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h3 class="modal-title" id="scheduleStudentName" style="margin: 0;"></h3>
+                <button class="btn-download" onclick="downloadScheduleImage()">Resim Olarak İndir</button>
+            </div>
+            <div id="scheduleImageContainer">
+                <div class="schedule-container">
+                    <div class="day-schedule" id="weeklyScheduleGrid">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-buttons" style="margin-top: 30px;">
+                <button type="button" class="modal-btn btn-secondary" onclick="closeScheduleModal()">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Schedule Modal -->
+    <div class="modal" id="createScheduleModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <h3 class="modal-title">Haftalık Program Oluştur</h3>
+            <form id="createScheduleForm">
+                <div id="scheduleFormDays">
+                    <!-- Days will be populated here -->
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn btn-secondary" onclick="closeCreateScheduleModal()">İptal</button>
+                    <button type="submit" class="modal-btn btn-primary">Programı Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         // ============ AUTHENTICATION ============
         const ADMIN_CREDENTIALS = {
             username: 'admin',
-            password: 'dash2024'  // ⚠️ ÜRETİMDE DEĞİŞTİRİN!
+            password: 'admin123'  // Daha basit şifre
         };
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -1152,10 +1199,14 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
+            console.log('Giriş denemesi:', username, password); // Debug için
+            
             if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                console.log('Giriş başarılı!');
                 localStorage.setItem('isLoggedIn', 'true');
                 showDashboard();
             } else {
+                console.log('Giriş başarısız!');
                 document.getElementById('errorMessage').classList.add('show');
                 setTimeout(() => {
                     document.getElementById('errorMessage').classList.remove('show');
@@ -1169,6 +1220,7 @@
             loadData();
             updateStats();
             renderCalendar();
+            loadApplicationsFromStorage();
         }
 
         function logout() {
@@ -1182,57 +1234,62 @@
         // Check if already logged in
         window.addEventListener('load', function() {
             if (localStorage.getItem('isLoggedIn') === 'true') {
+                console.log('Oturum açık, dashboard gösteriliyor...');
                 showDashboard();
+            } else {
+                console.log('Oturum kapalı, login ekranı gösteriliyor...');
             }
         });
 
         // ============ DATA MANAGEMENT ============
         let students = [];
         let lessons = [];
+        let applications = [];
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
+        let currentScheduleStudentId = null;
 
         function loadData() {
-            const savedStudents = localStorage.getItem('dashStudents');
-            const savedLessons = localStorage.getItem('dashLessons');
+            const savedStudents = localStorage.getItem('auraStudents');
+            const savedLessons = localStorage.getItem('auraLessons');
+            const savedApplications = localStorage.getItem('auraApplications');
             
             if (savedStudents) {
                 students = JSON.parse(savedStudents);
-                updateStudentsTable();
-                updateRecentStudents();
+                updateStudentsGrid();
+                updateScheduleStudentsGrid();
                 updateStudentSelect();
-                updateStudentsDetailTable();
-                updateWeeklySchedule();
             }
             
             if (savedLessons) {
                 lessons = JSON.parse(savedLessons);
-                updateWeeklySchedule();
+            }
+
+            if (savedApplications) {
+                applications = JSON.parse(savedApplications);
+                updateApplicationsTable();
+                updateRecentApplications();
             }
         }
 
         function saveData() {
-            localStorage.setItem('dashStudents', JSON.stringify(students));
-            localStorage.setItem('dashLessons', JSON.stringify(lessons));
+            localStorage.setItem('auraStudents', JSON.stringify(students));
+            localStorage.setItem('auraLessons', JSON.stringify(lessons));
+            localStorage.setItem('auraApplications', JSON.stringify(applications));
         }
 
-        // Get lesson count for a student
-        function getStudentLessonCount(studentId) {
-            return lessons.filter(l => l.studentId == studentId).length;
-        }
-
-        // Get student schedule
-        function getStudentSchedule(studentId) {
-            return lessons.filter(l => l.studentId == studentId)
-                .map(lesson => {
-                    const date = new Date(lesson.date);
-                    const days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
-                    return {
-                        day: days[date.getDay()],
-                        time: lesson.time,
-                        date: lesson.date
-                    };
-                });
+        // ============ LOAD APPLICATIONS FROM FORMSUBMIT ============
+        function loadApplicationsFromStorage() {
+            // Since FormSubmit sends emails, we'll check localStorage for test data
+            // In production, you would integrate with your email inbox or a webhook
+            const testApplications = localStorage.getItem('auraTestApplications');
+            if (testApplications && applications.length === 0) {
+                applications = JSON.parse(testApplications);
+                saveData();
+                updateApplicationsTable();
+                updateRecentApplications();
+                updateStats();
+            }
         }
 
         // ============ NAVIGATION ============
@@ -1253,6 +1310,7 @@
         // ============ STATISTICS ============
         function updateStats() {
             document.getElementById('totalStudents').textContent = students.length;
+            document.getElementById('totalApplications').textContent = applications.length;
             
             const currentDate = new Date();
             const currentMonthLessons = lessons.filter(lesson => {
@@ -1263,46 +1321,15 @@
             document.getElementById('totalLessons').textContent = currentMonthLessons.length;
         }
 
-        // ============ STUDENTS TABLE ============
-        function updateStudentsTable() {
-            const tbody = document.getElementById('studentsTableBody');
+        // ============ APPLICATIONS ============
+        function updateApplicationsTable() {
+            const tbody = document.getElementById('applicationsTableBody');
+            document.getElementById('applicationCount').textContent = applications.length;
             
-            if (students.length === 0) {
+            if (applications.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" class="empty-state">
-                            <div class="empty-icon">📭</div>
-                            <div>Henüz kayıtlı öğrenci yok</div>
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            tbody.innerHTML = students.map((student, index) => `
-                <tr>
-                    <td>${student.name} ${student.surname}</td>
-                    <td>${student.age}</td>
-                    <td>${student.country}</td>
-                    <td><span class="rank-badge rank-${student.rank.toLowerCase()}">${student.rank}</span></td>
-                    <td>${new Date(student.registrationDate).toLocaleDateString('tr-TR')}</td>
-                    <td>
-                        <button class="action-btn btn-edit" onclick="editStudent(${index})">✏️ Düzenle</button>
-                        <button class="action-btn btn-delete" onclick="deleteStudent(${index})">🗑️ Sil</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function updateRecentStudents() {
-            const tbody = document.getElementById('recentStudentsBody');
-            const recentStudents = students.slice(-5).reverse();
-            
-            if (recentStudents.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="empty-state">
-                            <div class="empty-icon">📭</div>
+                        <td colspan="7" class="empty-state">
                             <div>Henüz başvuru yok</div>
                         </td>
                     </tr>
@@ -1310,57 +1337,216 @@
                 return;
             }
             
-            tbody.innerHTML = recentStudents.map(student => `
-                <tr onclick="showStudentDetail(${student.id})" style="cursor: pointer;">
-                    <td class="student-name-cell">${student.name} ${student.surname}</td>
-                    <td>${student.age}</td>
-                    <td>${student.country}</td>
-                    <td><span class="rank-badge rank-${student.rank.toLowerCase()}">${student.rank}</span></td>
-                    <td>${new Date(student.registrationDate).toLocaleDateString('tr-TR')}</td>
+            tbody.innerHTML = applications.map((app, index) => `
+                <tr>
+                    <td onclick="showApplicationDetail(${index})" style="cursor: pointer;">${app.name} ${app.surname}</td>
+                    <td>${app.age}</td>
+                    <td>${app.country}</td>
+                    <td><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></td>
+                    <td><span class="rank-badge rank-${app.targetRank.toLowerCase()}">${app.targetRank}</span></td>
+                    <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
+                    <td>
+                        <button class="action-btn btn-add-student" onclick="addStudentFromApplication(${index})">Öğrenci Ekle</button>
+                        <button class="action-btn btn-delete" onclick="deleteApplication(${index})">Sil</button>
+                    </td>
                 </tr>
             `).join('');
         }
 
-        // ============ STUDENTS DETAIL TABLE ============
-        function updateStudentsDetailTable() {
-            const tbody = document.getElementById('studentsDetailTableBody');
-            document.getElementById('studentCount').textContent = students.length;
+        function updateRecentApplications() {
+            const tbody = document.getElementById('recentApplicationsBody');
+            const recentApps = applications.slice(-5).reverse();
             
-            if (students.length === 0) {
+            if (recentApps.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="empty-state">
-                            <div class="empty-icon">📭</div>
-                            <div>Henüz kayıtlı öğrenci yok</div>
+                        <td colspan="5" class="empty-state">
+                            <div>Henüz başvuru yok</div>
                         </td>
                     </tr>
                 `;
                 return;
             }
             
-            tbody.innerHTML = students.map(student => {
-                const lessonCount = getStudentLessonCount(student.id);
-                return `
-                    <tr onclick="showStudentDetail(${student.id})" style="cursor: pointer;">
-                        <td class="student-name-cell">${student.name} ${student.surname}</td>
-                        <td>${student.age}</td>
-                        <td>${student.country}</td>
-                        <td><span class="rank-badge rank-${student.rank.toLowerCase()}">${student.rank}</span></td>
-                        <td><span class="rank-badge rank-${(student.targetRank || student.rank).toLowerCase()}">${student.targetRank || '-'}</span></td>
-                        <td><strong>${lessonCount}</strong> ders</td>
-                        <td>${new Date(student.registrationDate).toLocaleDateString('tr-TR')}</td>
-                    </tr>
-                `;
-            }).join('');
+            tbody.innerHTML = recentApps.map((app, index) => `
+                <tr onclick="showApplicationDetail(${applications.indexOf(app)})" style="cursor: pointer;">
+                    <td>${app.name} ${app.surname}</td>
+                    <td>${app.age}</td>
+                    <td>${app.country}</td>
+                    <td><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></td>
+                    <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
+                </tr>
+            `).join('');
         }
 
-        // ============ STUDENT DETAIL MODAL ============
+        function showApplicationDetail(index) {
+            const app = applications[index];
+            const content = `
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Ad Soyad</div>
+                        <div class="detail-value">${app.name} ${app.surname}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Yaş</div>
+                        <div class="detail-value">${app.age}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Ülke</div>
+                        <div class="detail-value">${app.country}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Discord</div>
+                        <div class="detail-value">${app.discord || '-'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Mevcut Rank</div>
+                        <div class="detail-value"><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Hedef Rank</div>
+                        <div class="detail-value"><span class="rank-badge rank-${app.targetRank.toLowerCase()}">${app.targetRank}</span></div>
+                    </div>
+                    <div class="detail-item" style="grid-column: 1 / -1;">
+                        <div class="detail-label">Tracker Link</div>
+                        <div class="detail-value" style="font-size: 13px; word-break: break-all;">
+                            <a href="${app.tracker}" target="_blank" style="color: #6366f1; text-decoration: none;">${app.tracker}</a>
+                        </div>
+                    </div>
+                    <div class="detail-item" style="grid-column: 1 / -1;">
+                        <div class="detail-label">Koçluktan Beklenti</div>
+                        <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.expectations}</div>
+                    </div>
+                    <div class="detail-item" style="grid-column: 1 / -1;">
+                        <div class="detail-label">Kendini Tanıt</div>
+                        <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.introduction}</div>
+                    </div>
+                </div>
+                <div style="margin-top: 25px; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                    <button class="add-lesson-btn" onclick="addStudentFromApplication(${index}); closeApplicationModal();" style="width: 100%;">Bu Başvuruyu Öğrenci Olarak Ekle</button>
+                </div>
+            `;
+            
+            document.getElementById('applicationDetailContent').innerHTML = content;
+            document.getElementById('applicationDetailModal').classList.add('active');
+        }
+
+        function closeApplicationModal() {
+            document.getElementById('applicationDetailModal').classList.remove('active');
+        }
+
+        function addStudentFromApplication(index) {
+            const app = applications[index];
+            const student = {
+                id: Date.now(),
+                name: app.name,
+                surname: app.surname,
+                age: app.age,
+                country: app.country,
+                rank: app.rank,
+                targetRank: app.targetRank,
+                tracker: app.tracker,
+                expectations: app.expectations,
+                introduction: app.introduction,
+                discord: app.discord,
+                registrationDate: new Date().toISOString(),
+                weeklySchedule: null
+            };
+            
+            students.push(student);
+            applications.splice(index, 1);
+            saveData();
+            updateStats();
+            updateApplicationsTable();
+            updateRecentApplications();
+            updateStudentsGrid();
+            updateScheduleStudentsGrid();
+            updateStudentSelect();
+            
+            alert('✅ Öğrenci başarıyla eklendi!');
+        }
+
+        function deleteApplication(index) {
+            if (confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) {
+                applications.splice(index, 1);
+                saveData();
+                updateStats();
+                updateApplicationsTable();
+                updateRecentApplications();
+            }
+        }
+
+        // ============ STUDENTS ============
+        function updateStudentsGrid() {
+            const grid = document.getElementById('studentsGrid');
+            document.getElementById('studentCount').textContent = students.length;
+            
+            if (students.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div>Henüz kayıtlı öğrenci yok</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = students.map(student => `
+                <div class="student-card" onclick="showStudentDetail(${student.id})">
+                    <div class="student-card-header">
+                        <div class="student-name">${student.name} ${student.surname}</div>
+                    </div>
+                    <div class="student-info">
+                        <div class="info-row">
+                            <span class="info-label">Yaş:</span>
+                            <span class="info-value">${student.age}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Ülke:</span>
+                            <span class="info-value">${student.country}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Mevcut:</span>
+                            <span class="info-value"><span class="rank-badge rank-${student.rank.toLowerCase()}">${student.rank}</span></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Hedef:</span>
+                            <span class="info-value"><span class="rank-badge rank-${student.targetRank.toLowerCase()}">${student.targetRank}</span></span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateScheduleStudentsGrid() {
+            const grid = document.getElementById('scheduleStudentsGrid');
+            
+            if (students.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div>Henüz kayıtlı öğrenci yok</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = students.map(student => `
+                <div class="student-card" onclick="viewStudentSchedule(${student.id})">
+                    <div class="student-card-header">
+                        <div class="student-name">${student.name} ${student.surname}</div>
+                    </div>
+                    <div class="student-info">
+                        <div class="info-row">
+                            <span class="info-label">Program:</span>
+                            <span class="info-value">${student.weeklySchedule ? '✅ Var' : '❌ Yok'}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         function showStudentDetail(studentId) {
             const student = students.find(s => s.id == studentId);
             if (!student) return;
-
-            const schedule = getStudentSchedule(studentId);
-            const lessonCount = getStudentLessonCount(studentId);
 
             const content = `
                 <div class="detail-grid">
@@ -1377,16 +1563,16 @@
                         <div class="detail-value">${student.country}</div>
                     </div>
                     <div class="detail-item">
+                        <div class="detail-label">Discord</div>
+                        <div class="detail-value">${student.discord || '-'}</div>
+                    </div>
+                    <div class="detail-item">
                         <div class="detail-label">Mevcut Rank</div>
                         <div class="detail-value"><span class="rank-badge rank-${student.rank.toLowerCase()}">${student.rank}</span></div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Hedef Rank</div>
-                        <div class="detail-value"><span class="rank-badge rank-${(student.targetRank || 'gold').toLowerCase()}">${student.targetRank || '-'}</span></div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Toplam Ders</div>
-                        <div class="detail-value">${lessonCount} ders</div>
+                        <div class="detail-value"><span class="rank-badge rank-${student.targetRank.toLowerCase()}">${student.targetRank}</span></div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
                         <div class="detail-label">Tracker Link</div>
@@ -1403,20 +1589,6 @@
                         <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${student.introduction || '-'}</div>
                     </div>
                 </div>
-
-                <div class="schedule-section">
-                    <div class="schedule-title">📅 Haftalık Ders Programı</div>
-                    ${schedule.length > 0 ? `
-                        <div class="schedule-list">
-                            ${schedule.map(s => `
-                                <div class="schedule-item">
-                                    <span class="schedule-day">${s.day}</span>
-                                    <span class="schedule-time">${s.time} - ${new Date(s.date).toLocaleDateString('tr-TR')}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    ` : '<p style="color: rgba(255,255,255,0.5); text-align: center; padding: 20px;">Henüz ders programı oluşturulmamış</p>'}
-                </div>
             `;
 
             document.getElementById('studentDetailContent').innerHTML = content;
@@ -1428,75 +1600,130 @@
         }
 
         // ============ WEEKLY SCHEDULE ============
-        function updateWeeklySchedule() {
-            const grid = document.getElementById('weeklyScheduleGrid');
-            if (!grid) return;
+        function viewStudentSchedule(studentId) {
+            const student = students.find(s => s.id == studentId);
+            if (!student) return;
 
-            const hours = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
-            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            currentScheduleStudentId = studentId;
 
-            let html = '<div class="schedule-header"></div>';
-            days.forEach(day => {
-                html += `<div class="schedule-header">${day}</div>`;
-            });
-
-            hours.forEach(hour => {
-                html += `<div class="time-cell">${hour}</div>`;
-                
-                days.forEach((day, dayIndex) => {
-                    const dayLessons = lessons.filter(lesson => {
-                        const lessonDate = new Date(lesson.date);
-                        const lessonDay = (lessonDate.getDay() + 6) % 7; // Convert Sunday=0 to Monday=0
-                        const lessonHour = lesson.time.split(':')[0] + ':00';
-                        return lessonDay === dayIndex && lessonHour === hour;
-                    });
-
-                    html += `<div class="schedule-cell">`;
-                    dayLessons.forEach(lesson => {
-                        const student = students.find(s => s.id == lesson.studentId);
-                        if (student) {
-                            html += `
-                                <div class="lesson-block" onclick="showStudentDetail(${student.id})">
-                                    <div class="lesson-student">${student.name} ${student.surname}</div>
-                                    <div class="lesson-time">${lesson.time} (${lesson.duration}dk)</div>
-                                </div>
-                            `;
-                        }
-                    });
-                    html += `</div>`;
-                });
-            });
-
-            grid.innerHTML = html;
-        }
-
-        function deleteStudent(index) {
-            if (confirm('Bu öğrenciyi silmek istediğinizden emin misiniz?')) {
-                students.splice(index, 1);
-                saveData();
-                updateStudentsTable();
-                updateRecentStudents();
-                updateStats();
-                updateStudentSelect();
-                updateStudentsDetailTable();
-                updateWeeklySchedule();
+            if (!student.weeklySchedule) {
+                openCreateScheduleModal(studentId);
+            } else {
+                displayWeeklySchedule(student);
             }
         }
 
-        function editStudent(index) {
-            alert('Düzenleme özelliği yakında eklenecek!');
+        function openCreateScheduleModal(studentId) {
+            const student = students.find(s => s.id == studentId);
+            currentScheduleStudentId = studentId;
+
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const formContent = days.map((day, index) => `
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="day${index}" onchange="toggleDayInputs(${index})">
+                        ${day}
+                    </label>
+                    <div id="dayInputs${index}" style="display: none; margin-top: 10px; padding-left: 20px;">
+                        <div class="form-group">
+                            <label for="dayTime${index}">Saat</label>
+                            <input type="time" id="dayTime${index}">
+                        </div>
+                        <div class="form-group">
+                            <label for="dayDuration${index}">Süre (Dakika)</label>
+                            <select id="dayDuration${index}">
+                                <option value="60">60 dk</option>
+                                <option value="90">90 dk</option>
+                                <option value="120">120 dk</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('scheduleFormDays').innerHTML = formContent;
+            document.getElementById('createScheduleModal').classList.add('active');
         }
 
-        // Search functionality
-        document.getElementById('studentSearch').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const rows = document.querySelectorAll('#studentsDetailTableBody tr');
-            
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
+        function toggleDayInputs(dayIndex) {
+            const checkbox = document.getElementById(`day${dayIndex}`);
+            const inputs = document.getElementById(`dayInputs${dayIndex}`);
+            inputs.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+        function closeCreateScheduleModal() {
+            document.getElementById('createScheduleModal').classList.remove('active');
+            currentScheduleStudentId = null;
+        }
+
+        document.getElementById('createScheduleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const schedule = {};
+
+            days.forEach((day, index) => {
+                const checkbox = document.getElementById(`day${index}`);
+                if (checkbox.checked) {
+                    const time = document.getElementById(`dayTime${index}`).value;
+                    const duration = document.getElementById(`dayDuration${index}`).value;
+                    if (time) {
+                        schedule[day] = { time, duration };
+                    }
+                }
             });
+
+            const student = students.find(s => s.id == currentScheduleStudentId);
+            if (student) {
+                student.weeklySchedule = schedule;
+                saveData();
+                updateScheduleStudentsGrid();
+                closeCreateScheduleModal();
+                displayWeeklySchedule(student);
+                alert('✅ Haftalık program oluşturuldu!');
+            }
         });
+
+        function displayWeeklySchedule(student) {
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            let html = '';
+
+            days.forEach(day => {
+                const lesson = student.weeklySchedule && student.weeklySchedule[day];
+                html += `
+                    <div class="day-column">
+                        <div class="day-header">${day}</div>
+                        ${lesson ? `
+                            <div class="time-slot">
+                                <div class="time-slot-time">${lesson.time}</div>
+                                <div class="time-slot-duration">${lesson.duration} dakika</div>
+                            </div>
+                        ` : '<div style="text-align: center; color: rgba(255,255,255,0.3); padding: 20px;">Ders yok</div>'}
+                    </div>
+                `;
+            });
+
+            document.getElementById('weeklyScheduleGrid').innerHTML = html;
+            document.getElementById('scheduleStudentName').textContent = `${student.name} ${student.surname} - Haftalık Program`;
+            document.getElementById('weeklyScheduleModal').classList.add('active');
+        }
+
+        function closeScheduleModal() {
+            document.getElementById('weeklyScheduleModal').classList.remove('active');
+        }
+
+        function downloadScheduleImage() {
+            const element = document.getElementById('scheduleImageContainer');
+            html2canvas(element, {
+                backgroundColor: '#0a0e27',
+                scale: 2
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'haftalik-program.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
 
         // ============ CALENDAR ============
         function renderCalendar() {
@@ -1589,127 +1816,100 @@
             saveData();
             updateStats();
             renderCalendar();
-            updateStudentsDetailTable();
-            updateWeeklySchedule();
             closeAddLessonModal();
             
             alert('✅ Ders başarıyla eklendi!');
         });
 
-        // ============ SETTINGS ============
-        function saveSettings() {
-            const email = document.getElementById('settingsEmail').value;
-            const price = document.getElementById('settingsPrice').value;
+        // Search functionality
+        document.getElementById('studentSearch')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('#studentsGrid .student-card');
             
-            localStorage.setItem('dashSettings', JSON.stringify({
-                email: email,
-                price: price
-            }));
-            
-            alert('✅ Ayarlar kaydedildi!');
-        }
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
 
-        // Load settings
-        window.addEventListener('load', function() {
-            const settings = localStorage.getItem('dashSettings');
-            if (settings) {
-                const data = JSON.parse(settings);
-                document.getElementById('settingsEmail').value = data.email;
-                document.getElementById('settingsPrice').value = data.price;
-            }
+        document.getElementById('applicationSearch')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#applicationsTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
         });
 
         // ============ TEST DATA ============
-        // Test için örnek öğrenci ekle (İLK AÇILIŞTA)
-        if (localStorage.getItem('dashInitialized') !== 'true') {
-            students = [
-                {
-                    id: Date.now(),
-                    name: 'Ahmet',
-                    surname: 'Yılmaz',
-                    age: 22,
-                    country: 'Türkiye',
-                    rank: 'Gold',
-                    targetRank: 'Diamond',
-                    tracker: 'https://tracker.gg/valorant/profile/riot/AhmetYilmaz%23TR1',
-                    expectations: 'Aimimi geliştirmek ve Diamond ranka çıkmak istiyorum.',
-                    introduction: '1 yıldır Valorant oynuyorum, Duelist mainiyim.',
-                    registrationDate: new Date().toISOString()
-                },
-                {
-                    id: Date.now() + 1,
-                    name: 'Mehmet',
-                    surname: 'Demir',
-                    age: 19,
-                    country: 'Türkiye',
-                    rank: 'Platinum',
-                    targetRank: 'Immortal',
-                    tracker: 'https://tracker.gg/valorant/profile/riot/MehmetDemir%23TR1',
-                    expectations: 'Game sense ve takım oyunumu geliştirmek istiyorum.',
-                    introduction: '2 yıldır oynuyorum, Controller/Sentinel oynuyorum.',
-                    registrationDate: new Date().toISOString()
-                }
-            ];
+        // Test verilerini sadece ilk kez giriş yaptığında ekleyelim
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('auraInitialized') !== 'true') {
+                // Test başvuruları
+                applications = [
+                    {
+                        id: Date.now(),
+                        name: 'Ali',
+                        surname: 'Yılmaz',
+                        age: 20,
+                        country: 'Türkiye',
+                        rank: 'Gold',
+                        targetRank: 'Diamond',
+                        tracker: 'https://tracker.gg/valorant/profile/riot/AliYilmaz%23TR1',
+                        expectations: 'Aimimi geliştirmek ve Diamond ranka çıkmak istiyorum.',
+                        introduction: '1 yıldır Valorant oynuyorum, Duelist mainiyim.',
+                        discord: 'aliyilmaz#1234',
+                        date: new Date().toISOString()
+                    },
+                    {
+                        id: Date.now() + 1,
+                        name: 'Ayşe',
+                        surname: 'Kaya',
+                        age: 19,
+                        country: 'Türkiye',
+                        rank: 'Platinum',
+                        targetRank: 'Immortal',
+                        tracker: 'https://tracker.gg/valorant/profile/riot/AyseKaya%23TR1',
+                        expectations: 'Game sense ve takım oyunumu geliştirmek istiyorum.',
+                        introduction: '2 yıldır oynuyorum, Controller/Sentinel oynuyorum.',
+                        discord: 'aysekaya#5678',
+                        date: new Date().toISOString()
+                    }
+                ];
 
-            // Test dersleri ekle
-            lessons = [
-                {
-                    id: Date.now() + 100,
-                    studentId: students[0].id,
-                    date: getNextMonday(),
-                    time: '14:00',
-                    duration: '60',
-                    notes: 'Aim antrenmanı'
-                },
-                {
-                    id: Date.now() + 101,
-                    studentId: students[0].id,
-                    date: getNextWednesday(),
-                    time: '14:00',
-                    duration: '60',
-                    notes: 'VOD analizi'
-                },
-                {
-                    id: Date.now() + 102,
-                    studentId: students[1].id,
-                    date: getNextTuesday(),
-                    time: '16:00',
-                    duration: '90',
-                    notes: 'Game sense dersi'
-                }
-            ];
-            
-            saveData();
-            localStorage.setItem('dashInitialized', 'true');
-        }
-
-        // Helper functions to get next weekdays
-        function getNextMonday() {
-            const today = new Date();
-            const day = today.getDay();
-            const diff = day === 0 ? 1 : (1 + 7 - day) % 7;
-            const nextMonday = new Date(today);
-            nextMonday.setDate(today.getDate() + diff);
-            return nextMonday.toISOString().split('T')[0];
-        }
-
-        function getNextTuesday() {
-            const today = new Date();
-            const day = today.getDay();
-            const diff = day === 0 ? 2 : (2 + 7 - day) % 7;
-            const nextTuesday = new Date(today);
-            nextTuesday.setDate(today.getDate() + diff);
-            return nextTuesday.toISOString().split('T')[0];
-        }
-
-        function getNextWednesday() {
-            const today = new Date();
-            const day = today.getDay();
-            const diff = day === 0 ? 3 : (3 + 7 - day) % 7;
-            const nextWednesday = new Date(today);
-            nextWednesday.setDate(today.getDate() + diff);
-            return nextWednesday.toISOString().split('T')[0];
-        }
+                // Test öğrencisi
+                students = [
+                    {
+                        id: Date.now() + 100,
+                        name: 'Mehmet',
+                        surname: 'Demir',
+                        age: 22,
+                        country: 'Türkiye',
+                        rank: 'Diamond',
+                        targetRank: 'Immortal',
+                        tracker: 'https://tracker.gg/valorant/profile/riot/MehmetDemir%23TR1',
+                        expectations: 'Immortal olmak istiyorum.',
+                        introduction: 'Competitive oyuncuyum.',
+                        discord: 'mehmetdemir#9999',
+                        registrationDate: new Date().toISOString(),
+                        weeklySchedule: {
+                            'Pazartesi': { time: '14:00', duration: '60' },
+                            'Çarşamba': { time: '14:00', duration: '60' },
+                            'Cuma': { time: '16:00', duration: '90' }
+                        }
+                    }
+                ];
+                
+                saveData();
+                localStorage.setItem('auraInitialized', 'true');
+                
+                // Sayfayı yenile
+                setTimeout(() => {
+                    location.reload();
+                }, 100);
+            }
+        });
     </script>
 </body>
 </html>
