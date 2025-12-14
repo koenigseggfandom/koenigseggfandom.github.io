@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dash Coaching - Valorant Koçluk</title>
     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -48,15 +49,7 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
-            animation: bgColorShift 30s ease-in-out infinite;
-        }
-
-        @keyframes bgColorShift {
-            0% { background: #0a0e27; }
-            25% { background: #0d1129; }
-            50% { background: #0a0e27; }
-            75% { background: #0e1230; }
-            100% { background: #0a0e27; }
+            background: #0a0e27; /* Sabit arka plan rengi */
         }
 
         .orb {
@@ -144,51 +137,59 @@
             font-size: 72px;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #6366f1, #ec4899, #14b8a6);
+            background: linear-gradient(135deg, #6366f1, #ec4899, #14b8a6, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 300% 300%;
+            animation: gradientShift 8s ease infinite; /* Yavaşlatılmış gradyan */
             min-height: 90px;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .hero-subtitle {
-            font-size: 28px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 40px;
-            min-height: 40px;
-            display: none;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Typewriter Effect */
-        .typewriter {
+        .typewriter-word {
             display: inline-block;
-            border-right: 3px solid #6366f1;
+            border-right: 3px solid;
             animation: blink 0.7s step-end infinite;
             padding-right: 5px;
+            font-family: inherit;
+        }
+
+        .word-1 {
+            color: #6366f1;
+            font-family: 'Gruppo', cursive;
+            font-size: 80px;
+            border-color: #6366f1;
+        }
+
+        .word-2 {
+            color: #ec4899;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 75px;
+            border-color: #ec4899;
+        }
+
+        .word-3 {
+            color: #14b8a6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            font-size: 78px;
+            border-color: #14b8a6;
         }
 
         @keyframes blink {
             50% { border-color: transparent; }
-        }
-
-        .fade-out {
-            animation: fadeOut 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeOut {
-            to { opacity: 0; }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .hero-description {
@@ -253,9 +254,10 @@
             background-clip: text;
         }
 
+        /* REFERANSLAR BÖLÜMÜ - 2x2 GRID */
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 40px;
         }
 
@@ -711,11 +713,33 @@
 
         .comparison-table td:first-child {
             color: rgba(255, 255, 255, 0.5);
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .comparison-table td:first-child:before {
+            content: "✕";
+            position: absolute;
+            left: 15px;
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 20px;
         }
 
         .comparison-table td:last-child {
             color: #6366f1;
             font-weight: 500;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .comparison-table td:last-child:before {
+            content: "✓";
+            position: absolute;
+            left: 15px;
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 20px;
         }
 
         /* FAQ Section */
@@ -786,14 +810,20 @@
 
         @media (max-width: 1200px) {
             .features-grid { grid-template-columns: repeat(2, 1fr); }
-            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr; }
             .coaches-grid { grid-template-columns: repeat(2, 1fr); }
             .lesson-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 42px; }
-            .hero-subtitle { font-size: 20px; }
+            .hero-title { 
+                font-size: 42px; 
+                flex-direction: column;
+                gap: 5px;
+            }
+            .word-1, .word-2, .word-3 {
+                font-size: 45px !important;
+            }
             h2 { font-size: 36px; }
             .features-grid { grid-template-columns: 1fr; }
             .testimonials-grid { grid-template-columns: 1fr; }
@@ -817,9 +847,20 @@
     <!-- Hero Section -->
     <div class="section">
         <div class="section-content hero-section">
-            <h1 class="hero-title"><span class="typewriter" id="typewriter"></span></h1>
-            <p class="hero-subtitle"></p>
-            <p class="hero-description">Profesyonel koçluk hizmetimizle oyun içi performansını en üst seviyeye taşı! Aim, oyun bilgisi, movement, pozisyon alma, iletişim becerileri ve daha birçok konuda uzman koçlarımız; güçlü yönlerini ortaya çıkarıp zayıf noktalarını geliştirmek için seninle birebir ilgilenir. Hedeflerine daha hızlı ve daha bilinçli bir şekilde ulaşman için her adımda yanında oluruz. Tek başına değil, güçlü bir ekiple gelişmeye hazır mısın?</p>
+            <h1 class="hero-title">
+                <span class="typewriter-word word-1" id="word1"></span>
+                <span class="typewriter-word word-2" id="word2"></span>
+                <span class="typewriter-word word-3" id="word3"></span>
+            </h1>
+            <p class="hero-description">
+                Profesyonel Valorant koçluk hizmetimizle oyun içi performansınızı en üst seviyeye taşıyoruz! Uzman ekibimiz, aim, oyun bilgisi, movement, pozisyon alma, iletişim becerileri, taktiksel stratejiler, ajan yönetimi ve daha birçok kritik alanda size birebir destek sağlar. 
+                <br><br>
+                Güçlü yönlerinizi öne çıkarırken, zayıf noktalarınızı etkili geliştirme teknikleriyle güçlendiriyoruz. Hedeflerinize daha hızlı, daha bilinçli ve daha güvenli bir şekilde ulaşmanız için her adımda yanınızdayız. 
+                <br><br>
+                Sadece rank yükseltmekle kalmıyor, oyunu derinden anlamanızı, takım içinde etkili iletişim kurmanızı ve her maçta maksimum performans göstermenizi sağlıyoruz. Tek başına değil, güçlü bir ekiple gelişmeye hazır mısınız? 
+                <br><br>
+                Bizimle birlikte sadece bir oyuncu değil, stratejik düşünen, takım oyuncusu ve sürekli gelişen bir Valorant oyuncusu olacaksınız. Hadi, sıradaki başarı hikayesini birlikte yazalım!
+            </p>
             
             <div class="features-grid">
                 <div class="feature-item">
@@ -924,6 +965,20 @@
                     <p class="testimonial-text">Koçluk sistemi oldukça stabil ve tamamen kişiye özel işliyor. Aim, movement, game sense gibi konuları basit ve anlaşılır bir dille anlatıyorlar; anlamadığınız yerleri rahatça sorabiliyorsunuz. Koçluğu almadan önce Yücelik 2'ydim, aldıktan 1 ay sonra Immortal 2'ye kadar çıktım. Gerçekten başarı istiyorsanız düzenli çalışıp koçları iyi dinlemeniz gerekiyor.</p>
                     <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
                 </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">
+                            <img src="https://cdn.discordapp.com/avatars/536103220938932224/a912a7a185901cb5ca4840a406456a80.webp?size=128" alt="Axolotone">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4>Axolotone</h4>
+                            <div class="testimonial-rank">Plat 2 → Immortal</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">Plat 2'yken koçluk almayı düşünmeye başladım, bir süre araştırdım ve Dash'i buldum. Ardından 1 aylık paket alıp başladım, her şey çok iyi gidiyordu. Önce dia, sonra yüce ve ardından immo oldum. 3 aylık gibi bir kısa sürede immo oldum, her şey için çok teşekkürler!</p>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
             </div>
         </div>
     </div>
@@ -939,7 +994,7 @@
                     </div>
                     <div class="coach-name">Dash</div>
                     <div class="coach-rank">Radiant • Baş Koç</div>
-                    <p class="coach-specialty">Saf aim odaklı oyun mekanikleri, movement ve mikro karar süreçlerinde uzmanım. Tier 2 takımlar ve yüzlerce oyuncuya koçluk yaptım. Koçluk yaklaşımım; oyun takibini, hızlı ve etkili karar verme becerilerini ve oyun içinde soğukkanlığı korumayı geliştirmeye yöneliktir.</p>
+                    <p class="coach-specialty">Saf aim odaklı oyun mekanikleri, movement ve mikro karar süreçlerinde uzmanım. Tier 2 takımlar ve yüzlerce oyuncuya koçluk yaptım. Koçluk yaklaşımım; oyun takibini, hızlı ve etkili karar verme becerilerini ve oyun içinde soğukkanlılığı korumayı geliştirmeye yöneliktir.</p>
                 </div>
                 
                 <div class="coach-card">
@@ -1253,94 +1308,68 @@
     </div>
 
     <script>
-        // ============ TYPEWRITER EFFECT WITH INFINITE LOOP ============
-        const words = ["Hadi", "Beraber", "En", "Tepeye"];
-        const fullSentence = "Hadi Beraber En Tepeye";
-        const typewriterElement = document.getElementById('typewriter');
-        let wordIndex = 0;
-        let charIndex = 0;
+        // ============ TYPEWRITER EFFECT ============
+        const words = [
+            { text: "Hadi", elementId: "word1", colorClass: "word-1" },
+            { text: "Beraber", elementId: "word2", colorClass: "word-2" },
+            { text: "En Tepeye", elementId: "word3", colorClass: "word-3" }
+        ];
+
+        let currentWordIndex = 0;
+        let currentCharIndex = 0;
         let isDeleting = false;
-        let isWritingFullSentence = false;
-        let isDeletingFullSentence = false;
-        let cycleCount = 0;
+        let typingSpeed = 150; // Yavaşlatılmış typewriter hızı
+        let deletingSpeed = 80;
+        let pauseBetweenWords = 1500;
+        let pauseBetweenCycles = 3000;
 
         function typeWriter() {
-            if (!isWritingFullSentence && !isDeletingFullSentence) {
-                // Individual words phase
-                const currentWord = words[wordIndex];
+            const currentWordObj = words[currentWordIndex];
+            const element = document.getElementById(currentWordObj.elementId);
+            
+            if (isDeleting) {
+                // Silme işlemi
+                element.textContent = currentWordObj.text.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
                 
-                if (isDeleting) {
-                    typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
-                    charIndex--;
+                if (currentCharIndex === 0) {
+                    // Kelime tamamen silindi
+                    isDeleting = false;
+                    currentWordIndex++;
                     
-                    if (charIndex === 0) {
-                        isDeleting = false;
-                        wordIndex++;
-                        
-                        if (wordIndex === words.length) {
-                            // All individual words have been shown and deleted
-                            isWritingFullSentence = true;
-                            charIndex = 0;
-                            setTimeout(typeWriter, 500);
-                            return;
-                        }
-                        
-                        setTimeout(typeWriter, 300);
-                        return;
-                    }
-                    
-                    setTimeout(typeWriter, 50);
-                } else {
-                    typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
-                    charIndex++;
-                    
-                    if (charIndex === currentWord.length) {
+                    if (currentWordIndex === words.length) {
+                        // Tüm kelimeler tamamlandı, döngüyü yeniden başlat
                         setTimeout(() => {
-                            isDeleting = true;
-                            setTimeout(typeWriter, 1000);
-                        }, 1000);
+                            currentWordIndex = 0;
+                            setTimeout(typeWriter, 500);
+                        }, pauseBetweenCycles);
                         return;
                     }
                     
-                    setTimeout(typeWriter, 150);
-                }
-            } else if (isWritingFullSentence) {
-                // Writing full sentence
-                typewriterElement.textContent = fullSentence.substring(0, charIndex + 1);
-                charIndex++;
-                
-                if (charIndex === fullSentence.length) {
-                    setTimeout(() => {
-                        isWritingFullSentence = false;
-                        isDeletingFullSentence = true;
-                        setTimeout(typeWriter, 2000);
-                    }, 2000);
-                    return;
-                }
-                
-                setTimeout(typeWriter, 100);
-            } else if (isDeletingFullSentence) {
-                // Deleting full sentence
-                typewriterElement.textContent = fullSentence.substring(0, charIndex - 1);
-                charIndex--;
-                
-                if (charIndex === 0) {
-                    isDeletingFullSentence = false;
-                    wordIndex = 0;
-                    cycleCount++;
-                    
-                    // Restart the cycle
                     setTimeout(typeWriter, 500);
                     return;
                 }
                 
-                setTimeout(typeWriter, 50);
+                setTimeout(typeWriter, deletingSpeed);
+            } else {
+                // Yazma işlemi
+                element.textContent = currentWordObj.text.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+                
+                if (currentCharIndex === currentWordObj.text.length) {
+                    // Kelime tamamlandı
+                    isDeleting = true;
+                    setTimeout(typeWriter, pauseBetweenWords);
+                    return;
+                }
+                
+                setTimeout(typeWriter, typingSpeed);
             }
         }
 
         // Start typewriter effect when page loads
         window.addEventListener('load', function() {
-            setTimeout(typeWriter, 500);
+            setTimeout(typeWriter, 1000);
         });
 
         // ============ FAQ TOGGLE ============
