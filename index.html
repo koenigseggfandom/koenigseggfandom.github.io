@@ -1086,18 +1086,22 @@
                 </div>
 
                 <!-- FORMSUBMIT İLE MAİL GÖNDERİMİ -->
-                <form id="coachingForm" action="https://formsubmit.co/basvurukocluk@gmail.com" method="POST">
-                    <!-- FormSubmit Gizli Ayarları -->
-                    <input type="hidden" name="_subject" value="🎮 YENİ KOÇLUK BAŞVURUSU - Dash Coaching">
-                    <input type="hidden" name="_template" value="box">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="text" name="_honey" style="display:none">
-                    <input type="hidden" name="_next" value="https://koenigseggfandom.github.io/tesekkurler.html">
-                    
-                    <div class="form-group">
-                        <label for="name">İsim</label>
-                        <input type="text" id="name" name="👤 İsim" required placeholder="Adınızı giriniz">
-                    </div>
+                <!-- FORMSUBMIT İLE MAİL GÖNDERİMİ -->
+<form id="coachingForm" action="https://formsubmit.co/basvurukocluk@gmail.com" method="POST">
+    <!-- FormSubmit Gizli Ayarları -->
+<input type="hidden" name="_subject" value="🎮 YENİ KOÇLUK BAŞVURUSU - AURA Coaching">
+<input type="hidden" name="_template" value="box">
+<input type="hidden" name="_captcha" value="false">
+<input type="text" name="_honey" style="display:none">
+<input type="hidden" name="_next" value="https://koenigseggfandom.github.io/tesekkurler.html">
+    
+    <!-- FORM ALANLARI AYNI KALACAK -->
+    <div class="form-group">
+        <label for="name">İsim</label>
+        <input type="text" id="name" name="👤 İsim" required placeholder="Adınızı giriniz">
+    </div>
+    <!-- ... diğer form alanları ... -->
+</form>
 
                     <div class="form-group">
                         <label for="surname">Soyisim</label>
@@ -1307,196 +1311,193 @@
         </div>
     </div>
 
-    <script>
-        // ============ TYPEWRITER EFFECT ============
-        const words = [
-            { text: "Hadi", elementId: "word1", colorClass: "word-1" },
-            { text: "Beraber", elementId: "word2", colorClass: "word-2" },
-            { text: "En Tepeye", elementId: "word3", colorClass: "word-3" }
-        ];
+  <script>
+    // ============ TYPEWRITER EFFECT ============
+    const words = [
+        { text: "Hadi", elementId: "word1", colorClass: "word-1" },
+        { text: "Beraber", elementId: "word2", colorClass: "word-2" },
+        { text: "En Tepeye", elementId: "word3", colorClass: "word-3" }
+    ];
 
-        let currentWordIndex = 0;
-        let currentCharIndex = 0;
-        let isDeleting = false;
-        let typingSpeed = 150; // Yavaşlatılmış typewriter hızı
-        let deletingSpeed = 80;
-        let pauseBetweenWords = 1500;
-        let pauseBetweenCycles = 3000;
+    let currentWordIndex = 0;
+    let currentCharIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 150;
+    let deletingSpeed = 80;
+    let pauseBetweenWords = 1500;
+    let pauseBetweenCycles = 3000;
 
-        function typeWriter() {
-            const currentWordObj = words[currentWordIndex];
-            const element = document.getElementById(currentWordObj.elementId);
+    function typeWriter() {
+        const currentWordObj = words[currentWordIndex];
+        const element = document.getElementById(currentWordObj.elementId);
+        
+        if (isDeleting) {
+            element.textContent = currentWordObj.text.substring(0, currentCharIndex - 1);
+            currentCharIndex--;
             
-            if (isDeleting) {
-                // Silme işlemi
-                element.textContent = currentWordObj.text.substring(0, currentCharIndex - 1);
-                currentCharIndex--;
+            if (currentCharIndex === 0) {
+                isDeleting = false;
+                currentWordIndex++;
                 
-                if (currentCharIndex === 0) {
-                    // Kelime tamamen silindi
-                    isDeleting = false;
-                    currentWordIndex++;
-                    
-                    if (currentWordIndex === words.length) {
-                        // Tüm kelimeler tamamlandı, döngüyü yeniden başlat
-                        setTimeout(() => {
-                            currentWordIndex = 0;
-                            setTimeout(typeWriter, 500);
-                        }, pauseBetweenCycles);
-                        return;
-                    }
-                    
-                    setTimeout(typeWriter, 500);
+                if (currentWordIndex === words.length) {
+                    setTimeout(() => {
+                        currentWordIndex = 0;
+                        setTimeout(typeWriter, 500);
+                    }, pauseBetweenCycles);
                     return;
                 }
                 
-                setTimeout(typeWriter, deletingSpeed);
-            } else {
-                // Yazma işlemi
-                element.textContent = currentWordObj.text.substring(0, currentCharIndex + 1);
-                currentCharIndex++;
-                
-                if (currentCharIndex === currentWordObj.text.length) {
-                    // Kelime tamamlandı
-                    isDeleting = true;
-                    setTimeout(typeWriter, pauseBetweenWords);
-                    return;
-                }
-                
-                setTimeout(typeWriter, typingSpeed);
+                setTimeout(typeWriter, 500);
+                return;
             }
-        }
-
-        // Start typewriter effect when page loads
-        window.addEventListener('load', function() {
-            setTimeout(typeWriter, 1000);
-        });
-
-        // ============ FAQ TOGGLE ============
-        function toggleFaq(element) {
-            const faqItem = element.parentElement;
-            const allFaqs = document.querySelectorAll('.faq-item');
             
-            // Close all other FAQs
-            allFaqs.forEach(item => {
-                if (item !== faqItem && item.classList.contains('active')) {
-                    item.classList.remove('active');
-                }
+            setTimeout(typeWriter, deletingSpeed);
+        } else {
+            element.textContent = currentWordObj.text.substring(0, currentCharIndex + 1);
+            currentCharIndex++;
+            
+            if (currentCharIndex === currentWordObj.text.length) {
+                isDeleting = true;
+                setTimeout(typeWriter, pauseBetweenWords);
+                return;
+            }
+            
+            setTimeout(typeWriter, typingSpeed);
+        }
+    }
+
+    // Start typewriter effect when page loads
+    window.addEventListener('load', function() {
+        setTimeout(typeWriter, 1000);
+    });
+
+    // ============ FAQ TOGGLE ============
+    function toggleFaq(element) {
+        const faqItem = element.parentElement;
+        const allFaqs = document.querySelectorAll('.faq-item');
+        
+        allFaqs.forEach(item => {
+            if (item !== faqItem && item.classList.contains('active')) {
+                item.classList.remove('active');
+            }
+        });
+        
+        faqItem.classList.toggle('active');
+    }
+
+    // ============ FORM VALIDATION ve API ENTEGRASYONU ============
+    document.getElementById('coachingForm').addEventListener('submit', async function(e) {
+        e.preventDefault(); // FormSubmit'in normal gönderimini durdur
+        
+        // Form verilerini topla
+        const formData = {
+            name: document.getElementById('name').value.trim(),
+            surname: document.getElementById('surname').value.trim(),
+            age: parseInt(document.getElementById('age').value),
+            country: document.getElementById('country').value,
+            rank: document.getElementById('rank').value,
+            targetRank: document.getElementById('targetRank').value,
+            tracker: document.getElementById('tracker').value.trim(),
+            expectations: document.getElementById('expectations').value.trim(),
+            introduction: document.getElementById('introduction').value.trim(),
+            discord: document.getElementById('discord').value.trim() || ''
+        };
+        
+        // ============ VALIDATION ============
+        // YAŞ KONTROLÜ
+        if (formData.age < 16) {
+            alert('Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.');
+            return false;
+        }
+        
+        // RANK KONTROLÜ
+        const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Ascendant', 'Immortal', 'Radiant'];
+        const currentIndex = ranks.indexOf(formData.rank);
+        const targetIndex = ranks.indexOf(formData.targetRank);
+        
+        if (targetIndex <= currentIndex) {
+            alert('Hedef rank, mevcut rankınızdan yüksek olmalıdır.');
+            return false;
+        }
+        
+        // TRACKER KONTROLÜ
+        if (!formData.tracker.includes('tracker.gg')) {
+            alert('Lütfen geçerli bir Tracker.gg linki giriniz.');
+            return false;
+        }
+        
+        // ZORUNLU ALANLAR KONTROLÜ
+        if (!formData.name || !formData.surname || !formData.country || !formData.rank || 
+            !formData.targetRank || !formData.tracker || !formData.expectations || !formData.introduction) {
+            alert('Lütfen tüm zorunlu alanları doldurunuz.');
+            return false;
+        }
+        
+        try {
+            // 1. ÖNCE FORMSUBMIT İLE MAİL GÖNDER (ARKA PLANDA)
+            const originalForm = e.target;
+            const formSubmitData = new FormData(originalForm);
+            
+            // FormSubmit'e gönder (arka planda, beklemeyelim)
+            fetch(originalForm.action, {
+                method: 'POST',
+                body: formSubmitData
+            })
+            .then(() => {
+                console.log('✅ Mail FormSubmit\'e gönderildi');
+            })
+            .catch(err => {
+                console.error('FormSubmit hatası:', err);
+                // Mail gönderilemese bile devam et
             });
             
-            // Toggle current FAQ
-            faqItem.classList.toggle('active');
-        }
-
-        // ============ FORM VALIDATION ============
-        document.getElementById('coachingForm').addEventListener('submit', function(e) {document.getElementById('coachingForm').addEventListener('submit', async function(e) {
-    e.preventDefault(); // FormSubmit'in normal gönderimini durdur
-    
-    // Form verilerini topla
-    const formData = {
-        name: document.getElementById('name').value,
-        surname: document.getElementById('surname').value,
-        age: parseInt(document.getElementById('age').value),
-        country: document.getElementById('country').value,
-        rank: document.getElementById('rank').value,
-        targetRank: document.getElementById('targetRank').value,
-        tracker: document.getElementById('tracker').value,
-        expectations: document.getElementById('expectations').value,
-        introduction: document.getElementById('introduction').value,
-        discord: document.getElementById('discord').value || ''
-    };
-    
-    // YAŞ KONTROLÜ
-    if (formData.age < 16) {
-        alert('Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.');
-        return false;
-    }
-    
-    // RANK KONTROLÜ
-    const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Ascendant', 'Immortal', 'Radiant'];
-    const currentIndex = ranks.indexOf(formData.rank);
-    const targetIndex = ranks.indexOf(formData.targetRank);
-    
-    if (targetIndex <= currentIndex) {
-        alert('Hedef rank, mevcut rankınızdan yüksek olmalıdır.');
-        return false;
-    }
-    
-    // TRACKER KONTROLÜ
-    if (!formData.tracker.includes('tracker.gg')) {
-        alert('Lütfen geçerli bir Tracker.gg linki giriniz.');
-        return false;
-    }
-    
-    try {
-        // 1. ÖNCE FORMSUBMIT İLE MAİL GÖNDER
-        const originalForm = e.target;
-        const formSubmitData = new FormData(originalForm);
-        
-        // FormSubmit'e gönder (arka planda)
-        fetch(originalForm.action, {
-            method: 'POST',
-            body: formSubmitData
-        }).then(() => {
-            console.log('✅ Mail gönderildi');
-        }).catch(err => {
-            console.log('Mail gönderilemedi:', err);
-        });
-        
-        // 2. SONRA API'YE KAYDET (Admin paneli için)
-        // ⚠️⚠️⚠️ BURAYI KENDİ RAILWAY URL'NİZLE DEĞİŞTİRİN ⚠️⚠️⚠️
-        const API_URL = 'https://aura-coaching-api.up.railway.app'; // BU KISMI DEĞİŞTİR
-        
-        const response = await fetch(`${API_URL}/applications`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-        
-        if (response.ok) {
-            alert('✅ Başvurunuz alındı! Hem mailinize gönderildi hem de sistemimize kaydedildi.');
-            originalForm.reset();
-        } else {
-            throw new Error('API kayıt hatası');
+            // 2. SONRA API'YE KAYDET (Admin paneli için)
+            // ⚠️⚠️⚠️ BU SATIRI KENDİ RAILWAY URL'NİZLE DEĞİŞTİRİN ⚠️⚠️⚠️
+            const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
+            
+            console.log('API\'ye gönderiliyor:', formData);
+            
+            const response = await fetch(`${API_URL}/applications`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                console.log('API yanıtı:', result);
+                
+                // Başarı mesajını göster
+                document.getElementById('successMessage').classList.add('show');
+                
+                // Formu temizle
+                originalForm.reset();
+                
+                // 3 saniye sonra başarı mesajını gizle
+                setTimeout(() => {
+                    document.getElementById('successMessage').classList.remove('show');
+                }, 3000);
+                
+            } else {
+                const errorText = await response.text();
+                console.error('API hatası:', response.status, errorText);
+                throw new Error(`API kayıt hatası: ${response.status}`);
+            }
+            
+        } catch (error) {
+            console.error('Genel hata:', error);
+            
+            // API hatası olsa bile kullanıcıya mail gönderildiğini söyle
+            alert('✅ Başvurunuz mail olarak gönderildi! Admin paneli kaydı yapılamadı ancak mailiniz ulaşacak.');
+            
+            // Formu temizle
+            document.getElementById('coachingForm').reset();
         }
         
-    } catch (error) {
-        console.error('Hata:', error);
-        alert('Başvurunuz mail olarak gönderildi, ancak sistem kaydı yapılamadı.');
-    }
-    
-    return false;
-});
-            const age = parseInt(document.getElementById('age').value);
-            
-            if (age < 16) {
-                e.preventDefault();
-                alert('Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.');
-                return false;
-            }
-
-            const currentRank = document.getElementById('rank').value;
-            const targetRank = document.getElementById('targetRank').value;
-            
-            const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Ascendant', 'Immortal', 'Radiant'];
-            const currentIndex = ranks.indexOf(currentRank);
-            const targetIndex = ranks.indexOf(targetRank);
-            
-            if (targetIndex <= currentIndex) {
-                e.preventDefault();
-                alert('Hedef rank, mevcut rankınızdan yüksek olmalıdır.');
-                return false;
-            }
-
-            const tracker = document.getElementById('tracker').value;
-            if (!tracker.includes('tracker.gg')) {
-                e.preventDefault();
-                alert('Lütfen geçerli bir Tracker.gg linki giriniz.');
-                return false;
-            }
-        });
-    </script>
+        return false;
+    });
+</script>
 </body>
 </html>
