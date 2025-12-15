@@ -1389,7 +1389,86 @@
         }
 
         // ============ FORM VALIDATION ============
-        document.getElementById('coachingForm').addEventListener('submit', function(e) {
+        document.getElementById('coachingForm').addEventListener('submit', function(e) {document.getElementById('coachingForm').addEventListener('submit', async function(e) {
+    e.preventDefault(); // FormSubmit'in normal gönderimini durdur
+    
+    // Form verilerini topla
+    const formData = {
+        name: document.getElementById('name').value,
+        surname: document.getElementById('surname').value,
+        age: parseInt(document.getElementById('age').value),
+        country: document.getElementById('country').value,
+        rank: document.getElementById('rank').value,
+        targetRank: document.getElementById('targetRank').value,
+        tracker: document.getElementById('tracker').value,
+        expectations: document.getElementById('expectations').value,
+        introduction: document.getElementById('introduction').value,
+        discord: document.getElementById('discord').value || ''
+    };
+    
+    // YAŞ KONTROLÜ
+    if (formData.age < 16) {
+        alert('Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.');
+        return false;
+    }
+    
+    // RANK KONTROLÜ
+    const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Ascendant', 'Immortal', 'Radiant'];
+    const currentIndex = ranks.indexOf(formData.rank);
+    const targetIndex = ranks.indexOf(formData.targetRank);
+    
+    if (targetIndex <= currentIndex) {
+        alert('Hedef rank, mevcut rankınızdan yüksek olmalıdır.');
+        return false;
+    }
+    
+    // TRACKER KONTROLÜ
+    if (!formData.tracker.includes('tracker.gg')) {
+        alert('Lütfen geçerli bir Tracker.gg linki giriniz.');
+        return false;
+    }
+    
+    try {
+        // 1. ÖNCE FORMSUBMIT İLE MAİL GÖNDER
+        const originalForm = e.target;
+        const formSubmitData = new FormData(originalForm);
+        
+        // FormSubmit'e gönder (arka planda)
+        fetch(originalForm.action, {
+            method: 'POST',
+            body: formSubmitData
+        }).then(() => {
+            console.log('✅ Mail gönderildi');
+        }).catch(err => {
+            console.log('Mail gönderilemedi:', err);
+        });
+        
+        // 2. SONRA API'YE KAYDET (Admin paneli için)
+        // ⚠️⚠️⚠️ BURAYI KENDİ RAILWAY URL'NİZLE DEĞİŞTİRİN ⚠️⚠️⚠️
+        const API_URL = 'https://aura-coaching-api.up.railway.app'; // BU KISMI DEĞİŞTİR
+        
+        const response = await fetch(`${API_URL}/applications`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        if (response.ok) {
+            alert('✅ Başvurunuz alındı! Hem mailinize gönderildi hem de sistemimize kaydedildi.');
+            originalForm.reset();
+        } else {
+            throw new Error('API kayıt hatası');
+        }
+        
+    } catch (error) {
+        console.error('Hata:', error);
+        alert('Başvurunuz mail olarak gönderildi, ancak sistem kaydı yapılamadı.');
+    }
+    
+    return false;
+});
             const age = parseInt(document.getElementById('age').value);
             
             if (age < 16) {
@@ -1417,63 +1496,6 @@
                 alert('Lütfen geçerli bir Tracker.gg linki giriniz.');
                 return false;
             }
-        });
-
-        // Form gönderimini yakala
-        document.getElementById('coachingForm').addEventListener('submit', function(e) {
-            // FormSubmit normal çalışsın, biz ek olarak API'ye göndereceğiz
-            
-            // Form verilerini topla
-            const formData = {
-                name: document.getElementById('name').value,
-                surname: document.getElementById('surname').value,
-                age: parseInt(document.getElementById('age').value),
-                country: document.getElementById('country').value,
-                rank: document.getElementById('rank').value,
-                targetRank: document.getElementById('targetRank').value,
-                tracker: document.getElementById('tracker').value,
-                expectations: document.getElementById('expectations').value,
-                introduction: document.getElementById('introduction').value,
-                discord: document.getElementById('discord').value || ''
-            };
-            
-            // YAŞ KONTROLÜ
-            if (formData.age < 16) {
-                alert('Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.');
-                e.preventDefault();
-                return false;
-            }
-            
-            // RANK KONTROLÜ
-            const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Ascendant', 'Immortal', 'Radiant'];
-            const currentIndex = ranks.indexOf(formData.rank);
-            const targetIndex = ranks.indexOf(formData.targetRank);
-            
-            if (targetIndex <= currentIndex) {
-                alert('Hedef rank, mevcut rankınızdan yüksek olmalıdır.');
-                e.preventDefault();
-                return false;
-            }
-            
-            // API'YE GÖNDER (arka planda)
-            fetch('https://aura-coaching-api.railway.app/applications', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('✅ Başvuru API\'ye kaydedildi');
-                }
-            })
-            .catch(error => {
-                console.error('API hatası:', error);
-            });
-            
-            // FormSubmit normal işlemine devam etsin
-            return true;
         });
     </script>
 </body>
