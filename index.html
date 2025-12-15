@@ -602,6 +602,35 @@
 
         .success-message.show {
             display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .error-message {
+            display: none;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #fca5a5;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Lesson Types Section */
@@ -1193,11 +1222,15 @@
                         <input type="text" id="discord" name="💬 Discord" placeholder="kullaniciadi#1234">
                     </div>
 
-                    <button type="submit" class="button">Başvuruyu Gönder</button>
+                    <button type="submit" class="button" id="submitBtn">Başvuruyu Gönder</button>
                 </form>
 
                 <div class="success-message" id="successMessage">
                     ✅ Form başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz.
+                </div>
+
+                <div class="error-message" id="errorMessage">
+                    ❌ Bir hata oluştu. Lütfen tekrar deneyin.
                 </div>
             </div>
         </div>
@@ -1388,36 +1421,192 @@
             faqItem.classList.toggle('active');
         }
 
-        // ============ FORM VALIDATION ============
-        document.getElementById('coachingForm').addEventListener('submit', function(e) {
-            const age = parseInt(document.getElementById('age').value);
+        // ============ FORM VALIDATION AND DUAL SUBMISSION ============
+        // ⚠️⚠️⚠️ BU URL'Yİ KENDİ RAILWAY URL'NİZLE DEĞİŞTİRİN ⚠️⚠️⚠️
+        const API_URL = 'https://aura-coaching-api-production.up.railway.app';
+
+        document.getElementById('coachingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // Hide previous messages
+            successMsg.classList.remove('show');
+            errorMsg.classList.remove('show');
+            
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Gönderiliyor...';
+            
+            // Validation
+            const age = parseInt(document.getElementById('age').value);
             if (age < 16) {
-                e.preventDefault();
-                alert('Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.');
-                return false;
+                errorMsg.textContent = '❌ Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.';
+                errorMsg.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Başvuruyu Gönder';
+                return;
             }
 
             const currentRank = document.getElementById('rank').value;
             const targetRank = document.getElementById('targetRank').value;
-            
             const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Ascendant', 'Immortal', 'Radiant'];
             const currentIndex = ranks.indexOf(currentRank);
             const targetIndex = ranks.indexOf(targetRank);
             
             if (targetIndex <= currentIndex) {
-                e.preventDefault();
-                alert('Hedef rank, mevcut rankınızdan yüksek olmalıdır.');
-                return false;
+                errorMsg.textContent = '❌ Hedef rank, mevcut rankınızdan yüksek olmalıdır.';
+                errorMsg.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Başvuruyu Gönder';
+                return;
             }
 
             const tracker = document.getElementById('tracker').value;
             if (!tracker.includes('tracker.gg')) {
-                e.preventDefault();
-                alert('Lütfen geçerli bir Tracker.gg linki giriniz.');
-                return false;
+                errorMsg.textContent = '❌ Lütfen geçerli bir Tracker.gg linki giriniz.';
+                errorMsg.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Başvuruyu Gönder';
+                return;
+            }
+
+            try {
+                // 1. ÖNCE API'YE GÖNDER
+                const apiData = {
+                    name: document.getElementById('name').value,
+                    surname: document.getElementById('surname').value,
+                    age: age,
+                    country: document.getElementById('country').value,
+                    rank: currentRank,
+                    targetRank: targetRank,
+                    tracker: tracker,
+                    expectations: document.getElementById('expectations').value,
+                    introduction: document.getElementById('introduction').value,
+                    discord: document.getElementById('discord').value || ''
+                };
+
+                const apiResponse = await fetch(`${API_URL}/api/applications`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(apiData)
+                });
+
+                const apiResult = await apiResponse.json();
+
+                if (!apiResult.success) {
+                    throw new Error(apiResult.error || 'API hatası');
+                }
+
+                // 2. API BAŞARILIYSA, FORMSUBMIT'E GÖNDER
+                // FormSubmit'e gönderim için formu submit et
+                successMsg.classList.add('show');
+                
+                // Butonu sıfırla
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Başvuruyu Gönder';
+                
+                // FormSubmit'e göndermek için formu yeniden submit et
+                // (önceki preventDefault engelini kaldırarak)
+                setTimeout(() => {
+                    // Event listener'ı geçici olarak kaldır
+                    const form = document.getElementById('coachingForm');
+                    const submitHandler = arguments.callee;
+                    form.removeEventListener('submit', submitHandler);
+                    
+                    // FormSubmit'e gönder
+                    form.submit();
+                    
+                    // 5 saniye sonra event listener'ı tekrar ekle (gerekirse)
+                    setTimeout(() => {
+                        form.addEventListener('submit', submitHandler);
+                    }, 5000);
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Form gönderme hatası:', error);
+                
+                // Sadece API hatası oldu, FormSubmit'e göndermeye çalışabiliriz
+                // veya kullanıcıya seçenek sunabiliriz
+                errorMsg.textContent = `❌ API kaydı yapılamadı: ${error.message}. FormSubmit ile email gönderiliyor...`;
+                errorMsg.classList.add('show');
+                
+                // Butonu sıfırla
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Başvuruyu Gönder';
+                
+                // FormSubmit'e göndermeyi dene
+                setTimeout(() => {
+                    const form = document.getElementById('coachingForm');
+                    const submitHandler = arguments.callee;
+                    form.removeEventListener('submit', submitHandler);
+                    form.submit();
+                    
+                    setTimeout(() => {
+                        form.addEventListener('submit', submitHandler);
+                    }, 5000);
+                }, 2000);
             }
         });
+
+        // ============ ALTERNATIVE: PARALLEL SUBMISSION ============
+        // Yukarıdaki kod sıralı gönderim yapar. 
+        // Eğer paralel gönderim istiyorsanız aşağıdaki kodu kullanabilirsiniz:
+        /*
+        document.getElementById('coachingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            successMsg.classList.remove('show');
+            errorMsg.classList.remove('show');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Gönderiliyor...';
+            
+            // Validation kodu buraya...
+            
+            try {
+                // 1. API'ye gönder (async, await beklemez)
+                const apiData = {
+                    // form verileri...
+                };
+                
+                const apiPromise = fetch(`${API_URL}/api/applications`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(apiData)
+                }).then(response => response.json());
+                
+                // 2. FormSubmit'e gönder
+                const form = document.getElementById('coachingForm');
+                const formData = new FormData(form);
+                const formSubmitPromise = fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                // İkisini de paralel çalıştır
+                await Promise.allSettled([apiPromise, formSubmitPromise]);
+                
+                successMsg.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Başvuruyu Gönder';
+                
+            } catch (error) {
+                errorMsg.textContent = `❌ Gönderim hatası: ${error.message}`;
+                errorMsg.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Başvuruyu Gönder';
+            }
+        });
+        */
     </script>
 </body>
 </html>
