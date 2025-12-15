@@ -1187,6 +1187,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
+        // ============ API AYARLARI ============
+        const API_URL = 'https://aura-coaching-api.railway.app';
+
         // ============ AUTHENTICATION ============
         const ADMIN_CREDENTIALS = {
             username: 'admin',
@@ -1220,7 +1223,6 @@
             loadData();
             updateStats();
             renderCalendar();
-            loadApplicationsFromStorage();
         }
 
         function logout() {
@@ -1249,47 +1251,35 @@
         let currentYear = new Date().getFullYear();
         let currentScheduleStudentId = null;
 
-        function loadData() {
-            const savedStudents = localStorage.getItem('auraStudents');
-            const savedLessons = localStorage.getItem('auraLessons');
-            const savedApplications = localStorage.getItem('auraApplications');
-            
-            if (savedStudents) {
-                students = JSON.parse(savedStudents);
-                updateStudentsGrid();
-                updateScheduleStudentsGrid();
-                updateStudentSelect();
-            }
-            
-            if (savedLessons) {
-                lessons = JSON.parse(savedLessons);
-            }
-
-            if (savedApplications) {
-                applications = JSON.parse(savedApplications);
-                updateApplicationsTable();
-                updateRecentApplications();
+        // ============ VERİLERİ API'DEN ÇEK ============
+        async function loadData() {
+            try {
+                // Başvuruları çek
+                const response = await fetch(`${API_URL}/applications`);
+                if (response.ok) {
+                    applications = await response.json();
+                    updateApplicationsTable();
+                    updateRecentApplications();
+                    updateStats();
+                }
+                
+                // Öğrencileri çek
+                const studentsResponse = await fetch(`${API_URL}/students`);
+                if (studentsResponse.ok) {
+                    students = await studentsResponse.json();
+                    updateStudentsGrid();
+                    updateScheduleStudentsGrid();
+                    updateStudentSelect();
+                }
+                
+            } catch (error) {
+                console.error('API bağlantı hatası:', error);
             }
         }
 
         function saveData() {
-            localStorage.setItem('auraStudents', JSON.stringify(students));
-            localStorage.setItem('auraLessons', JSON.stringify(lessons));
-            localStorage.setItem('auraApplications', JSON.stringify(applications));
-        }
-
-        // ============ LOAD APPLICATIONS FROM FORMSUBMIT ============
-        function loadApplicationsFromStorage() {
-            // Since FormSubmit sends emails, we'll check localStorage for test data
-            // In production, you would integrate with your email inbox or a webhook
-            const testApplications = localStorage.getItem('auraTestApplications');
-            if (testApplications && applications.length === 0) {
-                applications = JSON.parse(testApplications);
-                saveData();
-                updateApplicationsTable();
-                updateRecentApplications();
-                updateStats();
-            }
+            // Artık localStorage yerine API kullanılıyor
+            console.log('Veriler API üzerinden yönetiliyor');
         }
 
         // ============ NAVIGATION ============
@@ -1466,13 +1456,24 @@
             alert('✅ Öğrenci başarıyla eklendi!');
         }
 
-        function deleteApplication(index) {
-            if (confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) {
-                applications.splice(index, 1);
-                saveData();
-                updateStats();
-                updateApplicationsTable();
-                updateRecentApplications();
+        // ============ BAŞVURU SİLME ============
+        async function deleteApplication(index) {
+            const app = applications[index];
+            
+            try {
+                const response = await fetch(`${API_URL}/applications/${app.id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    applications.splice(index, 1);
+                    updateStats();
+                    updateApplicationsTable();
+                    updateRecentApplications();
+                    alert('✅ Başvuru silindi!');
+                }
+            } catch (error) {
+                console.error('Silme hatası:', error);
             }
         }
 
