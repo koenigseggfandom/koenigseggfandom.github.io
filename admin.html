@@ -1187,21 +1187,23 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-      
-      // ============ AUTHENTICATION ============
+        // ============ API AYARLARI ============
+        // ⚠️⚠️⚠️ BU URL'Yİ KENDİ RAILWAY URL'NİZLE DEĞİŞTİRİN ⚠️⚠️⚠️
+        const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
+        
+        // ============ AUTHENTICATION ============
         const ADMIN_CREDENTIALS = {
             username: 'admin',
-            password: 'admin123'  // Daha basit şifre
+            password: 'admin123'
         };
-// ⚠️⚠️⚠️ BU URL'Yİ KENDİ RAILWAY URL'NİZLE DEĞİŞTİRİN ⚠️⚠️⚠️
-const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            console.log('Giriş denemesi:', username, password); // Debug için
+            console.log('Giriş denemesi:', username, password);
             
             if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
                 console.log('Giriş başarılı!');
@@ -1222,7 +1224,6 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
             loadData();
             updateStats();
             renderCalendar();
-            loadApplicationsFromStorage();
         }
 
         function logout() {
@@ -1251,47 +1252,46 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
         let currentYear = new Date().getFullYear();
         let currentScheduleStudentId = null;
 
-        function loadData() {
-            const savedStudents = localStorage.getItem('auraStudents');
-            const savedLessons = localStorage.getItem('auraLessons');
-            const savedApplications = localStorage.getItem('auraApplications');
-            
-            if (savedStudents) {
-                students = JSON.parse(savedStudents);
-                updateStudentsGrid();
-                updateScheduleStudentsGrid();
-                updateStudentSelect();
-            }
-            
-            if (savedLessons) {
-                lessons = JSON.parse(savedLessons);
-            }
-
-            if (savedApplications) {
-                applications = JSON.parse(savedApplications);
-                updateApplicationsTable();
-                updateRecentApplications();
+        // VERİLERİ API'DEN ÇEK
+        async function loadData() {
+            try {
+                console.log('API\'den veriler çekiliyor...');
+                
+                // Başvuruları API'den çek
+                const response = await fetch(`${API_URL}/applications`);
+                if (response.ok) {
+                    applications = await response.json();
+                    console.log('Başvurular alındı:', applications.length);
+                    updateApplicationsTable();
+                    updateRecentApplications();
+                    updateStats();
+                } else {
+                    console.error('API bağlantı hatası:', response.status);
+                }
+                
+                // Öğrencileri API'den çek
+                const studentsResponse = await fetch(`${API_URL}/students`);
+                if (studentsResponse.ok) {
+                    students = await studentsResponse.json();
+                    updateStudentsGrid();
+                    updateScheduleStudentsGrid();
+                    updateStudentSelect();
+                }
+                
+            } catch (error) {
+                console.error('Veri çekme hatası:', error);
+                // Hata durumunda localStorage'dan yükle
+                const savedStudents = localStorage.getItem('auraStudents');
+                const savedApplications = localStorage.getItem('auraApplications');
+                
+                if (savedStudents) students = JSON.parse(savedStudents);
+                if (savedApplications) applications = JSON.parse(savedApplications);
             }
         }
 
         function saveData() {
             localStorage.setItem('auraStudents', JSON.stringify(students));
             localStorage.setItem('auraLessons', JSON.stringify(lessons));
-            localStorage.setItem('auraApplications', JSON.stringify(applications));
-        }
-
-        // ============ LOAD APPLICATIONS FROM FORMSUBMIT ============
-        function loadApplicationsFromStorage() {
-            // Since FormSubmit sends emails, we'll check localStorage for test data
-            // In production, you would integrate with your email inbox or a webhook
-            const testApplications = localStorage.getItem('auraTestApplications');
-            if (testApplications && applications.length === 0) {
-                applications = JSON.parse(testApplications);
-                saveData();
-                updateApplicationsTable();
-                updateRecentApplications();
-                updateStats();
-            }
         }
 
         // ============ NAVIGATION ============
@@ -1346,7 +1346,7 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
                     <td>${app.country}</td>
                     <td><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></td>
                     <td><span class="rank-badge rank-${app.targetRank.toLowerCase()}">${app.targetRank}</span></td>
-                    <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
+                    <td>${new Date(app.created_at).toLocaleDateString('tr-TR')}</td>
                     <td>
                         <button class="action-btn btn-add-student" onclick="addStudentFromApplication(${index})">Öğrenci Ekle</button>
                         <button class="action-btn btn-delete" onclick="deleteApplication(${index})">Sil</button>
@@ -1376,7 +1376,7 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
                     <td>${app.age}</td>
                     <td>${app.country}</td>
                     <td><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></td>
-                    <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
+                    <td>${new Date(app.created_at).toLocaleDateString('tr-TR')}</td>
                 </tr>
             `).join('');
         }
@@ -1437,10 +1437,37 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
             document.getElementById('applicationDetailModal').classList.remove('active');
         }
 
-        function addStudentFromApplication(index) {
+        // BAŞVURU SİLME
+        async function deleteApplication(index) {
+            if (!confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) return;
+            
             const app = applications[index];
+            
+            try {
+                const response = await fetch(`${API_URL}/applications/${app.id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    applications.splice(index, 1);
+                    updateStats();
+                    updateApplicationsTable();
+                    updateRecentApplications();
+                    alert('✅ Başvuru silindi!');
+                } else {
+                    alert('❌ Silme işlemi başarısız!');
+                }
+            } catch (error) {
+                console.error('Silme hatası:', error);
+                alert('❌ API bağlantı hatası!');
+            }
+        }
+
+        // ÖĞRENCİ EKLEME (Başvurudan)
+        async function addStudentFromApplication(index) {
+            const app = applications[index];
+            
             const student = {
-                id: Date.now(),
                 name: app.name,
                 surname: app.surname,
                 age: app.age,
@@ -1450,31 +1477,45 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
                 tracker: app.tracker,
                 expectations: app.expectations,
                 introduction: app.introduction,
-                discord: app.discord,
-                registrationDate: new Date().toISOString(),
-                weeklySchedule: null
+                discord: app.discord || '',
+                registrationDate: new Date().toISOString()
             };
             
-            students.push(student);
-            applications.splice(index, 1);
-            saveData();
-            updateStats();
-            updateApplicationsTable();
-            updateRecentApplications();
-            updateStudentsGrid();
-            updateScheduleStudentsGrid();
-            updateStudentSelect();
-            
-            alert('✅ Öğrenci başarıyla eklendi!');
-        }
-
-        function deleteApplication(index) {
-            if (confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) {
-                applications.splice(index, 1);
-                saveData();
-                updateStats();
-                updateApplicationsTable();
-                updateRecentApplications();
+            try {
+                // 1. API'YE ÖĞRENCİ EKLE
+                const addResponse = await fetch(`${API_URL}/students`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(student)
+                });
+                
+                if (addResponse.ok) {
+                    // 2. BAŞVURUYU SİL
+                    await fetch(`${API_URL}/applications/${app.id}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    // 3. LOCAL LİSTELERİ GÜNCELLE
+                    const newStudent = await addResponse.json();
+                    students.push(newStudent);
+                    applications.splice(index, 1);
+                    
+                    // 4. EKRANI GÜNCELLE
+                    updateStats();
+                    updateApplicationsTable();
+                    updateRecentApplications();
+                    updateStudentsGrid();
+                    updateScheduleStudentsGrid();
+                    updateStudentSelect();
+                    
+                    alert('✅ Öğrenci başarıyla eklendi!');
+                }
+                
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('❌ İşlem sırasında hata oluştu!');
             }
         }
 
@@ -1677,14 +1718,37 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
 
             const student = students.find(s => s.id == currentScheduleStudentId);
             if (student) {
-                student.weeklySchedule = schedule;
-                saveData();
-                updateScheduleStudentsGrid();
-                closeCreateScheduleModal();
-                displayWeeklySchedule(student);
-                alert('✅ Haftalık program oluşturuldu!');
+                // API'ye schedule'ı güncelle
+                updateStudentSchedule(student.id, schedule);
             }
         });
+
+        async function updateStudentSchedule(studentId, schedule) {
+            try {
+                const student = students.find(s => s.id == studentId);
+                if (!student) return;
+                
+                // API'ye güncelleme gönder
+                const response = await fetch(`${API_URL}/students/${studentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ weeklySchedule: schedule })
+                });
+                
+                if (response.ok) {
+                    student.weeklySchedule = schedule;
+                    updateScheduleStudentsGrid();
+                    closeCreateScheduleModal();
+                    displayWeeklySchedule(student);
+                    alert('✅ Haftalık program oluşturuldu!');
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('❌ Program kaydedilemedi!');
+            }
+        }
 
         function displayWeeklySchedule(student) {
             const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
@@ -1802,11 +1866,10 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
             document.getElementById('addLessonForm').reset();
         }
 
-        document.getElementById('addLessonForm').addEventListener('submit', function(e) {
+        document.getElementById('addLessonForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const lesson = {
-                id: Date.now(),
                 studentId: document.getElementById('lessonStudent').value,
                 date: document.getElementById('lessonDate').value,
                 time: document.getElementById('lessonTime').value,
@@ -1814,13 +1877,27 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
                 notes: document.getElementById('lessonNotes').value
             };
             
-            lessons.push(lesson);
-            saveData();
-            updateStats();
-            renderCalendar();
-            closeAddLessonModal();
-            
-            alert('✅ Ders başarıyla eklendi!');
+            try {
+                const response = await fetch(`${API_URL}/lessons`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(lesson)
+                });
+                
+                if (response.ok) {
+                    const newLesson = await response.json();
+                    lessons.push(newLesson);
+                    updateStats();
+                    renderCalendar();
+                    closeAddLessonModal();
+                    alert('✅ Ders başarıyla eklendi!');
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('❌ Ders eklenemedi!');
+            }
         });
 
         // Search functionality
@@ -1845,71 +1922,11 @@ const API_URL = 'https://aura-coaching-api-production.up.railway.app/';
         });
 
         // ============ TEST DATA ============
-        // Test verilerini sadece ilk kez giriş yaptığında ekleyelim
+        // Eğer API'de veri yoksa test verileri oluştur
         window.addEventListener('load', function() {
-            if (localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('auraInitialized') !== 'true') {
-                // Test başvuruları
-                applications = [
-                    {
-                        id: Date.now(),
-                        name: 'Ali',
-                        surname: 'Yılmaz',
-                        age: 20,
-                        country: 'Türkiye',
-                        rank: 'Gold',
-                        targetRank: 'Diamond',
-                        tracker: 'https://tracker.gg/valorant/profile/riot/AliYilmaz%23TR1',
-                        expectations: 'Aimimi geliştirmek ve Diamond ranka çıkmak istiyorum.',
-                        introduction: '1 yıldır Valorant oynuyorum, Duelist mainiyim.',
-                        discord: 'aliyilmaz#1234',
-                        date: new Date().toISOString()
-                    },
-                    {
-                        id: Date.now() + 1,
-                        name: 'Ayşe',
-                        surname: 'Kaya',
-                        age: 19,
-                        country: 'Türkiye',
-                        rank: 'Platinum',
-                        targetRank: 'Immortal',
-                        tracker: 'https://tracker.gg/valorant/profile/riot/AyseKaya%23TR1',
-                        expectations: 'Game sense ve takım oyunumu geliştirmek istiyorum.',
-                        introduction: '2 yıldır oynuyorum, Controller/Sentinel oynuyorum.',
-                        discord: 'aysekaya#5678',
-                        date: new Date().toISOString()
-                    }
-                ];
-
-                // Test öğrencisi
-                students = [
-                    {
-                        id: Date.now() + 100,
-                        name: 'Mehmet',
-                        surname: 'Demir',
-                        age: 22,
-                        country: 'Türkiye',
-                        rank: 'Diamond',
-                        targetRank: 'Immortal',
-                        tracker: 'https://tracker.gg/valorant/profile/riot/MehmetDemir%23TR1',
-                        expectations: 'Immortal olmak istiyorum.',
-                        introduction: 'Competitive oyuncuyum.',
-                        discord: 'mehmetdemir#9999',
-                        registrationDate: new Date().toISOString(),
-                        weeklySchedule: {
-                            'Pazartesi': { time: '14:00', duration: '60' },
-                            'Çarşamba': { time: '14:00', duration: '60' },
-                            'Cuma': { time: '16:00', duration: '90' }
-                        }
-                    }
-                ];
-                
-                saveData();
-                localStorage.setItem('auraInitialized', 'true');
-                
-                // Sayfayı yenile
-                setTimeout(() => {
-                    location.reload();
-                }, 100);
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                // 5 dakikada bir verileri yenile
+                setInterval(loadData, 5 * 60 * 1000);
             }
         });
     </script>
