@@ -455,117 +455,6 @@
             transform: translateY(-2px);
         }
 
-        /* Calendar */
-        .calendar-container {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .calendar-title {
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        .calendar-nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .calendar-nav button {
-            background: rgba(99, 102, 241, 0.2);
-            border: none;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 600;
-        }
-
-        .calendar-nav button:hover {
-            background: rgba(99, 102, 241, 0.4);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .calendar-day-header {
-            text-align: center;
-            font-weight: 600;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            padding: 12px;
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 10px;
-        }
-
-        .calendar-day:hover {
-            background: rgba(99, 102, 241, 0.2);
-            border-color: #6366f1;
-        }
-
-        .calendar-day.has-lesson {
-            background: rgba(99, 102, 241, 0.3);
-            border-color: #6366f1;
-        }
-
-        .calendar-day-number {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .calendar-day-lessons {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.6);
-            background: rgba(99, 102, 241, 0.4);
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-
-        .add-lesson-btn {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border: none;
-            color: white;
-            padding: 14px 28px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 25px;
-            transition: all 0.3s ease;
-            font-size: 15px;
-        }
-
-        .add-lesson-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-        }
-
         /* Modal */
         .modal {
             position: fixed;
@@ -746,6 +635,7 @@
             padding: 25px;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .student-card:hover {
@@ -801,7 +691,7 @@
 
         .day-schedule {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px;
             margin-top: 25px;
         }
@@ -812,6 +702,8 @@
             border-radius: 12px;
             padding: 15px;
             min-height: 200px;
+            position: relative;
+            overflow: hidden;
         }
 
         .day-header {
@@ -830,6 +722,8 @@
             padding: 10px;
             margin-bottom: 10px;
             font-size: 13px;
+            position: relative;
+            z-index: 1;
         }
 
         .time-slot-time {
@@ -841,6 +735,103 @@
         .time-slot-duration {
             color: rgba(255, 255, 255, 0.6);
             font-size: 11px;
+        }
+
+        .schedule-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            justify-content: flex-end;
+        }
+
+        .btn-conflict {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .btn-conflict.show {
+            display: block;
+        }
+
+        /* 1. "Bu başvuruyu öğrenci olarak ekle" butonu için yeni stil */
+        .add-lesson-btn {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .add-lesson-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6);
+            background: linear-gradient(135deg, #34d399, #10b981);
+        }
+
+        .add-lesson-btn:active {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .add-lesson-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .add-lesson-btn:hover::before {
+            left: 100%;
+        }
+
+        /* 2. Ders süresi seçimi için dropdown stil düzenlemeleri */
+        .form-group select option {
+            background: rgba(15, 23, 42, 0.98);
+            color: #fff;
+            padding: 12px;
+        }
+
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 20px;
+            padding-right: 48px;
+        }
+
+        .form-group select:focus {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+        }
+
+        /* Edit schedule modal'ındaki checkbox düzenlemeleri */
+        .form-group label input[type="checkbox"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: #6366f1;
+            vertical-align: middle;
         }
 
         @media (max-width: 768px) {
@@ -869,6 +860,11 @@
 
             .day-schedule {
                 grid-template-columns: 1fr;
+            }
+
+            .add-lesson-btn {
+                padding: 16px 20px;
+                font-size: 15px;
             }
         }
     </style>
@@ -927,9 +923,6 @@
                 <div class="menu-item" onclick="showSection('schedule')">
                     <span>Haftalık Program</span>
                 </div>
-                <div class="menu-item" onclick="showSection('calendar')">
-                    <span>Aylık Takvim</span>
-                </div>
             </div>
             
             <div class="logout-btn" onclick="logout()">
@@ -957,7 +950,7 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="totalLessons">0</div>
-                        <div class="stat-label">Bu Ay Ders</div>
+                        <div class="stat-label">Toplam Ders</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value">95%</div>
@@ -1059,67 +1052,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Calendar Section -->
-            <div class="content-section" id="calendarSection">
-                <div class="page-header">
-                    <h1 class="page-title">Aylık Takvim</h1>
-                    <p class="page-subtitle">Ders programını görüntüleyin ve yeni dersler ekleyin</p>
-                </div>
-
-                <div class="calendar-container">
-                    <div class="calendar-header">
-                        <h3 class="calendar-title" id="calendarMonth"></h3>
-                        <div class="calendar-nav">
-                            <button onclick="changeMonth(-1)">◀ Önceki</button>
-                            <button onclick="changeMonth(1)">Sonraki ▶</button>
-                        </div>
-                    </div>
-                    
-                    <div class="calendar-grid" id="calendarGrid"></div>
-                    
-                    <button class="add-lesson-btn" onclick="openAddLessonModal()">Yeni Ders Ekle</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Lesson Modal -->
-    <div class="modal" id="addLessonModal">
-        <div class="modal-content">
-            <h3 class="modal-title">Yeni Ders Ekle</h3>
-            <form id="addLessonForm">
-                <div class="form-group">
-                    <label for="lessonStudent">Öğrenci Seç</label>
-                    <select id="lessonStudent" required>
-                        <option value="">Öğrenci seçiniz</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="lessonDate">Tarih</label>
-                    <input type="date" id="lessonDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="lessonTime">Saat</label>
-                    <input type="time" id="lessonTime" required>
-                </div>
-                <div class="form-group">
-                    <label for="lessonDuration">Süre (Dakika)</label>
-                    <select id="lessonDuration" required>
-                        <option value="60">60 dk</option>
-                        <option value="90">90 dk</option>
-                        <option value="120">120 dk</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="lessonNotes">Notlar (Opsiyonel)</label>
-                    <textarea id="lessonNotes" placeholder="Ders konusu, özel notlar..."></textarea>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="modal-btn btn-secondary" onclick="closeAddLessonModal()">İptal</button>
-                    <button type="submit" class="modal-btn btn-primary">Dersi Ekle</button>
-                </div>
-            </form>
         </div>
     </div>
 
@@ -1132,6 +1064,7 @@
             </div>
             <div class="modal-buttons">
                 <button type="button" class="modal-btn btn-secondary" onclick="closeStudentDetailModal()">Kapat</button>
+                <button type="button" class="modal-btn btn-primary" onclick="editStudentSchedule(currentDetailStudentId)">Programı Düzenle</button>
             </div>
         </div>
     </div>
@@ -1154,7 +1087,10 @@
         <div class="modal-content" style="max-width: 900px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <h3 class="modal-title" id="scheduleStudentName" style="margin: 0;"></h3>
-                <button class="btn-download" onclick="downloadScheduleImage()">Resim Olarak İndir</button>
+                <div>
+                    <button class="action-btn btn-edit" onclick="editCurrentSchedule()">Programı Düzenle</button>
+                    <button class="btn-download" onclick="downloadScheduleImage()">Resim Olarak İndir</button>
+                </div>
             </div>
             <div id="scheduleImageContainer">
                 <div class="schedule-container">
@@ -1169,17 +1105,20 @@
         </div>
     </div>
 
-    <!-- Create Schedule Modal -->
-    <div class="modal" id="createScheduleModal">
+    <!-- Edit Schedule Modal -->
+    <div class="modal" id="editScheduleModal">
         <div class="modal-content" style="max-width: 600px;">
-            <h3 class="modal-title">Haftalık Program Oluştur</h3>
-            <form id="createScheduleForm">
-                <div id="scheduleFormDays">
+            <h3 class="modal-title" id="editScheduleTitle">Haftalık Program Düzenle</h3>
+            <div id="conflictWarning" class="error-message" style="display: none;">
+                Bu saatte başka bir öğrenciye ders var!
+            </div>
+            <form id="editScheduleForm">
+                <div id="editScheduleDays">
                     <!-- Days will be populated here -->
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="modal-btn btn-secondary" onclick="closeCreateScheduleModal()">İptal</button>
-                    <button type="submit" class="modal-btn btn-primary">Programı Kaydet</button>
+                    <button type="button" class="modal-btn btn-secondary" onclick="closeEditScheduleModal()">İptal</button>
+                    <button type="submit" class="modal-btn btn-primary">Değişiklikleri Kaydet</button>
                 </div>
             </form>
         </div>
@@ -1218,7 +1157,6 @@
             document.getElementById('dashboard').classList.add('active');
             await loadData();
             updateStats();
-            renderCalendar();
         }
 
         function logout() {
@@ -1238,44 +1176,37 @@
 
         // ============ DATA MANAGEMENT ============
         let students = [];
-        let lessons = [];
         let applications = [];
-        let currentMonth = new Date().getMonth();
-        let currentYear = new Date().getFullYear();
         let currentScheduleStudentId = null;
+        let currentDetailStudentId = null;
+        let editingStudentId = null;
 
         async function loadData() {
             try {
                 // API'den verileri çek
-                const [appsResponse, studentsResponse, lessonsResponse] = await Promise.all([
+                const [appsResponse, studentsResponse] = await Promise.all([
                     fetch(`${API_URL}/api/applications`).then(res => res.json()),
-                    fetch(`${API_URL}/api/students`).then(res => res.json()),
-                    fetch(`${API_URL}/api/lessons`).then(res => res.json())
+                    fetch(`${API_URL}/api/students`).then(res => res.json())
                 ]);
                 
                 if (appsResponse.success) applications = appsResponse.applications;
                 if (studentsResponse.success) students = studentsResponse.students;
-                if (lessonsResponse.success) lessons = lessonsResponse.lessons;
                 
                 updateStudentsGrid();
                 updateScheduleStudentsGrid();
-                updateStudentSelect();
                 updateApplicationsTable();
                 updateRecentApplications();
             } catch (error) {
                 console.error('Veri yüklenirken hata:', error);
                 // Fallback: localStorage'den yükle
                 const savedStudents = localStorage.getItem('auraStudents');
-                const savedLessons = localStorage.getItem('auraLessons');
                 const savedApplications = localStorage.getItem('auraApplications');
                 
                 if (savedStudents) students = JSON.parse(savedStudents);
-                if (savedLessons) lessons = JSON.parse(savedLessons);
                 if (savedApplications) applications = JSON.parse(savedApplications);
                 
                 updateStudentsGrid();
                 updateScheduleStudentsGrid();
-                updateStudentSelect();
                 updateApplicationsTable();
                 updateRecentApplications();
             }
@@ -1301,13 +1232,14 @@
             document.getElementById('totalStudents').textContent = students.length;
             document.getElementById('totalApplications').textContent = applications.length;
             
-            const currentDate = new Date();
-            const currentMonthLessons = lessons.filter(lesson => {
-                const lessonDate = new Date(lesson.date);
-                return lessonDate.getMonth() === currentDate.getMonth() && 
-                       lessonDate.getFullYear() === currentDate.getFullYear();
+            // Toplam ders sayısını hesapla (haftalık programlardan)
+            let totalLessons = 0;
+            students.forEach(student => {
+                if (student.weeklySchedule) {
+                    totalLessons += Object.keys(student.weeklySchedule).length;
+                }
             });
-            document.getElementById('totalLessons').textContent = currentMonthLessons.length;
+            document.getElementById('totalLessons').textContent = totalLessons;
         }
 
         // ============ APPLICATIONS ============
@@ -1336,7 +1268,7 @@
                     <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
                     <td>
                         <button class="action-btn btn-add-student" onclick="addStudentFromApplication(${index})">Öğrenci Ekle</button>
-                        <button class="action-btn btn-delete" onclick="deleteApplication(${index})">Sil</button>
+                        <button class="action-btn btn-delete" onclick="deleteApplication('${app._id || app.id}', ${index})">Sil</button>
                     </td>
                 </tr>
             `).join('');
@@ -1366,6 +1298,33 @@
                     <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
                 </tr>
             `).join('');
+        }
+
+        async function deleteApplication(appId, index) {
+            if (!confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/applications/${appId}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    applications.splice(index, 1);
+                    updateStats();
+                    updateApplicationsTable();
+                    updateRecentApplications();
+                    alert('✅ Başvuru silindi!');
+                } else {
+                    alert('❌ Başvuru silinirken hata oluştu!');
+                }
+            } catch (error) {
+                console.error('Başvuru silme hatası:', error);
+                alert('❌ Başvuru silinirken hata oluştu!');
+            }
         }
 
         function showApplicationDetail(index) {
@@ -1412,7 +1371,7 @@
                     </div>
                 </div>
                 <div style="margin-top: 25px; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <button class="add-lesson-btn" onclick="addStudentFromApplication(${index}); closeApplicationModal();" style="width: 100%;">Bu Başvuruyu Öğrenci Olarak Ekle</button>
+                    <button class="add-lesson-btn" onclick="addStudentFromApplication(${index}); closeApplicationModal();">BU BAŞVURUYU ÖĞRENCİ OLARAK EKLE</button>
                 </div>
             `;
             
@@ -1467,36 +1426,12 @@
                     updateRecentApplications();
                     updateStudentsGrid();
                     updateScheduleStudentsGrid();
-                    updateStudentSelect();
                     
                     alert('✅ Öğrenci başarıyla eklendi!');
                 }
             } catch (error) {
                 console.error('Öğrenci ekleme hatası:', error);
                 alert('❌ Öğrenci eklenirken hata oluştu!');
-            }
-        }
-
-        async function deleteApplication(index) {
-            if (!confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) {
-                return;
-            }
-            
-            const app = applications[index];
-            
-            try {
-                await fetch(`${API_URL}/api/applications/${app._id || app.id}`, {
-                    method: 'DELETE'
-                });
-                
-                applications.splice(index, 1);
-                updateStats();
-                updateApplicationsTable();
-                updateRecentApplications();
-                alert('✅ Başvuru silindi!');
-            } catch (error) {
-                console.error('Başvuru silme hatası:', error);
-                alert('❌ Başvuru silinirken hata oluştu!');
             }
         }
 
@@ -1515,11 +1450,12 @@
             }
             
             grid.innerHTML = students.map(student => `
-                <div class="student-card" onclick="showStudentDetail('${student._id || student.id}')">
+                <div class="student-card">
                     <div class="student-card-header">
                         <div class="student-name">${student.name} ${student.surname}</div>
+                        <button class="action-btn btn-delete" onclick="deleteStudent('${student._id || student.id}', event)">Sil</button>
                     </div>
-                    <div class="student-info">
+                    <div class="student-info" onclick="showStudentDetail('${student._id || student.id}')">
                         <div class="info-row">
                             <span class="info-label">Yaş:</span>
                             <span class="info-value">${student.age}</span>
@@ -1539,6 +1475,42 @@
                     </div>
                 </div>
             `).join('');
+        }
+
+        async function deleteStudent(studentId, event) {
+            if (event) event.stopPropagation();
+            
+            if (!confirm('Bu öğrenciyi silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/students/${studentId}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Local veriden sil
+                    students = students.filter(s => (s._id || s.id) != studentId);
+                    
+                    updateStats();
+                    updateStudentsGrid();
+                    updateScheduleStudentsGrid();
+                    alert('✅ Öğrenci silindi!');
+                    
+                    // Eğer detay modal'ı açıksa kapat
+                    if (currentDetailStudentId === studentId) {
+                        closeStudentDetailModal();
+                    }
+                } else {
+                    alert('❌ Öğrenci silinirken hata oluştu!');
+                }
+            } catch (error) {
+                console.error('Öğrenci silme hatası:', error);
+                alert('❌ Öğrenci silinirken hata oluştu!');
+            }
         }
 
         function updateScheduleStudentsGrid() {
@@ -1571,6 +1543,8 @@
         async function showStudentDetail(studentId) {
             const student = students.find(s => (s._id || s.id) == studentId);
             if (!student) return;
+
+            currentDetailStudentId = studentId;
 
             const content = `
                 <div class="detail-grid">
@@ -1621,6 +1595,7 @@
 
         function closeStudentDetailModal() {
             document.getElementById('studentDetailModal').classList.remove('active');
+            currentDetailStudentId = null;
         }
 
         // ============ WEEKLY SCHEDULE ============
@@ -1631,98 +1606,11 @@
             currentScheduleStudentId = studentId;
 
             if (!student.weeklySchedule) {
-                openCreateScheduleModal(studentId);
+                openEditScheduleModal(studentId);
             } else {
                 displayWeeklySchedule(student);
             }
         }
-
-        function openCreateScheduleModal(studentId) {
-            const student = students.find(s => (s._id || s.id) == studentId);
-            currentScheduleStudentId = studentId;
-
-            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-            const formContent = days.map((day, index) => `
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="day${index}" onchange="toggleDayInputs(${index})">
-                        ${day}
-                    </label>
-                    <div id="dayInputs${index}" style="display: none; margin-top: 10px; padding-left: 20px;">
-                        <div class="form-group">
-                            <label for="dayTime${index}">Saat</label>
-                            <input type="time" id="dayTime${index}">
-                        </div>
-                        <div class="form-group">
-                            <label for="dayDuration${index}">Süre (Dakika)</label>
-                            <select id="dayDuration${index}">
-                                <option value="60">60 dk</option>
-                                <option value="90">90 dk</option>
-                                <option value="120">120 dk</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            document.getElementById('scheduleFormDays').innerHTML = formContent;
-            document.getElementById('createScheduleModal').classList.add('active');
-        }
-
-        function toggleDayInputs(dayIndex) {
-            const checkbox = document.getElementById(`day${dayIndex}`);
-            const inputs = document.getElementById(`dayInputs${dayIndex}`);
-            inputs.style.display = checkbox.checked ? 'block' : 'none';
-        }
-
-        function closeCreateScheduleModal() {
-            document.getElementById('createScheduleModal').classList.remove('active');
-            currentScheduleStudentId = null;
-        }
-
-        document.getElementById('createScheduleForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-            const schedule = {};
-
-            days.forEach((day, index) => {
-                const checkbox = document.getElementById(`day${index}`);
-                if (checkbox.checked) {
-                    const time = document.getElementById(`dayTime${index}`).value;
-                    const duration = document.getElementById(`dayDuration${index}`).value;
-                    if (time) {
-                        schedule[day] = { time, duration };
-                    }
-                }
-            });
-
-            const student = students.find(s => (s._id || s.id) == currentScheduleStudentId);
-            if (student) {
-                try {
-                    const response = await fetch(`${API_URL}/api/students/${currentScheduleStudentId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ weeklySchedule: schedule })
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        student.weeklySchedule = schedule;
-                        updateScheduleStudentsGrid();
-                        closeCreateScheduleModal();
-                        displayWeeklySchedule(student);
-                        alert('✅ Haftalık program oluşturuldu!');
-                    }
-                } catch (error) {
-                    console.error('Program kaydetme hatası:', error);
-                    alert('❌ Program kaydedilirken hata oluştu!');
-                }
-            }
-        });
 
         function displayWeeklySchedule(student) {
             const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
@@ -1750,7 +1638,179 @@
 
         function closeScheduleModal() {
             document.getElementById('weeklyScheduleModal').classList.remove('active');
+            currentScheduleStudentId = null;
         }
+
+        function editCurrentSchedule() {
+            if (currentScheduleStudentId) {
+                openEditScheduleModal(currentScheduleStudentId);
+            }
+        }
+
+        function editStudentSchedule(studentId) {
+            openEditScheduleModal(studentId);
+            closeStudentDetailModal();
+        }
+
+        function openEditScheduleModal(studentId) {
+            const student = students.find(s => (s._id || s.id) == studentId);
+            if (!student) return;
+
+            editingStudentId = studentId;
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            
+            let formContent = '';
+            days.forEach((day, index) => {
+                const lesson = student.weeklySchedule && student.weeklySchedule[day];
+                formContent += `
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="day${index}" ${lesson ? 'checked' : ''} onchange="toggleDayInputs(${index})">
+                            ${day}
+                        </label>
+                        <div id="dayInputs${index}" style="${lesson ? 'display: block;' : 'display: none;'} margin-top: 10px; padding-left: 20px;">
+                            <div class="form-group">
+                                <label for="dayTime${index}">Saat</label>
+                                <input type="time" id="dayTime${index}" value="${lesson ? lesson.time : ''}" onchange="checkScheduleConflict(${index})">
+                                <div id="conflictWarning${index}" class="btn-conflict">Bu saatte başka bir öğrenciye ders var!</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dayDuration${index}">Süre (Dakika)</label>
+                                <select id="dayDuration${index}">
+                                    <option value="60" ${lesson && lesson.duration == 60 ? 'selected' : ''}>60 dk</option>
+                                    <option value="90" ${lesson && lesson.duration == 90 ? 'selected' : ''}>90 dk</option>
+                                    <option value="120" ${lesson && lesson.duration == 120 ? 'selected' : ''}>120 dk</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('editScheduleDays').innerHTML = formContent;
+            document.getElementById('editScheduleTitle').textContent = `${student.name} ${student.surname} - Haftalık Program Düzenle`;
+            document.getElementById('editScheduleModal').classList.add('active');
+        }
+
+        function toggleDayInputs(dayIndex) {
+            const checkbox = document.getElementById(`day${dayIndex}`);
+            const inputs = document.getElementById(`dayInputs${dayIndex}`);
+            inputs.style.display = checkbox.checked ? 'block' : 'none';
+            
+            // Çakışma kontrolünü temizle
+            const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
+            if (conflictWarning) {
+                conflictWarning.classList.remove('show');
+            }
+        }
+
+        function checkScheduleConflict(dayIndex) {
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const day = days[dayIndex];
+            const timeInput = document.getElementById(`dayTime${dayIndex}`);
+            const time = timeInput.value;
+            
+            if (!time) return;
+            
+            // Aynı gün ve saatte başka öğrenci var mı kontrol et
+            let hasConflict = false;
+            students.forEach(student => {
+                if (student._id || student.id === editingStudentId) return;
+                if (student.weeklySchedule && student.weeklySchedule[day]) {
+                    const lesson = student.weeklySchedule[day];
+                    if (lesson.time === time) {
+                        hasConflict = true;
+                    }
+                }
+            });
+            
+            const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
+            if (hasConflict) {
+                conflictWarning.classList.add('show');
+                timeInput.style.borderColor = '#ef4444';
+            } else {
+                conflictWarning.classList.remove('show');
+                timeInput.style.borderColor = '';
+            }
+        }
+
+        function closeEditScheduleModal() {
+            document.getElementById('editScheduleModal').classList.remove('active');
+            editingStudentId = null;
+        }
+
+        document.getElementById('editScheduleForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const schedule = {};
+
+            // Önce çakışma kontrolü yap
+            let hasConflict = false;
+            days.forEach((day, index) => {
+                const checkbox = document.getElementById(`day${index}`);
+                if (checkbox.checked) {
+                    const time = document.getElementById(`dayTime${index}`).value;
+                    if (time) {
+                        // Çakışma kontrolü
+                        students.forEach(student => {
+                            if ((student._id || student.id) == editingStudentId) return;
+                            if (student.weeklySchedule && student.weeklySchedule[day]) {
+                                const lesson = student.weeklySchedule[day];
+                                if (lesson.time === time) {
+                                    hasConflict = true;
+                                    document.getElementById(`conflictWarning${index}`).classList.add('show');
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+
+            if (hasConflict) {
+                alert('❌ Bazı saatlerde çakışma var! Lütfen düzelttikten sonra tekrar deneyin.');
+                return;
+            }
+
+            // Çakışma yoksa devam et
+            days.forEach((day, index) => {
+                const checkbox = document.getElementById(`day${index}`);
+                if (checkbox.checked) {
+                    const time = document.getElementById(`dayTime${index}`).value;
+                    const duration = document.getElementById(`dayDuration${index}`).value;
+                    if (time) {
+                        schedule[day] = { time, duration };
+                    }
+                }
+            });
+
+            const student = students.find(s => (s._id || s.id) == editingStudentId);
+            if (student) {
+                try {
+                    const response = await fetch(`${API_URL}/api/students/${editingStudentId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ weeklySchedule: schedule })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        student.weeklySchedule = schedule;
+                        updateStats();
+                        updateScheduleStudentsGrid();
+                        closeEditScheduleModal();
+                        displayWeeklySchedule(student);
+                        alert('✅ Haftalık program güncellendi!');
+                    }
+                } catch (error) {
+                    console.error('Program kaydetme hatası:', error);
+                    alert('❌ Program kaydedilirken hata oluştu!');
+                }
+            }
+        });
 
         function downloadScheduleImage() {
             const element = document.getElementById('scheduleImageContainer');
@@ -1764,116 +1824,6 @@
                 link.click();
             });
         }
-
-        // ============ CALENDAR ============
-        function renderCalendar() {
-            const monthNames = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-                              'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-            
-            document.getElementById('calendarMonth').textContent = 
-                `${monthNames[currentMonth]} ${currentYear}`;
-            
-            const firstDay = new Date(currentYear, currentMonth, 1);
-            const lastDay = new Date(currentYear, currentMonth + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startingDayOfWeek = firstDay.getDay();
-            
-            const grid = document.getElementById('calendarGrid');
-            grid.innerHTML = '';
-            
-            // Day headers
-            const dayNames = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'];
-            dayNames.forEach(day => {
-                const header = document.createElement('div');
-                header.className = 'calendar-day-header';
-                header.textContent = day;
-                grid.appendChild(header);
-            });
-            
-            // Empty cells before first day
-            for (let i = 0; i < startingDayOfWeek; i++) {
-                grid.appendChild(document.createElement('div'));
-            }
-            
-            // Days
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const dayLessons = lessons.filter(l => l.date === dateStr);
-                
-                const dayDiv = document.createElement('div');
-                dayDiv.className = 'calendar-day' + (dayLessons.length > 0 ? ' has-lesson' : '');
-                dayDiv.innerHTML = `
-                    <div class="calendar-day-number">${day}</div>
-                    ${dayLessons.length > 0 ? `<div class="calendar-day-lessons">${dayLessons.length} ders</div>` : ''}
-                `;
-                grid.appendChild(dayDiv);
-            }
-        }
-
-        function changeMonth(delta) {
-            currentMonth += delta;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            } else if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            renderCalendar();
-        }
-
-        // ============ LESSON MODAL ============
-        function updateStudentSelect() {
-            const select = document.getElementById('lessonStudent');
-            select.innerHTML = '<option value="">Öğrenci seçiniz</option>' +
-                students.map(student => 
-                    `<option value="${student._id || student.id}">${student.name} ${student.surname}</option>`
-                ).join('');
-        }
-
-        function openAddLessonModal() {
-            document.getElementById('addLessonModal').classList.add('active');
-        }
-
-        function closeAddLessonModal() {
-            document.getElementById('addLessonModal').classList.remove('active');
-            document.getElementById('addLessonForm').reset();
-        }
-
-        document.getElementById('addLessonForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const lesson = {
-                studentId: document.getElementById('lessonStudent').value,
-                date: document.getElementById('lessonDate').value,
-                time: document.getElementById('lessonTime').value,
-                duration: document.getElementById('lessonDuration').value,
-                notes: document.getElementById('lessonNotes').value
-            };
-            
-            try {
-                const response = await fetch(`${API_URL}/api/lessons`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(lesson)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    lessons.push({ ...lesson, id: result.lessonId || Date.now() });
-                    updateStats();
-                    renderCalendar();
-                    closeAddLessonModal();
-                    alert('✅ Ders başarıyla eklendi!');
-                }
-            } catch (error) {
-                console.error('Ders ekleme hatası:', error);
-                alert('❌ Ders eklenirken hata oluştu!');
-            }
-        });
 
         // Search functionality
         document.getElementById('studentSearch')?.addEventListener('input', function(e) {
