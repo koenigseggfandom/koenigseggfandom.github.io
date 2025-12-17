@@ -837,6 +837,172 @@
             font-size: 16px;
         }
 
+        /* Footer Styles */
+        footer {
+            background: rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Gruppo', cursive;
+            font-size: 42px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .footer-description {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .footer-heading {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: #6366f1;
+            transform: translateX(5px);
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: #6366f1;
+        }
+
+        .contact-icon {
+            background: rgba(99, 102, 241, 0.2);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6366f1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .social-link:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .social-link.email {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+        }
+
+        .social-link.email:hover {
+            background: rgba(236, 72, 153, 0.3);
+            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
+        }
+
         @media (max-width: 1200px) {
             .features-grid { grid-template-columns: repeat(2, 1fr); }
             .testimonials-grid { grid-template-columns: 1fr; }
@@ -860,6 +1026,8 @@
             .form-container { padding: 40px 30px; }
             .section { padding: 80px 20px; }
             .site-logo { font-size: 36px; left: 20px; top: 20px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -1339,6 +1507,80 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <!-- Logo & Description -->
+                <div>
+                    <div class="footer-logo">AURA</div>
+                    <p class="footer-description">
+                        Profesyonel Valorant koçluk hizmetimizle oyun içi performansınızı en üst seviyeye taşıyoruz. Hedeflerinize birlikte ulaşalım! 🎮
+                    </p>
+                </div>
+
+                <!-- Hızlı Bağlantılar -->
+                <div>
+                    <h4 class="footer-heading">Hızlı Bağlantılar</h4>
+                    <ul class="footer-links">
+                        <li>
+                            <a href="#" onclick="document.querySelector('.hero-section').scrollIntoView({behavior: 'smooth'}); return false;" 
+                               class="footer-link">
+                                → Ana Sayfa
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="document.querySelectorAll('h2')[0].scrollIntoView({behavior: 'smooth'}); return false;"
+                               class="footer-link">
+                                → Ders Türleri
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="document.querySelectorAll('h2')[1].scrollIntoView({behavior: 'smooth'}); return false;"
+                               class="footer-link">
+                                → Öğrenci Yorumları
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="document.querySelector('.form-container').scrollIntoView({behavior: 'smooth'}); return false;"
+                               class="footer-link">
+                                → Başvuru Formu
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- İletişim -->
+                <div>
+                    <h4 class="footer-heading">Bize Ulaşın</h4>
+                    <div class="footer-contact">
+                        <a href="mailto:basvurukocluk@gmail.com" class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            basvurukocluk@gmail.com
+                        </a>
+                        <a href="https://discord.com/invite/srKYEKXUYW" target="_blank" class="contact-item">
+                            <span class="contact-icon">💬</span>
+                            Discord Sunucumuz
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 AURA Coaching. Tüm hakları saklıdır.</p>
+                <div class="social-links">
+                    <a href="https://discord.com/invite/srKYEKXUYW" target="_blank" class="social-link">
+                        💬
+                    </a>
+                    <a href="mailto:basvurukocluk@gmail.com" class="social-link email">
+                        📧
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script>
         // ============ TYPEWRITER EFFECT ============
         const words = [
@@ -1550,61 +1792,6 @@
                 }, 2000);
             }
         });
-
-        // ============ ALTERNATIVE: PARALLEL SUBMISSION ============
-        // Yukarıdaki kod sıralı gönderim yapar. 
-        // Eğer paralel gönderim istiyorsanız aşağıdaki kodu kullanabilirsiniz:
-        /*
-        document.getElementById('coachingForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const successMsg = document.getElementById('successMessage');
-            const errorMsg = document.getElementById('errorMessage');
-            
-            successMsg.classList.remove('show');
-            errorMsg.classList.remove('show');
-            
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Gönderiliyor...';
-            
-            // Validation kodu buraya...
-            
-            try {
-                // 1. API'ye gönder (async, await beklemez)
-                const apiData = {
-                    // form verileri...
-                };
-                
-                const apiPromise = fetch(`${API_URL}/api/applications`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(apiData)
-                }).then(response => response.json());
-                
-                // 2. FormSubmit'e gönder
-                const form = document.getElementById('coachingForm');
-                const formData = new FormData(form);
-                const formSubmitPromise = fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                // İkisini de paralel çalıştır
-                await Promise.allSettled([apiPromise, formSubmitPromise]);
-                
-                successMsg.classList.add('show');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Başvuruyu Gönder';
-                
-            } catch (error) {
-                errorMsg.textContent = `❌ Gönderim hatası: ${error.message}`;
-                errorMsg.classList.add('show');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Başvuruyu Gönder';
-            }
-        });
-        */
     </script>
 </body>
 </html>
