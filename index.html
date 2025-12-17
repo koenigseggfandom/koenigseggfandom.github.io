@@ -49,7 +49,7 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
-            background: #0a0e27; /* Sabit arka plan rengi */
+            background: #0a0e27;
         }
 
         .orb {
@@ -133,17 +133,27 @@
             text-align: center;
         }
 
-        .hero-title {
-            font-size: 72px;
-            font-weight: 800;
-            margin-bottom: 20px;
+        /* YENİ: Ana Başlık - AURA COACHING */
+        .main-title {
+            font-family: 'Gruppo', cursive;
+            font-size: 120px;
+            font-weight: 400;
+            margin-bottom: 30px;
             background: linear-gradient(135deg, #6366f1, #ec4899, #14b8a6, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             background-size: 300% 300%;
-            animation: gradientShift 8s ease infinite; /* Yavaşlatılmış gradyan */
-            min-height: 90px;
+            animation: gradientShift 8s ease infinite;
+            letter-spacing: 2px;
+        }
+
+        /* YENİ: Typewriter Subtitle */
+        .hero-subtitle {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -168,7 +178,7 @@
         .word-1 {
             color: #6366f1;
             font-family: 'Poppins', sans-serif;
-            font-size: 80px;
+            font-size: 45px;
             border-color: #6366f1;
         }
 
@@ -176,7 +186,7 @@
             color: #ec4899;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            font-size: 75px;
+            font-size: 42px;
             border-color: #ec4899;
         }
 
@@ -184,7 +194,7 @@
             color: #14b8a6;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-weight: 700;
-            font-size: 78px;
+            font-size: 44px;
             border-color: #14b8a6;
         }
 
@@ -452,7 +462,6 @@
             transform: translateY(-2px);
         }
 
-        /* Tooltip for Tracker */
         .tooltip-container {
             position: relative;
             display: inline-block;
@@ -633,7 +642,6 @@
             }
         }
 
-        /* Lesson Types Section */
         .lesson-types {
             max-width: 1200px;
             margin: 0 auto 80px;
@@ -701,7 +709,6 @@
             font-weight: bold;
         }
 
-        /* Comparison Table */
         .comparison-section {
             max-width: 1200px;
             margin: 0 auto 80px;
@@ -771,7 +778,6 @@
             font-size: 20px;
         }
 
-        /* FAQ Section */
         .faq-section {
             max-width: 1000px;
             margin: 0 auto;
@@ -837,7 +843,6 @@
             font-size: 16px;
         }
 
-        /* Footer Styles */
         footer {
             background: rgba(255, 255, 255, 0.03);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -1011,13 +1016,16 @@
         }
 
         @media (max-width: 768px) {
-            .hero-title { 
-                font-size: 42px; 
+            .main-title { 
+                font-size: 56px;
+            }
+            .hero-subtitle { 
+                font-size: 28px;
                 flex-direction: column;
                 gap: 5px;
             }
             .word-1, .word-2, .word-3 {
-                font-size: 45px !important;
+                font-size: 30px !important;
             }
             h2 { font-size: 36px; }
             .features-grid { grid-template-columns: 1fr; }
@@ -1032,7 +1040,6 @@
     </style>
 </head>
 <body>
-    <!-- Logo -->
     <div class="site-logo">AURA</div>
 
     <div class="animated-bg">
@@ -1044,11 +1051,14 @@
     <!-- Hero Section -->
     <div class="section">
         <div class="section-content hero-section">
-            <h1 class="hero-title">
+            <h1 class="main-title">AURA COACHING</h1>
+            
+            <div class="hero-subtitle">
                 <span class="typewriter-word word-1" id="word1"></span>
                 <span class="typewriter-word word-2" id="word2"></span>
                 <span class="typewriter-word word-3" id="word3"></span>
-            </h1>
+            </div>
+            
             <p class="hero-description">
                 Profesyonel Valorant koçluk hizmetimizle oyun içi performansınızı en üst seviyeye taşıyoruz! Uzman ekibimiz, aim, oyun bilgisi, movement, pozisyon alma, iletişim becerileri, taktiksel stratejiler, ajan yönetimi ve daha birçok kritik alanda size birebir destek sağlar. 
                 
@@ -1178,40 +1188,41 @@
         </div>
     </div>
 
-<!-- Coaches Section (güncellenmiş kısım) -->
-<div class="section">
-    <div class="section-content">
-        <h2>Koçlarımızla Tanışın 👥</h2>
-        <div class="coaches-grid">
-            <div class="coach-card">
-                <div class="coach-avatar">
-                    <img src="https://i.ibb.co/YTNTzw3s/image.jpg" alt="Dash">
+    <!-- Coaches Section -->
+    <div class="section">
+        <div class="section-content">
+            <h2>Koçlarımızla Tanışın 👥</h2>
+            <div class="coaches-grid">
+                <div class="coach-card">
+                    <div class="coach-avatar">
+                        <img src="https://i.ibb.co/YTNTzw3s/image.jpg" alt="Dash">
+                    </div>
+                    <div class="coach-name">Dash</div>
+                    <div class="coach-rank">Radiant • Baş Koç</div>
+                    <p class="coach-specialty">Saf aim odaklı oyun mekanikleri, movement ve mikro karar süreçlerinde uzmanım. Tier 2 takımlar ve yüzlerce oyuncuya koçluk yaptım. Koçluk yaklaşımım; oyun takibini, hızlı ve etkili karar verme becerilerini ve oyun içinde soğukkanlılığı korumayı geliştirmeye yöneliktir.</p>
                 </div>
-                <div class="coach-name">Dash</div>
-                <div class="coach-rank">Radiant • Baş Koç</div>
-                <p class="coach-specialty">Saf aim odaklı oyun mekanikleri, movement ve mikro karar süreçlerinde uzmanım. Tier 2 takımlar ve yüzlerce oyuncuya koçluk yaptım. Koçluk yaklaşımım; oyun takibini, hızlı ve etkili karar verme becerilerini ve oyun içinde soğukkanlılığı korumayı geliştirmeye yöneliktir.</p>
-            </div>
-            
-            <div class="coach-card">
-                <div class="coach-avatar">
-                    <img src="https://i.ibb.co/WWh03mcG/a63e6c8a-1a82-4962-9cf7-b58ad0414828.jpg" alt="Dowsie">
+                
+                <div class="coach-card">
+                    <div class="coach-avatar">
+                        <img src="https://i.ibb.co/WWh03mcG/a63e6c8a-1a82-4962-9cf7-b58ad0414828.jpg" alt="Dowsie">
+                    </div>
+                    <div class="coach-name">Dowsie</div>
+                    <div class="coach-rank">Immortal 3 • Koç</div>
+                    <p class="coach-specialty">Game sense ve IGL olmak konusunda uzmanlaşmış bir oyuncuyum. Tier 2 ve Tier 3 takımlarda oynadım, peak'im Immortal 3. Koçluk yaklaşımım netlik, sabır ve oyuncuyu gerçek potansiyeline taşımaya odaklanır.</p>
                 </div>
-                <div class="coach-name">Dowsie</div>
-                <div class="coach-rank">Immortal 3 • Koç</div>
-                <p class="coach-specialty">Game sense ve IGL olmak konusunda uzmanlaşmış bir oyuncuyum. Tier 2 ve Tier 3 takımlarda oynadım, peak'im Immortal 3. Koçluk yaklaşımım netlik, sabır ve oyuncuyu gerçek potansiyeline taşımaya odaklanır.</p>
-            </div>
-            
-            <div class="coach-card">
-                <div class="coach-avatar">
-                    <img src="https://i.ibb.co/gMyYCBLQ/Whats-App-Gorsel-2025-12-16-saat-00-01-58-5d389c3b.jpg" alt="Dugi">
+                
+                <div class="coach-card">
+                    <div class="coach-avatar">
+                        <img src="https://i.ibb.co/gMyYCBLQ/Whats-App-Gorsel-2025-12-16-saat-00-01-58-5d389c3b.jpg" alt="Dugi">
+                    </div>
+                    <div class="coach-name">Dugi</div>
+                    <div class="coach-rank">Immortal 2 • Koç</div>
+                    <p class="coach-specialty">IGL deneyimine sahip, Tier 3 takımlarda oynamış flex bir oyuncuyum. Koçluk yaklaşımım; game sense ve aim konusunda paralel çalışarak, karar verme ve rakip okuma becerilerini geliştirmek üzerinedir.</p>
                 </div>
-                <div class="coach-name">Dugi</div>
-                <div class="coach-rank">Immortal 2 • Koç</div>
-                <p class="coach-specialty">IGL deneyimine sahip, Tier 3 takımlarda oynamış flex bir oyuncuyum. Koçluk yaklaşımım; game sense ve aim konusunda paralel çalışarak, karar verme ve rakip okuma becerilerini geliştirmek üzerinedir.</p>
             </div>
         </div>
     </div>
-</div>
+
     <!-- Comparison Section -->
     <div class="section">
         <div class="section-content">
@@ -1281,9 +1292,7 @@
                     ⚠️ Koçluk için yaş sınırı 16'dır
                 </div>
 
-                <!-- FORMSUBMIT İLE MAİL GÖNDERİMİ -->
                 <form id="coachingForm" action="https://formsubmit.co/basvurukocluk@gmail.com" method="POST">
-                    <!-- FormSubmit Gizli Ayarları -->
                     <input type="hidden" name="_subject" value="🎮 YENİ KOÇLUK BAŞVURUSU - Dash Coaching">
                     <input type="hidden" name="_template" value="box">
                     <input type="hidden" name="_captcha" value="false">
@@ -1383,7 +1392,6 @@
                         <textarea id="introduction" name="👋 Kendini Tanıt" required placeholder="Örn: Valorant'a 1 yıldır oynuyorum, genelde Duelist/Controller oynuyorum. Hafta içi akşamları ve hafta sonları aktifim..."></textarea>
                     </div>
 
-                    <!-- Opsiyonel İletişim -->
                     <div class="form-group">
                         <label for="discord">Discord (Opsiyonel)</label>
                         <input type="text" id="discord" name="💬 Discord" placeholder="kullaniciadi#1234">
@@ -1406,7 +1414,7 @@
     <!-- FAQ Section -->
     <div class="section">
         <div class="section-content">
-            <h2>⭐ Sıkça Sorulan Sorular</h2>
+            <h2>❔ Sıkça Sorulan Sorular</h2>
             <div class="faq-section">
                 <div class="faq-container">
                     <div class="faq-item">
@@ -1511,7 +1519,6 @@
     <footer>
         <div class="footer-content">
             <div class="footer-grid">
-                <!-- Logo & Description -->
                 <div>
                     <div class="footer-logo">AURA</div>
                     <p class="footer-description">
@@ -1519,7 +1526,6 @@
                     </p>
                 </div>
 
-                <!-- Hızlı Bağlantılar -->
                 <div>
                     <h4 class="footer-heading">Hızlı Bağlantılar</h4>
                     <ul class="footer-links">
@@ -1550,7 +1556,6 @@
                     </ul>
                 </div>
 
-                <!-- İletişim -->
                 <div>
                     <h4 class="footer-heading">Bize Ulaşın</h4>
                     <div class="footer-contact">
@@ -1566,7 +1571,6 @@
                 </div>
             </div>
 
-            <!-- Bottom Bar -->
             <div class="footer-bottom">
                 <p class="copyright">© 2025 AURA Coaching. Tüm hakları saklıdır.</p>
                 <div class="social-links">
@@ -1592,7 +1596,7 @@
         let currentWordIndex = 0;
         let currentCharIndex = 0;
         let isDeleting = false;
-        let typingSpeed = 150; // Yavaşlatılmış typewriter hızı
+        let typingSpeed = 150;
         let deletingSpeed = 80;
         let pauseBetweenWords = 1500;
         let pauseBetweenCycles = 3000;
@@ -1602,17 +1606,14 @@
             const element = document.getElementById(currentWordObj.elementId);
             
             if (isDeleting) {
-                // Silme işlemi
                 element.textContent = currentWordObj.text.substring(0, currentCharIndex - 1);
                 currentCharIndex--;
                 
                 if (currentCharIndex === 0) {
-                    // Kelime tamamen silindi
                     isDeleting = false;
                     currentWordIndex++;
                     
                     if (currentWordIndex === words.length) {
-                        // Tüm kelimeler tamamlandı, döngüyü yeniden başlat
                         setTimeout(() => {
                             currentWordIndex = 0;
                             setTimeout(typeWriter, 500);
@@ -1626,12 +1627,10 @@
                 
                 setTimeout(typeWriter, deletingSpeed);
             } else {
-                // Yazma işlemi
                 element.textContent = currentWordObj.text.substring(0, currentCharIndex + 1);
                 currentCharIndex++;
                 
                 if (currentCharIndex === currentWordObj.text.length) {
-                    // Kelime tamamlandı
                     isDeleting = true;
                     setTimeout(typeWriter, pauseBetweenWords);
                     return;
@@ -1641,7 +1640,6 @@
             }
         }
 
-        // Start typewriter effect when page loads
         window.addEventListener('load', function() {
             setTimeout(typeWriter, 1000);
         });
@@ -1651,18 +1649,16 @@
             const faqItem = element.parentElement;
             const allFaqs = document.querySelectorAll('.faq-item');
             
-            // Close all other FAQs
             allFaqs.forEach(item => {
                 if (item !== faqItem && item.classList.contains('active')) {
                     item.classList.remove('active');
                 }
             });
             
-            // Toggle current FAQ
             faqItem.classList.toggle('active');
         }
 
-        // ============ FORM VALIDATION AND DUAL SUBMISSION ============
+        // ============ FORM VALIDATION ============
         const API_URL = 'https://aura-coaching-api-production.up.railway.app';
 
         document.getElementById('coachingForm').addEventListener('submit', async function(e) {
@@ -1672,15 +1668,12 @@
             const successMsg = document.getElementById('successMessage');
             const errorMsg = document.getElementById('errorMessage');
             
-            // Hide previous messages
             successMsg.classList.remove('show');
             errorMsg.classList.remove('show');
             
-            // Disable button
             submitBtn.disabled = true;
             submitBtn.textContent = 'Gönderiliyor...';
             
-            // Validation
             const age = parseInt(document.getElementById('age').value);
             if (age < 16) {
                 errorMsg.textContent = '❌ Üzgünüz, koçluk hizmeti için minimum yaş sınırı 16\'dır.';
@@ -1714,7 +1707,6 @@
             }
 
             try {
-                // 1. ÖNCE API'YE GÖNDER
                 const apiData = {
                     name: document.getElementById('name').value,
                     surname: document.getElementById('surname').value,
@@ -1742,26 +1734,16 @@
                     throw new Error(apiResult.error || 'API hatası');
                 }
 
-                // 2. API BAŞARILIYSA, FORMSUBMIT'E GÖNDER
-                // FormSubmit'e gönderim için formu submit et
                 successMsg.classList.add('show');
-                
-                // Butonu sıfırla
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Başvuruyu Gönder';
                 
-                // FormSubmit'e göndermek için formu yeniden submit et
-                // (önceki preventDefault engelini kaldırarak)
                 setTimeout(() => {
-                    // Event listener'ı geçici olarak kaldır
                     const form = document.getElementById('coachingForm');
                     const submitHandler = arguments.callee;
                     form.removeEventListener('submit', submitHandler);
-                    
-                    // FormSubmit'e gönder
                     form.submit();
                     
-                    // 5 saniye sonra event listener'ı tekrar ekle (gerekirse)
                     setTimeout(() => {
                         form.addEventListener('submit', submitHandler);
                     }, 5000);
@@ -1769,17 +1751,11 @@
                 
             } catch (error) {
                 console.error('Form gönderme hatası:', error);
-                
-                // Sadece API hatası oldu, FormSubmit'e göndermeye çalışabiliriz
-                // veya kullanıcıya seçenek sunabiliriz
                 errorMsg.textContent = `❌ API kaydı yapılamadı: ${error.message}. FormSubmit ile email gönderiliyor...`;
                 errorMsg.classList.add('show');
-                
-                // Butonu sıfırla
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Başvuruyu Gönder';
                 
-                // FormSubmit'e göndermeyi dene
                 setTimeout(() => {
                     const form = document.getElementById('coachingForm');
                     const submitHandler = arguments.callee;
