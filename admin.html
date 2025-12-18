@@ -1555,8 +1555,12 @@
             
             grid.innerHTML = students.map(student => `
                 <div class="student-card">
+                    ${student.profileImage ? `
+                        <div style="text-align: center;">
+                            <img src="${student.profileImage}" class="student-avatar" alt="${student.name}">
+                        </div>
+                    ` : ''}
                     <div class="student-card-header">
-                        ${student.profileImage ? `<img src="${student.profileImage}" class="student-avatar" alt="${student.name}">` : ''}
                         <div class="student-name">${student.name} ${student.surname}</div>
                         <button class="action-btn btn-delete" onclick="deleteStudent('${student._id || student.id}', event)">Sil</button>
                     </div>
@@ -1652,6 +1656,11 @@
             currentDetailStudentId = studentId;
 
             const content = `
+                ${student.profileImage ? `
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <img src="${student.profileImage}" class="student-avatar" alt="${student.name}" style="width: 100px; height: 100px;">
+                    </div>
+                ` : ''}
                 <div class="detail-grid">
                     <div class="detail-item">
                         <div class="detail-label">Ad Soyad</div>
@@ -1678,6 +1687,17 @@
                         <div class="detail-value"><span class="rank-badge rank-${student.targetRank.toLowerCase()}">${student.targetRank}</span></div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
+                        <div class="detail-label">Profil Resmi URL</div>
+                        <div class="detail-value">
+                            <input type="text" id="editProfileImage" value="${student.profileImage || ''}" 
+                                   placeholder="Imgur vb. link girin" 
+                                   style="width: 100%; padding: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white;">
+                            <button onclick="updateProfileImage('${student._id || student.id}')" 
+                                    class="action-btn btn-edit" 
+                                    style="margin-top: 10px; width: 100%;">Profil Resmini Güncelle</button>
+                        </div>
+                    </div>
+                    <div class="detail-item" style="grid-column: 1 / -1;">
                         <div class="detail-label">Tracker Link</div>
                         <div class="detail-value" style="font-size: 13px; word-break: break-all;">
                             ${student.tracker ? `<a href="${student.tracker}" target="_blank" style="color: #6366f1; text-decoration: none;">${student.tracker}</a>` : '-'}
@@ -1701,6 +1721,42 @@
         function closeStudentDetailModal() {
             document.getElementById('studentDetailModal').classList.remove('active');
             currentDetailStudentId = null;
+        }
+
+        async function updateProfileImage(studentId) {
+            const newImageUrl = document.getElementById('editProfileImage').value;
+            
+            if (!newImageUrl.trim()) {
+                alert('⚠️ Lütfen bir resim URL\'si girin!');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/students/${studentId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ profileImage: newImageUrl })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Local veriyi güncelle
+                    const student = students.find(s => (s._id || s.id) == studentId);
+                    if (student) {
+                        student.profileImage = newImageUrl;
+                    }
+                    
+                    updateStudentsGrid();
+                    closeStudentDetailModal();
+                    alert('✅ Profil resmi güncellendi!');
+                } else {
+                    alert('❌ Güncelleme başarısız!');
+                }
+            } catch (error) {
+                console.error('Profil resmi güncelleme hatası:', error);
+                alert('❌ Profil resmi güncellenirken hata oluştu!');
+            }
         }
 
         // ============ COACHES ============
