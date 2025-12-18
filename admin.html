@@ -758,7 +758,7 @@
             display: block;
         }
 
-        /* 1. "Bu baÅŸvuruyu Ã¶ÄŸrenci olarak ekle" butonu iÃ§in yeni stil */
+        /* 1. "Bu başvuruyu öğrenci olarak ekle" butonu için yeni stil */
         .add-lesson-btn {
             width: 100%;
             padding: 18px 24px;
@@ -803,7 +803,7 @@
             left: 100%;
         }
 
-        /* 2. Ders sÃ¼resi seÃ§imi iÃ§in dropdown stil dÃ¼zenlemeleri */
+        /* 2. Ders süresi seçimi için dropdown stil düzenlemeleri */
         .form-group select option {
             background: rgba(15, 23, 42, 0.98);
             color: #fff;
@@ -825,7 +825,7 @@
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
         }
 
-        /* Edit schedule modal'Ä±ndaki checkbox dÃ¼zenlemeleri */
+        /* Edit schedule modal'ındaki checkbox düzenlemeleri */
         .form-group label input[type="checkbox"] {
             margin-right: 12px;
             width: 18px;
@@ -880,24 +880,24 @@
         <div class="login-box">
             <div class="login-logo">AURA</div>
             <h1 class="login-title">Admin Panel</h1>
-            <p class="login-subtitle">YÃ¶netim Sistemi</p>
+            <p class="login-subtitle">Yönetim Sistemi</p>
             
             <div class="error-message" id="errorMessage">
-                KullanÄ±cÄ± adÄ± veya ÅŸifre hatalÄ±!
+                Kullanıcı adı veya şifre hatalı!
             </div>
             
             <form id="loginForm">
                 <div class="input-group">
-                    <label for="username">KullanÄ±cÄ± AdÄ±</label>
-                    <input type="text" id="username" placeholder="KullanÄ±cÄ± adÄ±nÄ±zÄ± girin" required>
+                    <label for="username">Kullanıcı Adı</label>
+                    <input type="text" id="username" placeholder="Kullanıcı adınızı girin" required>
                 </div>
                 
                 <div class="input-group">
-                    <label for="password">Åžifre</label>
-                    <input type="password" id="password" placeholder="Åžifrenizi girin" required>
+                    <label for="password">Şifre</label>
+                    <input type="password" id="password" placeholder="Şifrenizi girin" required>
                 </div>
                 
-                <button type="submit" class="login-btn">GiriÅŸ Yap</button>
+                <button type="submit" class="login-btn">Giriş Yap</button>
             </form>
         </div>
     </div>
@@ -912,21 +912,21 @@
             
             <div class="sidebar-menu">
                 <div class="menu-item active" onclick="showSection('overview')">
-                    <span>Genel BakÄ±ÅŸ</span>
+                    <span>Genel Bakış</span>
                 </div>
                 <div class="menu-item" onclick="showSection('applications')">
-                    <span>BaÅŸvurular</span>
+                    <span>Başvurular</span>
                 </div>
                 <div class="menu-item" onclick="showSection('students')">
-                    <span>Ã–ÄŸrenciler</span>
+                    <span>Öğrenciler</span>
                 </div>
                 <div class="menu-item" onclick="showSection('schedule')">
-                    <span>HaftalÄ±k Program</span>
+                    <span>Haftalık Program</span>
                 </div>
             </div>
             
             <div class="logout-btn" onclick="logout()">
-                Ã‡Ä±kÄ±ÅŸ Yap
+                Çıkış Yap
             </div>
         </div>
 
@@ -935,18 +935,18 @@
             <!-- Overview Section -->
             <div class="content-section active" id="overviewSection">
                 <div class="page-header">
-                    <h1 class="page-title">Genel BakÄ±ÅŸ</h1>
-                    <p class="page-subtitle">AURA Coaching istatistikleri ve Ã¶zet bilgiler</p>
+                    <h1 class="page-title">Genel Bakış</h1>
+                    <p class="page-subtitle">AURA Coaching istatistikleri ve özet bilgiler</p>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value" id="totalStudents">0</div>
-                        <div class="stat-label">Toplam Ã–ÄŸrenci</div>
+                        <div class="stat-label">Toplam Öğrenci</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="totalApplications">0</div>
-                        <div class="stat-label">Bekleyen BaÅŸvuru</div>
+                        <div class="stat-label">Bekleyen Başvuru</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="totalLessons">0</div>
@@ -954,20 +954,20 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-value">95%</div>
-                        <div class="stat-label">BaÅŸarÄ± OranÄ±</div>
+                        <div class="stat-label">Başarı Oranı</div>
                     </div>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">Son BaÅŸvurular</h3>
+                        <h3 class="table-title">Son Başvurular</h3>
                     </div>
                     <table>
                         <thead>
                             <tr>
                                 <th>Ad Soyad</th>
-                                <th>YaÅŸ</th>
-                                <th>Ãœlke</th>
+                                <th>Yaş</th>
+                                <th>Ülke</th>
                                 <th>Rank</th>
                                 <th>Tarih</th>
                             </tr>
@@ -975,7 +975,7 @@
                         <tbody id="recentApplicationsBody">
                             <tr>
                                 <td colspan="5" class="empty-state">
-                                    <div>HenÃ¼z baÅŸvuru yok</div>
+                                    <div>Henüz başvuru yok</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -986,31 +986,31 @@
             <!-- Applications Section -->
             <div class="content-section" id="applicationsSection">
                 <div class="page-header">
-                    <h1 class="page-title">BaÅŸvurular <span class="stats-badge" id="applicationCount">0</span></h1>
-                    <p class="page-subtitle">TÃ¼m baÅŸvurularÄ± gÃ¶rÃ¼ntÃ¼leyin ve Ã¶ÄŸrenci ekleyin</p>
+                    <h1 class="page-title">Başvurular <span class="stats-badge" id="applicationCount">0</span></h1>
+                    <p class="page-subtitle">Tüm başvuruları görüntüleyin ve öğrenci ekleyin</p>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">BaÅŸvuru Listesi</h3>
-                        <input type="text" class="search-box" id="applicationSearch" placeholder="BaÅŸvuru ara...">
+                        <h3 class="table-title">Başvuru Listesi</h3>
+                        <input type="text" class="search-box" id="applicationSearch" placeholder="Başvuru ara...">
                     </div>
                     <table>
                         <thead>
                             <tr>
                                 <th>Ad Soyad</th>
-                                <th>YaÅŸ</th>
-                                <th>Ãœlke</th>
+                                <th>Yaş</th>
+                                <th>Ülke</th>
                                 <th>Mevcut Rank</th>
                                 <th>Hedef Rank</th>
                                 <th>Tarih</th>
-                                <th>Ä°ÅŸlem</th>
+                                <th>İşlem</th>
                             </tr>
                         </thead>
                         <tbody id="applicationsTableBody">
                             <tr>
                                 <td colspan="7" class="empty-state">
-                                    <div>HenÃ¼z baÅŸvuru yok</div>
+                                    <div>Henüz başvuru yok</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -1021,14 +1021,14 @@
             <!-- Students Section -->
             <div class="content-section" id="studentsSection">
                 <div class="page-header">
-                    <h1 class="page-title">Ã–ÄŸrenciler <span class="stats-badge" id="studentCount">0</span></h1>
-                    <p class="page-subtitle">TÃ¼m kayÄ±tlÄ± Ã¶ÄŸrencileri gÃ¶rÃ¼ntÃ¼leyin</p>
+                    <h1 class="page-title">Öğrenciler <span class="stats-badge" id="studentCount">0</span></h1>
+                    <p class="page-subtitle">Tüm kayıtlı öğrencileri görüntüleyin</p>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">Ã–ÄŸrenci Listesi</h3>
-                        <input type="text" class="search-box" id="studentSearch" placeholder="Ã–ÄŸrenci ara...">
+                        <h3 class="table-title">Öğrenci Listesi</h3>
+                        <input type="text" class="search-box" id="studentSearch" placeholder="Öğrenci ara...">
                     </div>
                     <div class="students-grid" id="studentsGrid">
                         <!-- Students will be populated here -->
@@ -1039,13 +1039,13 @@
             <!-- Weekly Schedule Section -->
             <div class="content-section" id="scheduleSection">
                 <div class="page-header">
-                    <h1 class="page-title">HaftalÄ±k Program</h1>
-                    <p class="page-subtitle">Ã–ÄŸrencilerin haftalÄ±k ders programlarÄ±</p>
+                    <h1 class="page-title">Haftalık Program</h1>
+                    <p class="page-subtitle">Öğrencilerin haftalık ders programları</p>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">Ã–ÄŸrenci SeÃ§</h3>
+                        <h3 class="table-title">Öğrenci Seç</h3>
                     </div>
                     <div class="students-grid" id="scheduleStudentsGrid">
                         <!-- Students will be populated here -->
@@ -1058,13 +1058,13 @@
     <!-- Student Detail Modal -->
     <div class="modal student-detail-modal" id="studentDetailModal">
         <div class="modal-content">
-            <h3 class="modal-title">Ã–ÄŸrenci DetaylarÄ±</h3>
+            <h3 class="modal-title">Öğrenci Detayları</h3>
             <div id="studentDetailContent">
                 <!-- Will be populated by JavaScript -->
             </div>
             <div class="modal-buttons">
                 <button type="button" class="modal-btn btn-secondary" onclick="closeStudentDetailModal()">Kapat</button>
-                <button type="button" class="modal-btn btn-primary" onclick="editStudentSchedule(currentDetailStudentId)">ProgramÄ± DÃ¼zenle</button>
+                <button type="button" class="modal-btn btn-primary" onclick="editStudentSchedule(currentDetailStudentId)">Programı Düzenle</button>
             </div>
         </div>
     </div>
@@ -1072,7 +1072,7 @@
     <!-- Application Detail Modal -->
     <div class="modal" id="applicationDetailModal">
         <div class="modal-content" style="max-width: 700px;">
-            <h3 class="modal-title">BaÅŸvuru DetaylarÄ±</h3>
+            <h3 class="modal-title">Başvuru Detayları</h3>
             <div id="applicationDetailContent">
                 <!-- Will be populated by JavaScript -->
             </div>
@@ -1088,8 +1088,8 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <h3 class="modal-title" id="scheduleStudentName" style="margin: 0;"></h3>
                 <div>
-                    <button class="action-btn btn-edit" onclick="editCurrentSchedule()">ProgramÄ± DÃ¼zenle</button>
-                    <button class="btn-download" onclick="downloadScheduleImage()">Resim Olarak Ä°ndir</button>
+                    <button class="action-btn btn-edit" onclick="editCurrentSchedule()">Programı Düzenle</button>
+                    <button class="btn-download" onclick="downloadScheduleImage()">Resim Olarak İndir</button>
                 </div>
             </div>
             <div id="scheduleImageContainer">
@@ -1108,17 +1108,17 @@
     <!-- Edit Schedule Modal -->
     <div class="modal" id="editScheduleModal">
         <div class="modal-content" style="max-width: 600px;">
-            <h3 class="modal-title" id="editScheduleTitle">HaftalÄ±k Program DÃ¼zenle</h3>
+            <h3 class="modal-title" id="editScheduleTitle">Haftalık Program Düzenle</h3>
             <div id="conflictWarning" class="error-message" style="display: none;">
-                Bu saatte baÅŸka bir Ã¶ÄŸrenciye ders var!
+                Bu saatte başka bir öğrenciye ders var!
             </div>
             <form id="editScheduleForm">
                 <div id="editScheduleDays">
                     <!-- Days will be populated here -->
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="modal-btn btn-secondary" onclick="closeEditScheduleModal()">Ä°ptal</button>
-                    <button type="submit" class="modal-btn btn-primary">DeÄŸiÅŸiklikleri Kaydet</button>
+                    <button type="button" class="modal-btn btn-secondary" onclick="closeEditScheduleModal()">İptal</button>
+                    <button type="submit" class="modal-btn btn-primary">Değişiklikleri Kaydet</button>
                 </div>
             </form>
         </div>
@@ -1126,7 +1126,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-        // âš ï¸âš ï¸âš ï¸ BU URL'YÄ° KENDÄ° RAILWAY URL'NÄ°ZLE DEÄžÄ°ÅžTÄ°RÄ°N âš ï¸âš ï¸âš ï¸
+        // ⚠️⚠️⚠️ BU URL'Yİ KENDİ RAILWAY URL'NİZLE DEĞİŞTİRİN ⚠️⚠️⚠️
         const API_URL = 'https://aura-coaching-api-production.up.railway.app';
         
         // ============ AUTHENTICATION ============
@@ -1160,7 +1160,7 @@
         }
 
         function logout() {
-            if (confirm('Ã‡Ä±kÄ±ÅŸ yapmak istediÄŸinizden emin misiniz?')) {
+            if (confirm('Çıkış yapmak istediğinizden emin misiniz?')) {
                 localStorage.removeItem('isLoggedIn');
                 document.getElementById('loginScreen').style.display = 'flex';
                 document.getElementById('dashboard').classList.remove('active');
@@ -1183,7 +1183,7 @@
 
         async function loadData() {
             try {
-                // API'den verileri Ã§ek
+                // API'den verileri çek
                 const [appsResponse, studentsResponse] = await Promise.all([
                     fetch(`${API_URL}/api/applications`).then(res => res.json()),
                     fetch(`${API_URL}/api/students`).then(res => res.json())
@@ -1197,8 +1197,8 @@
                 updateApplicationsTable();
                 updateRecentApplications();
             } catch (error) {
-                console.error('Veri yÃ¼klenirken hata:', error);
-                // Fallback: localStorage'den yÃ¼kle
+                console.error('Veri yüklenirken hata:', error);
+                // Fallback: localStorage'den yükle
                 const savedStudents = localStorage.getItem('auraStudents');
                 const savedApplications = localStorage.getItem('auraApplications');
                 
@@ -1232,7 +1232,7 @@
             document.getElementById('totalStudents').textContent = students.length;
             document.getElementById('totalApplications').textContent = applications.length;
             
-            // Toplam ders sayÄ±sÄ±nÄ± hesapla (haftalÄ±k programlardan)
+            // Toplam ders sayısını hesapla (haftalık programlardan)
             let totalLessons = 0;
             students.forEach(student => {
                 if (student.weeklySchedule) {
@@ -1251,7 +1251,7 @@
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="7" class="empty-state">
-                            <div>HenÃ¼z baÅŸvuru yok</div>
+                            <div>Henüz başvuru yok</div>
                         </td>
                     </tr>
                 `;
@@ -1267,7 +1267,7 @@
                     <td><span class="rank-badge rank-${app.targetRank.toLowerCase()}">${app.targetRank}</span></td>
                     <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
                     <td>
-                        <button class="action-btn btn-add-student" onclick="addStudentFromApplication(${index})">Ã–ÄŸrenci Ekle</button>
+                        <button class="action-btn btn-add-student" onclick="addStudentFromApplication(${index})">Öğrenci Ekle</button>
                         <button class="action-btn btn-delete" onclick="deleteApplication('${app._id || app.id}', ${index})">Sil</button>
                     </td>
                 </tr>
@@ -1282,7 +1282,7 @@
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="5" class="empty-state">
-                            <div>HenÃ¼z baÅŸvuru yok</div>
+                            <div>Henüz başvuru yok</div>
                         </td>
                     </tr>
                 `;
@@ -1301,7 +1301,7 @@
         }
 
         async function deleteApplication(appId, index) {
-            if (!confirm('Bu baÅŸvuruyu silmek istediÄŸinizden emin misiniz?')) {
+            if (!confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) {
                 return;
             }
             
@@ -1317,13 +1317,13 @@
                     updateStats();
                     updateApplicationsTable();
                     updateRecentApplications();
-                    alert('âœ… BaÅŸvuru silindi!');
+                    alert('✅ Başvuru silindi!');
                 } else {
-                    alert('âŒ BaÅŸvuru silinirken hata oluÅŸtu!');
+                    alert('❌ Başvuru silinirken hata oluştu!');
                 }
             } catch (error) {
-                console.error('BaÅŸvuru silme hatasÄ±:', error);
-                alert('âŒ BaÅŸvuru silinirken hata oluÅŸtu!');
+                console.error('Başvuru silme hatası:', error);
+                alert('❌ Başvuru silinirken hata oluştu!');
             }
         }
 
@@ -1336,11 +1336,11 @@
                         <div class="detail-value">${app.name} ${app.surname}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">YaÅŸ</div>
+                        <div class="detail-label">Yaş</div>
                         <div class="detail-value">${app.age}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Ãœlke</div>
+                        <div class="detail-label">Ülke</div>
                         <div class="detail-value">${app.country}</div>
                     </div>
                     <div class="detail-item">
@@ -1362,16 +1362,16 @@
                         </div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
-                        <div class="detail-label">KoÃ§luktan Beklenti</div>
+                        <div class="detail-label">Koçluktan Beklenti</div>
                         <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.expectations}</div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
-                        <div class="detail-label">Kendini TanÄ±t</div>
+                        <div class="detail-label">Kendini Tanıt</div>
                         <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.introduction}</div>
                     </div>
                 </div>
                 <div style="margin-top: 25px; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <button class="add-lesson-btn" onclick="addStudentFromApplication(${index}); closeApplicationModal();">BU BAÅžVURUYU Ã–ÄžRENCÄ° OLARAK EKLE</button>
+                    <button class="add-lesson-btn" onclick="addStudentFromApplication(${index}); closeApplicationModal();">BU BAŞVURUYU ÖĞRENCİ OLARAK EKLE</button>
                 </div>
             `;
             
@@ -1400,7 +1400,7 @@
             };
             
             try {
-                // API'ye Ã¶ÄŸrenci ekle
+                // API'ye öğrenci ekle
                 const response = await fetch(`${API_URL}/api/students`, {
                     method: 'POST',
                     headers: {
@@ -1412,12 +1412,12 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    // API'den baÅŸvuruyu sil
+                    // API'den başvuruyu sil
                     await fetch(`${API_URL}/api/applications/${app._id || app.id}`, {
                         method: 'DELETE'
                     });
                     
-                    // Local verileri gÃ¼ncelle
+                    // Local verileri güncelle
                     applications.splice(index, 1);
                     students.push({ ...student, id: result.studentId || Date.now() });
                     
@@ -1427,11 +1427,11 @@
                     updateStudentsGrid();
                     updateScheduleStudentsGrid();
                     
-                    alert('âœ… Ã–ÄŸrenci baÅŸarÄ±yla eklendi!');
+                    alert('✅ Öğrenci başarıyla eklendi!');
                 }
             } catch (error) {
-                console.error('Ã–ÄŸrenci ekleme hatasÄ±:', error);
-                alert('âŒ Ã–ÄŸrenci eklenirken hata oluÅŸtu!');
+                console.error('Öğrenci ekleme hatası:', error);
+                alert('❌ Öğrenci eklenirken hata oluştu!');
             }
         }
 
@@ -1443,7 +1443,7 @@
             if (students.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state" style="grid-column: 1 / -1;">
-                        <div>HenÃ¼z kayÄ±tlÄ± Ã¶ÄŸrenci yok</div>
+                        <div>Henüz kayıtlı öğrenci yok</div>
                     </div>
                 `;
                 return;
@@ -1457,11 +1457,11 @@
                     </div>
                     <div class="student-info" onclick="showStudentDetail('${student._id || student.id}')">
                         <div class="info-row">
-                            <span class="info-label">YaÅŸ:</span>
+                            <span class="info-label">Yaş:</span>
                             <span class="info-value">${student.age}</span>
                         </div>
                         <div class="info-row">
-                            <span class="info-label">Ãœlke:</span>
+                            <span class="info-label">Ülke:</span>
                             <span class="info-value">${student.country}</span>
                         </div>
                         <div class="info-row">
@@ -1480,7 +1480,7 @@
         async function deleteStudent(studentId, event) {
             if (event) event.stopPropagation();
             
-            if (!confirm('Bu Ã¶ÄŸrenciyi silmek istediÄŸinizden emin misiniz?')) {
+            if (!confirm('Bu öğrenciyi silmek istediğinizden emin misiniz?')) {
                 return;
             }
             
@@ -1498,18 +1498,18 @@
                     updateStats();
                     updateStudentsGrid();
                     updateScheduleStudentsGrid();
-                    alert('âœ… Ã–ÄŸrenci silindi!');
+                    alert('✅ Öğrenci silindi!');
                     
-                    // EÄŸer detay modal'Ä± aÃ§Ä±ksa kapat
+                    // Eğer detay modal'ı açıksa kapat
                     if (currentDetailStudentId === studentId) {
                         closeStudentDetailModal();
                     }
                 } else {
-                    alert('âŒ Ã–ÄŸrenci silinirken hata oluÅŸtu!');
+                    alert('❌ Öğrenci silinirken hata oluştu!');
                 }
             } catch (error) {
-                console.error('Ã–ÄŸrenci silme hatasÄ±:', error);
-                alert('âŒ Ã–ÄŸrenci silinirken hata oluÅŸtu!');
+                console.error('Öğrenci silme hatası:', error);
+                alert('❌ Öğrenci silinirken hata oluştu!');
             }
         }
 
@@ -1519,7 +1519,7 @@
             if (students.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state" style="grid-column: 1 / -1;">
-                        <div>HenÃ¼z kayÄ±tlÄ± Ã¶ÄŸrenci yok</div>
+                        <div>Henüz kayıtlı öğrenci yok</div>
                     </div>
                 `;
                 return;
@@ -1533,7 +1533,7 @@
                     <div class="student-info">
                         <div class="info-row">
                             <span class="info-label">Program:</span>
-                            <span class="info-value">${student.weeklySchedule ? 'âœ… Var' : 'âŒ Yok'}</span>
+                            <span class="info-value">${student.weeklySchedule ? '✅ Var' : '❌ Yok'}</span>
                         </div>
                     </div>
                 </div>
@@ -1553,11 +1553,11 @@
                         <div class="detail-value">${student.name} ${student.surname}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">YaÅŸ</div>
+                        <div class="detail-label">Yaş</div>
                         <div class="detail-value">${student.age}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Ãœlke</div>
+                        <div class="detail-label">Ülke</div>
                         <div class="detail-value">${student.country}</div>
                     </div>
                     <div class="detail-item">
@@ -1579,11 +1579,11 @@
                         </div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
-                        <div class="detail-label">KoÃ§luktan Beklenti</div>
+                        <div class="detail-label">Koçluktan Beklenti</div>
                         <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${student.expectations || '-'}</div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
-                        <div class="detail-label">Kendini TanÄ±t</div>
+                        <div class="detail-label">Kendini Tanıt</div>
                         <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${student.introduction || '-'}</div>
                     </div>
                 </div>
@@ -1613,7 +1613,7 @@
         }
 
         function displayWeeklySchedule(student) {
-            const days = ['Pazartesi', 'SalÄ±', 'Ã‡arÅŸamba', 'PerÅŸembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             let html = '';
 
             days.forEach(day => {
@@ -1632,7 +1632,7 @@
             });
 
             document.getElementById('weeklyScheduleGrid').innerHTML = html;
-            document.getElementById('scheduleStudentName').textContent = `${student.name} ${student.surname} - HaftalÄ±k Program`;
+            document.getElementById('scheduleStudentName').textContent = `${student.name} ${student.surname} - Haftalık Program`;
             document.getElementById('weeklyScheduleModal').classList.add('active');
         }
 
@@ -1657,7 +1657,7 @@
             if (!student) return;
 
             editingStudentId = studentId;
-            const days = ['Pazartesi', 'SalÄ±', 'Ã‡arÅŸamba', 'PerÅŸembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             
             let formContent = '';
             days.forEach((day, index) => {
@@ -1672,10 +1672,10 @@
                             <div class="form-group">
                                 <label for="dayTime${index}">Saat</label>
                                 <input type="time" id="dayTime${index}" value="${lesson ? lesson.time : ''}" onchange="checkScheduleConflict(${index})">
-                                <div id="conflictWarning${index}" class="btn-conflict">Bu saatte baÅŸka bir Ã¶ÄŸrenciye ders var!</div>
+                                <div id="conflictWarning${index}" class="btn-conflict">Bu saatte başka bir öğrenciye ders var!</div>
                             </div>
                             <div class="form-group">
-                                <label for="dayDuration${index}">SÃ¼re (Dakika)</label>
+                                <label for="dayDuration${index}">Süre (Dakika)</label>
                                 <select id="dayDuration${index}">
                                     <option value="60" ${lesson && lesson.duration == 60 ? 'selected' : ''}>60 dk</option>
                                     <option value="90" ${lesson && lesson.duration == 90 ? 'selected' : ''}>90 dk</option>
@@ -1688,7 +1688,7 @@
             });
 
             document.getElementById('editScheduleDays').innerHTML = formContent;
-            document.getElementById('editScheduleTitle').textContent = `${student.name} ${student.surname} - HaftalÄ±k Program DÃ¼zenle`;
+            document.getElementById('editScheduleTitle').textContent = `${student.name} ${student.surname} - Haftalık Program Düzenle`;
             document.getElementById('editScheduleModal').classList.add('active');
         }
 
@@ -1697,7 +1697,7 @@
             const inputs = document.getElementById(`dayInputs${dayIndex}`);
             inputs.style.display = checkbox.checked ? 'block' : 'none';
             
-            // Ã‡akÄ±ÅŸma kontrolÃ¼nÃ¼ temizle
+            // Çakışma kontrolünü temizle
             const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
             if (conflictWarning) {
                 conflictWarning.classList.remove('show');
@@ -1705,14 +1705,14 @@
         }
 
         function checkScheduleConflict(dayIndex) {
-            const days = ['Pazartesi', 'SalÄ±', 'Ã‡arÅŸamba', 'PerÅŸembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const day = days[dayIndex];
             const timeInput = document.getElementById(`dayTime${dayIndex}`);
             const time = timeInput.value;
             
             if (!time) return;
             
-            // AynÄ± gÃ¼n ve saatte baÅŸka Ã¶ÄŸrenci var mÄ± kontrol et
+            // Aynı gün ve saatte başka öğrenci var mı kontrol et
             let hasConflict = false;
             students.forEach(student => {
                 if (student._id || student.id === editingStudentId) return;
@@ -1742,17 +1742,17 @@
         document.getElementById('editScheduleForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const days = ['Pazartesi', 'SalÄ±', 'Ã‡arÅŸamba', 'PerÅŸembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const schedule = {};
 
-            // Ã–nce Ã§akÄ±ÅŸma kontrolÃ¼ yap
+            // Önce çakışma kontrolü yap
             let hasConflict = false;
             days.forEach((day, index) => {
                 const checkbox = document.getElementById(`day${index}`);
                 if (checkbox.checked) {
                     const time = document.getElementById(`dayTime${index}`).value;
                     if (time) {
-                        // Ã‡akÄ±ÅŸma kontrolÃ¼
+                        // Çakışma kontrolü
                         students.forEach(student => {
                             if ((student._id || student.id) == editingStudentId) return;
                             if (student.weeklySchedule && student.weeklySchedule[day]) {
@@ -1768,11 +1768,11 @@
             });
 
             if (hasConflict) {
-                alert('âŒ BazÄ± saatlerde Ã§akÄ±ÅŸma var! LÃ¼tfen dÃ¼zelttikten sonra tekrar deneyin.');
+                alert('❌ Bazı saatlerde çakışma var! Lütfen düzelttikten sonra tekrar deneyin.');
                 return;
             }
 
-            // Ã‡akÄ±ÅŸma yoksa devam et
+            // Çakışma yoksa devam et
             days.forEach((day, index) => {
                 const checkbox = document.getElementById(`day${index}`);
                 if (checkbox.checked) {
@@ -1803,11 +1803,11 @@
                         updateScheduleStudentsGrid();
                         closeEditScheduleModal();
                         displayWeeklySchedule(student);
-                        alert('âœ… HaftalÄ±k program gÃ¼ncellendi!');
+                        alert('✅ Haftalık program güncellendi!');
                     }
                 } catch (error) {
-                    console.error('Program kaydetme hatasÄ±:', error);
-                    alert('âŒ Program kaydedilirken hata oluÅŸtu!');
+                    console.error('Program kaydetme hatası:', error);
+                    alert('❌ Program kaydedilirken hata oluştu!');
                 }
             }
         });
