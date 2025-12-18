@@ -834,6 +834,43 @@
             vertical-align: middle;
         }
 
+        /* Profil resmi stilleri */
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(99, 102, 241, 0.5);
+            margin-bottom: 15px;
+        }
+
+        .avatar-upload {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(99, 102, 241, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .coach-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            color: #6ee7b7;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -920,6 +957,9 @@
                 <div class="menu-item" onclick="showSection('students')">
                     <span>Öğrenciler</span>
                 </div>
+                <div class="menu-item" onclick="showSection('coaches')">
+                    <span>Koçlar</span>
+                </div>
                 <div class="menu-item" onclick="showSection('schedule')">
                     <span>Haftalık Program</span>
                 </div>
@@ -953,8 +993,8 @@
                         <div class="stat-label">Toplam Ders</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value">95%</div>
-                        <div class="stat-label">Başarı Oranı</div>
+                        <div class="stat-value" id="coachCount">0</div>
+                        <div class="stat-label">Toplam Koç</div>
                     </div>
                 </div>
 
@@ -1032,6 +1072,24 @@
                     </div>
                     <div class="students-grid" id="studentsGrid">
                         <!-- Students will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coaches Section -->
+            <div class="content-section" id="coachesSection">
+                <div class="page-header">
+                    <h1 class="page-title">Koçlar <span class="stats-badge" id="coachCountBadge">0</span></h1>
+                    <p class="page-subtitle">Tüm koçları görüntüleyin ve yönetin</p>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3 class="table-title">Koç Listesi</h3>
+                        <button class="action-btn btn-add-student" onclick="openAddCoachModal()">Yeni Koç Ekle</button>
+                    </div>
+                    <div class="students-grid" id="coachesGrid">
+                        <!-- Coaches will be populated here -->
                     </div>
                 </div>
             </div>
@@ -1124,6 +1182,46 @@
         </div>
     </div>
 
+    <!-- Add Coach Modal -->
+    <div class="modal" id="addCoachModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Yeni Koç Ekle</h3>
+            <form id="addCoachForm">
+                <div class="form-group">
+                    <label for="coachName">Ad</label>
+                    <input type="text" id="coachName" required>
+                </div>
+                <div class="form-group">
+                    <label for="coachSurname">Soyad</label>
+                    <input type="text" id="coachSurname" required>
+                </div>
+                <div class="form-group">
+                    <label for="coachEmail">E-posta</label>
+                    <input type="email" id="coachEmail">
+                </div>
+                <div class="form-group">
+                    <label for="coachDiscord">Discord</label>
+                    <input type="text" id="coachDiscord">
+                </div>
+                <div class="form-group">
+                    <label for="coachSpecialization">Uzmanlık</label>
+                    <select id="coachSpecialization">
+                        <option value="">Seçiniz</option>
+                        <option value="Duelist">Duelist</option>
+                        <option value="Controller">Controller</option>
+                        <option value="Sentinel">Sentinel</option>
+                        <option value="Initiator">Initiator</option>
+                        <option value="Genel">Genel</option>
+                    </select>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn btn-secondary" onclick="closeAddCoachModal()">İptal</button>
+                    <button type="submit" class="modal-btn btn-primary">Koç Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         // ⚠️⚠️⚠️ BU URL'Yİ KENDİ RAILWAY URL'NİZLE DEĞİŞTİRİN ⚠️⚠️⚠️
@@ -1177,6 +1275,7 @@
         // ============ DATA MANAGEMENT ============
         let students = [];
         let applications = [];
+        let coaches = []; // YENİ
         let currentScheduleStudentId = null;
         let currentDetailStudentId = null;
         let editingStudentId = null;
@@ -1184,18 +1283,21 @@
         async function loadData() {
             try {
                 // API'den verileri çek
-                const [appsResponse, studentsResponse] = await Promise.all([
+                const [appsResponse, studentsResponse, coachesResponse] = await Promise.all([
                     fetch(`${API_URL}/api/applications`).then(res => res.json()),
-                    fetch(`${API_URL}/api/students`).then(res => res.json())
+                    fetch(`${API_URL}/api/students`).then(res => res.json()),
+                    fetch(`${API_URL}/api/coaches`).then(res => res.json()) // YENİ
                 ]);
                 
                 if (appsResponse.success) applications = appsResponse.applications;
                 if (studentsResponse.success) students = studentsResponse.students;
+                if (coachesResponse.success) coaches = coachesResponse.coaches; // YENİ
                 
                 updateStudentsGrid();
                 updateScheduleStudentsGrid();
                 updateApplicationsTable();
                 updateRecentApplications();
+                updateCoachesGrid(); // YENİ
             } catch (error) {
                 console.error('Veri yüklenirken hata:', error);
                 // Fallback: localStorage'den yükle
@@ -1231,6 +1333,8 @@
         function updateStats() {
             document.getElementById('totalStudents').textContent = students.length;
             document.getElementById('totalApplications').textContent = applications.length;
+            document.getElementById('coachCount').textContent = coaches.length; // YENİ
+            document.getElementById('coachCountBadge').textContent = coaches.length; // YENİ
             
             // Toplam ders sayısını hesapla (haftalık programlardan)
             let totalLessons = 0;
@@ -1452,6 +1556,7 @@
             grid.innerHTML = students.map(student => `
                 <div class="student-card">
                     <div class="student-card-header">
+                        ${student.profileImage ? `<img src="${student.profileImage}" class="student-avatar" alt="${student.name}">` : ''}
                         <div class="student-name">${student.name} ${student.surname}</div>
                         <button class="action-btn btn-delete" onclick="deleteStudent('${student._id || student.id}', event)">Sil</button>
                     </div>
@@ -1598,6 +1703,109 @@
             currentDetailStudentId = null;
         }
 
+        // ============ COACHES ============
+        function updateCoachesGrid() {
+            const grid = document.getElementById('coachesGrid');
+            
+            if (coaches.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div>Henüz kayıtlı koç yok</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = coaches.map(coach => `
+                <div class="student-card">
+                    <div class="student-card-header">
+                        <div class="student-name">${coach.name} ${coach.surname}</div>
+                        <button class="action-btn btn-delete" onclick="deleteCoach('${coach._id}', event)">Sil</button>
+                    </div>
+                    <div class="student-info">
+                        <div class="info-row">
+                            <span class="info-label">E-posta:</span>
+                            <span class="info-value">${coach.email || '-'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Discord:</span>
+                            <span class="info-value">${coach.discord || '-'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Uzmanlık:</span>
+                            <span class="info-value">${coach.specialization || '-'}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAddCoachModal() {
+            document.getElementById('addCoachModal').classList.add('active');
+        }
+
+        function closeAddCoachModal() {
+            document.getElementById('addCoachModal').classList.remove('active');
+            document.getElementById('addCoachForm').reset();
+        }
+
+        document.getElementById('addCoachForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const coachData = {
+                name: document.getElementById('coachName').value,
+                surname: document.getElementById('coachSurname').value,
+                email: document.getElementById('coachEmail').value,
+                discord: document.getElementById('coachDiscord').value,
+                specialization: document.getElementById('coachSpecialization').value
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/api/coaches`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(coachData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    await loadData();
+                    updateStats();
+                    closeAddCoachModal();
+                    alert('✅ Koç başarıyla eklendi!');
+                }
+            } catch (error) {
+                console.error('Koç ekleme hatası:', error);
+                alert('❌ Koç eklenirken hata oluştu!');
+            }
+        });
+
+        async function deleteCoach(coachId, event) {
+            if (event) event.stopPropagation();
+            
+            if (!confirm('Bu koçu silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/coaches/${coachId}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    await loadData();
+                    updateStats();
+                    alert('✅ Koç silindi!');
+                }
+            } catch (error) {
+                console.error('Koç silme hatası:', error);
+                alert('❌ Koç silinirken hata oluştu!');
+            }
+        }
+
         // ============ WEEKLY SCHEDULE ============
         function viewStudentSchedule(studentId) {
             const student = students.find(s => (s._id || s.id) == studentId);
@@ -1618,6 +1826,8 @@
 
             days.forEach(day => {
                 const lesson = student.weeklySchedule && student.weeklySchedule[day];
+                const coach = lesson && coaches.find(c => c._id == lesson.coachId);
+                
                 html += `
                     <div class="day-column">
                         <div class="day-header">${day}</div>
@@ -1625,6 +1835,8 @@
                             <div class="time-slot">
                                 <div class="time-slot-time">${lesson.time}</div>
                                 <div class="time-slot-duration">${lesson.duration} dakika</div>
+                                ${lesson.lessonType ? `<div style="margin-top: 8px; padding: 4px 8px; background: rgba(99, 102, 241, 0.3); border-radius: 6px; font-size: 11px;">${lesson.lessonType}</div>` : ''}
+                                ${coach ? `<div class="coach-badge">${coach.name} ${coach.surname}</div>` : ''}
                             </div>
                         ` : '<div style="text-align: center; color: rgba(255,255,255,0.3); padding: 20px;">Ders yok</div>'}
                     </div>
@@ -1670,9 +1882,20 @@
                         </label>
                         <div id="dayInputs${index}" style="${lesson ? 'display: block;' : 'display: none;'} margin-top: 10px; padding-left: 20px;">
                             <div class="form-group">
+                                <label for="dayCoach${index}">Koç</label>
+                                <select id="dayCoach${index}">
+                                    <option value="">Seçiniz</option>
+                                    ${coaches.map(coach => `
+                                        <option value="${coach._id}" ${lesson && lesson.coachId == coach._id ? 'selected' : ''}>
+                                            ${coach.name} ${coach.surname}
+                                        </option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="dayTime${index}">Saat</label>
                                 <input type="time" id="dayTime${index}" value="${lesson ? lesson.time : ''}" onchange="checkScheduleConflict(${index})">
-                                <div id="conflictWarning${index}" class="btn-conflict">Bu saatte başka bir öğrenciye ders var!</div>
+                                <div id="conflictWarning${index}" class="btn-conflict">Bu saatte aynı koça başka ders var!</div>
                             </div>
                             <div class="form-group">
                                 <label for="dayDuration${index}">Süre (Dakika)</label>
@@ -1681,6 +1904,10 @@
                                     <option value="90" ${lesson && lesson.duration == 90 ? 'selected' : ''}>90 dk</option>
                                     <option value="120" ${lesson && lesson.duration == 120 ? 'selected' : ''}>120 dk</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dayLessonType${index}">Ders Tipi</label>
+                                <input type="text" id="dayLessonType${index}" value="${lesson ? lesson.lessonType || '' : ''}" placeholder="örn: Vod, Aim, Ranked">
                             </div>
                         </div>
                     </div>
@@ -1708,17 +1935,19 @@
             const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const day = days[dayIndex];
             const timeInput = document.getElementById(`dayTime${dayIndex}`);
+            const coachSelect = document.getElementById(`dayCoach${dayIndex}`);
             const time = timeInput.value;
+            const coachId = coachSelect.value;
             
-            if (!time) return;
+            if (!time || !coachId) return;
             
-            // Aynı gün ve saatte başka öğrenci var mı kontrol et
+            // Aynı gün, saat ve koçta başka öğrenci var mı kontrol et
             let hasConflict = false;
             students.forEach(student => {
-                if (student._id || student.id === editingStudentId) return;
+                if ((student._id || student.id) == editingStudentId) return;
                 if (student.weeklySchedule && student.weeklySchedule[day]) {
                     const lesson = student.weeklySchedule[day];
-                    if (lesson.time === time) {
+                    if (lesson.time === time && lesson.coachId === coachId) {
                         hasConflict = true;
                     }
                 }
@@ -1745,41 +1974,21 @@
             const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const schedule = {};
 
-            // Önce çakışma kontrolü yap
-            let hasConflict = false;
             days.forEach((day, index) => {
                 const checkbox = document.getElementById(`day${index}`);
                 if (checkbox.checked) {
-                    const time = document.getElementById(`dayTime${index}`).value;
-                    if (time) {
-                        // Çakışma kontrolü
-                        students.forEach(student => {
-                            if ((student._id || student.id) == editingStudentId) return;
-                            if (student.weeklySchedule && student.weeklySchedule[day]) {
-                                const lesson = student.weeklySchedule[day];
-                                if (lesson.time === time) {
-                                    hasConflict = true;
-                                    document.getElementById(`conflictWarning${index}`).classList.add('show');
-                                }
-                            }
-                        });
-                    }
-                }
-            });
-
-            if (hasConflict) {
-                alert('❌ Bazı saatlerde çakışma var! Lütfen düzelttikten sonra tekrar deneyin.');
-                return;
-            }
-
-            // Çakışma yoksa devam et
-            days.forEach((day, index) => {
-                const checkbox = document.getElementById(`day${index}`);
-                if (checkbox.checked) {
+                    const coachId = document.getElementById(`dayCoach${index}`).value;
                     const time = document.getElementById(`dayTime${index}`).value;
                     const duration = document.getElementById(`dayDuration${index}`).value;
-                    if (time) {
-                        schedule[day] = { time, duration };
+                    const lessonType = document.getElementById(`dayLessonType${index}`).value;
+                    
+                    if (time && coachId) {
+                        schedule[day] = { 
+                            time, 
+                            duration, 
+                            lessonType,
+                            coachId 
+                        };
                     }
                 }
             });
@@ -1789,9 +1998,7 @@
                 try {
                     const response = await fetch(`${API_URL}/api/students/${editingStudentId}`, {
                         method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ weeklySchedule: schedule })
                     });
                     
