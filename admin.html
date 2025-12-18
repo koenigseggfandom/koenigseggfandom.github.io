@@ -758,7 +758,7 @@
             display: block;
         }
 
-        /* 1. "Bu başvuruyu öğrenci olarak ekle" butonu için yeni stil */
+        /* 1. "Bu baÅŸvuruyu Ã¶ÄŸrenci olarak ekle" butonu iÃ§in yeni stil */
         .add-lesson-btn {
             width: 100%;
             padding: 18px 24px;
@@ -803,7 +803,7 @@
             left: 100%;
         }
 
-        /* 2. Ders süresi seçimi için dropdown stil düzenlemeleri */
+        /* 2. Ders sÃ¼resi seÃ§imi iÃ§in dropdown stil dÃ¼zenlemeleri */
         .form-group select option {
             background: rgba(15, 23, 42, 0.98);
             color: #fff;
@@ -825,50 +825,13 @@
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
         }
 
-        /* Edit schedule modal'ındaki checkbox düzenlemeleri */
+        /* Edit schedule modal'Ä±ndaki checkbox dÃ¼zenlemeleri */
         .form-group label input[type="checkbox"] {
             margin-right: 12px;
             width: 18px;
             height: 18px;
             accent-color: #6366f1;
             vertical-align: middle;
-        }
-
-        /* Profil resmi stilleri */
-        .student-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(99, 102, 241, 0.5);
-            margin-bottom: 15px;
-        }
-
-        .avatar-upload {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .avatar-preview {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(99, 102, 241, 0.5);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .coach-badge {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.2);
-            color: #6ee7b7;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-left: 8px;
         }
 
         @media (max-width: 768px) {
@@ -917,24 +880,24 @@
         <div class="login-box">
             <div class="login-logo">AURA</div>
             <h1 class="login-title">Admin Panel</h1>
-            <p class="login-subtitle">Yönetim Sistemi</p>
+            <p class="login-subtitle">YÃ¶netim Sistemi</p>
             
             <div class="error-message" id="errorMessage">
-                Kullanıcı adı veya şifre hatalı!
+                KullanÄ±cÄ± adÄ± veya ÅŸifre hatalÄ±!
             </div>
             
             <form id="loginForm">
                 <div class="input-group">
-                    <label for="username">Kullanıcı Adı</label>
-                    <input type="text" id="username" placeholder="Kullanıcı adınızı girin" required>
+                    <label for="username">KullanÄ±cÄ± AdÄ±</label>
+                    <input type="text" id="username" placeholder="KullanÄ±cÄ± adÄ±nÄ±zÄ± girin" required>
                 </div>
                 
                 <div class="input-group">
-                    <label for="password">Şifre</label>
-                    <input type="password" id="password" placeholder="Şifrenizi girin" required>
+                    <label for="password">Åžifre</label>
+                    <input type="password" id="password" placeholder="Åžifrenizi girin" required>
                 </div>
                 
-                <button type="submit" class="login-btn">Giriş Yap</button>
+                <button type="submit" class="login-btn">GiriÅŸ Yap</button>
             </form>
         </div>
     </div>
@@ -949,24 +912,21 @@
             
             <div class="sidebar-menu">
                 <div class="menu-item active" onclick="showSection('overview')">
-                    <span>Genel Bakış</span>
+                    <span>Genel BakÄ±ÅŸ</span>
                 </div>
                 <div class="menu-item" onclick="showSection('applications')">
-                    <span>Başvurular</span>
+                    <span>BaÅŸvurular</span>
                 </div>
                 <div class="menu-item" onclick="showSection('students')">
-                    <span>Öğrenciler</span>
-                </div>
-                <div class="menu-item" onclick="showSection('coaches')">
-                    <span>Koçlar</span>
+                    <span>Ã–ÄŸrenciler</span>
                 </div>
                 <div class="menu-item" onclick="showSection('schedule')">
-                    <span>Haftalık Program</span>
+                    <span>HaftalÄ±k Program</span>
                 </div>
             </div>
             
             <div class="logout-btn" onclick="logout()">
-                Çıkış Yap
+                Ã‡Ä±kÄ±ÅŸ Yap
             </div>
         </div>
 
@@ -975,39 +935,39 @@
             <!-- Overview Section -->
             <div class="content-section active" id="overviewSection">
                 <div class="page-header">
-                    <h1 class="page-title">Genel Bakış</h1>
-                    <p class="page-subtitle">AURA Coaching istatistikleri ve özet bilgiler</p>
+                    <h1 class="page-title">Genel BakÄ±ÅŸ</h1>
+                    <p class="page-subtitle">AURA Coaching istatistikleri ve Ã¶zet bilgiler</p>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value" id="totalStudents">0</div>
-                        <div class="stat-label">Toplam Öğrenci</div>
+                        <div class="stat-label">Toplam Ã–ÄŸrenci</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="totalApplications">0</div>
-                        <div class="stat-label">Bekleyen Başvuru</div>
+                        <div class="stat-label">Bekleyen BaÅŸvuru</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="totalLessons">0</div>
                         <div class="stat-label">Toplam Ders</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="coachCount">0</div>
-                        <div class="stat-label">Toplam Koç</div>
+                        <div class="stat-value">95%</div>
+                        <div class="stat-label">BaÅŸarÄ± OranÄ±</div>
                     </div>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">Son Başvurular</h3>
+                        <h3 class="table-title">Son BaÅŸvurular</h3>
                     </div>
                     <table>
                         <thead>
                             <tr>
                                 <th>Ad Soyad</th>
-                                <th>Yaş</th>
-                                <th>Ülke</th>
+                                <th>YaÅŸ</th>
+                                <th>Ãœlke</th>
                                 <th>Rank</th>
                                 <th>Tarih</th>
                             </tr>
@@ -1015,7 +975,7 @@
                         <tbody id="recentApplicationsBody">
                             <tr>
                                 <td colspan="5" class="empty-state">
-                                    <div>Henüz başvuru yok</div>
+                                    <div>HenÃ¼z baÅŸvuru yok</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -1026,31 +986,31 @@
             <!-- Applications Section -->
             <div class="content-section" id="applicationsSection">
                 <div class="page-header">
-                    <h1 class="page-title">Başvurular <span class="stats-badge" id="applicationCount">0</span></h1>
-                    <p class="page-subtitle">Tüm başvuruları görüntüleyin ve öğrenci ekleyin</p>
+                    <h1 class="page-title">BaÅŸvurular <span class="stats-badge" id="applicationCount">0</span></h1>
+                    <p class="page-subtitle">TÃ¼m baÅŸvurularÄ± gÃ¶rÃ¼ntÃ¼leyin ve Ã¶ÄŸrenci ekleyin</p>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">Başvuru Listesi</h3>
-                        <input type="text" class="search-box" id="applicationSearch" placeholder="Başvuru ara...">
+                        <h3 class="table-title">BaÅŸvuru Listesi</h3>
+                        <input type="text" class="search-box" id="applicationSearch" placeholder="BaÅŸvuru ara...">
                     </div>
                     <table>
                         <thead>
                             <tr>
                                 <th>Ad Soyad</th>
-                                <th>Yaş</th>
-                                <th>Ülke</th>
+                                <th>YaÅŸ</th>
+                                <th>Ãœlke</th>
                                 <th>Mevcut Rank</th>
                                 <th>Hedef Rank</th>
                                 <th>Tarih</th>
-                                <th>İşlem</th>
+                                <th>Ä°ÅŸlem</th>
                             </tr>
                         </thead>
                         <tbody id="applicationsTableBody">
                             <tr>
                                 <td colspan="7" class="empty-state">
-                                    <div>Henüz başvuru yok</div>
+                                    <div>HenÃ¼z baÅŸvuru yok</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -1061,14 +1021,14 @@
             <!-- Students Section -->
             <div class="content-section" id="studentsSection">
                 <div class="page-header">
-                    <h1 class="page-title">Öğrenciler <span class="stats-badge" id="studentCount">0</span></h1>
-                    <p class="page-subtitle">Tüm kayıtlı öğrencileri görüntüleyin</p>
+                    <h1 class="page-title">Ã–ÄŸrenciler <span class="stats-badge" id="studentCount">0</span></h1>
+                    <p class="page-subtitle">TÃ¼m kayÄ±tlÄ± Ã¶ÄŸrencileri gÃ¶rÃ¼ntÃ¼leyin</p>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">Öğrenci Listesi</h3>
-                        <input type="text" class="search-box" id="studentSearch" placeholder="Öğrenci ara...">
+                        <h3 class="table-title">Ã–ÄŸrenci Listesi</h3>
+                        <input type="text" class="search-box" id="studentSearch" placeholder="Ã–ÄŸrenci ara...">
                     </div>
                     <div class="students-grid" id="studentsGrid">
                         <!-- Students will be populated here -->
@@ -1076,34 +1036,16 @@
                 </div>
             </div>
 
-            <!-- Coaches Section -->
-            <div class="content-section" id="coachesSection">
-                <div class="page-header">
-                    <h1 class="page-title">Koçlar <span class="stats-badge" id="coachCountBadge">0</span></h1>
-                    <p class="page-subtitle">Tüm koçları görüntüleyin ve yönetin</p>
-                </div>
-
-                <div class="data-table">
-                    <div class="table-header">
-                        <h3 class="table-title">Koç Listesi</h3>
-                        <button class="action-btn btn-add-student" onclick="openAddCoachModal()">Yeni Koç Ekle</button>
-                    </div>
-                    <div class="students-grid" id="coachesGrid">
-                        <!-- Coaches will be populated here -->
-                    </div>
-                </div>
-            </div>
-
             <!-- Weekly Schedule Section -->
             <div class="content-section" id="scheduleSection">
                 <div class="page-header">
-                    <h1 class="page-title">Haftalık Program</h1>
-                    <p class="page-subtitle">Öğrencilerin haftalık ders programları</p>
+                    <h1 class="page-title">HaftalÄ±k Program</h1>
+                    <p class="page-subtitle">Ã–ÄŸrencilerin haftalÄ±k ders programlarÄ±</p>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">Öğrenci Seç</h3>
+                        <h3 class="table-title">Ã–ÄŸrenci SeÃ§</h3>
                     </div>
                     <div class="students-grid" id="scheduleStudentsGrid">
                         <!-- Students will be populated here -->
@@ -1116,13 +1058,13 @@
     <!-- Student Detail Modal -->
     <div class="modal student-detail-modal" id="studentDetailModal">
         <div class="modal-content">
-            <h3 class="modal-title">Öğrenci Detayları</h3>
+            <h3 class="modal-title">Ã–ÄŸrenci DetaylarÄ±</h3>
             <div id="studentDetailContent">
                 <!-- Will be populated by JavaScript -->
             </div>
             <div class="modal-buttons">
                 <button type="button" class="modal-btn btn-secondary" onclick="closeStudentDetailModal()">Kapat</button>
-                <button type="button" class="modal-btn btn-primary" onclick="editStudentSchedule(currentDetailStudentId)">Programı Düzenle</button>
+                <button type="button" class="modal-btn btn-primary" onclick="editStudentSchedule(currentDetailStudentId)">ProgramÄ± DÃ¼zenle</button>
             </div>
         </div>
     </div>
@@ -1130,7 +1072,7 @@
     <!-- Application Detail Modal -->
     <div class="modal" id="applicationDetailModal">
         <div class="modal-content" style="max-width: 700px;">
-            <h3 class="modal-title">Başvuru Detayları</h3>
+            <h3 class="modal-title">BaÅŸvuru DetaylarÄ±</h3>
             <div id="applicationDetailContent">
                 <!-- Will be populated by JavaScript -->
             </div>
@@ -1146,8 +1088,8 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <h3 class="modal-title" id="scheduleStudentName" style="margin: 0;"></h3>
                 <div>
-                    <button class="action-btn btn-edit" onclick="editCurrentSchedule()">Programı Düzenle</button>
-                    <button class="btn-download" onclick="downloadScheduleImage()">Resim Olarak İndir</button>
+                    <button class="action-btn btn-edit" onclick="editCurrentSchedule()">ProgramÄ± DÃ¼zenle</button>
+                    <button class="btn-download" onclick="downloadScheduleImage()">Resim Olarak Ä°ndir</button>
                 </div>
             </div>
             <div id="scheduleImageContainer">
@@ -1166,57 +1108,17 @@
     <!-- Edit Schedule Modal -->
     <div class="modal" id="editScheduleModal">
         <div class="modal-content" style="max-width: 600px;">
-            <h3 class="modal-title" id="editScheduleTitle">Haftalık Program Düzenle</h3>
+            <h3 class="modal-title" id="editScheduleTitle">HaftalÄ±k Program DÃ¼zenle</h3>
             <div id="conflictWarning" class="error-message" style="display: none;">
-                Bu saatte başka bir öğrenciye ders var!
+                Bu saatte baÅŸka bir Ã¶ÄŸrenciye ders var!
             </div>
             <form id="editScheduleForm">
                 <div id="editScheduleDays">
                     <!-- Days will be populated here -->
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="modal-btn btn-secondary" onclick="closeEditScheduleModal()">İptal</button>
-                    <button type="submit" class="modal-btn btn-primary">Değişiklikleri Kaydet</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Add Coach Modal -->
-    <div class="modal" id="addCoachModal">
-        <div class="modal-content">
-            <h3 class="modal-title">Yeni Koç Ekle</h3>
-            <form id="addCoachForm">
-                <div class="form-group">
-                    <label for="coachName">Ad</label>
-                    <input type="text" id="coachName" required>
-                </div>
-                <div class="form-group">
-                    <label for="coachSurname">Soyad</label>
-                    <input type="text" id="coachSurname" required>
-                </div>
-                <div class="form-group">
-                    <label for="coachEmail">E-posta</label>
-                    <input type="email" id="coachEmail">
-                </div>
-                <div class="form-group">
-                    <label for="coachDiscord">Discord</label>
-                    <input type="text" id="coachDiscord">
-                </div>
-                <div class="form-group">
-                    <label for="coachSpecialization">Uzmanlık</label>
-                    <select id="coachSpecialization">
-                        <option value="">Seçiniz</option>
-                        <option value="Duelist">Duelist</option>
-                        <option value="Controller">Controller</option>
-                        <option value="Sentinel">Sentinel</option>
-                        <option value="Initiator">Initiator</option>
-                        <option value="Genel">Genel</option>
-                    </select>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="modal-btn btn-secondary" onclick="closeAddCoachModal()">İptal</button>
-                    <button type="submit" class="modal-btn btn-primary">Koç Ekle</button>
+                    <button type="button" class="modal-btn btn-secondary" onclick="closeEditScheduleModal()">Ä°ptal</button>
+                    <button type="submit" class="modal-btn btn-primary">DeÄŸiÅŸiklikleri Kaydet</button>
                 </div>
             </form>
         </div>
@@ -1224,7 +1126,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-        // ⚠️⚠️⚠️ BU URL'Yİ KENDİ RAILWAY URL'NİZLE DEĞİŞTİRİN ⚠️⚠️⚠️
+        // âš ï¸âš ï¸âš ï¸ BU URL'YÄ° KENDÄ° RAILWAY URL'NÄ°ZLE DEÄžÄ°ÅžTÄ°RÄ°N âš ï¸âš ï¸âš ï¸
         const API_URL = 'https://aura-coaching-api-production.up.railway.app';
         
         // ============ AUTHENTICATION ============
@@ -1258,7 +1160,7 @@
         }
 
         function logout() {
-            if (confirm('Çıkış yapmak istediğinizden emin misiniz?')) {
+            if (confirm('Ã‡Ä±kÄ±ÅŸ yapmak istediÄŸinizden emin misiniz?')) {
                 localStorage.removeItem('isLoggedIn');
                 document.getElementById('loginScreen').style.display = 'flex';
                 document.getElementById('dashboard').classList.remove('active');
@@ -1275,32 +1177,28 @@
         // ============ DATA MANAGEMENT ============
         let students = [];
         let applications = [];
-        let coaches = []; // YENİ
         let currentScheduleStudentId = null;
         let currentDetailStudentId = null;
         let editingStudentId = null;
 
         async function loadData() {
             try {
-                // API'den verileri çek
-                const [appsResponse, studentsResponse, coachesResponse] = await Promise.all([
+                // API'den verileri Ã§ek
+                const [appsResponse, studentsResponse] = await Promise.all([
                     fetch(`${API_URL}/api/applications`).then(res => res.json()),
-                    fetch(`${API_URL}/api/students`).then(res => res.json()),
-                    fetch(`${API_URL}/api/coaches`).then(res => res.json()) // YENİ
+                    fetch(`${API_URL}/api/students`).then(res => res.json())
                 ]);
                 
                 if (appsResponse.success) applications = appsResponse.applications;
                 if (studentsResponse.success) students = studentsResponse.students;
-                if (coachesResponse.success) coaches = coachesResponse.coaches; // YENİ
                 
                 updateStudentsGrid();
                 updateScheduleStudentsGrid();
                 updateApplicationsTable();
                 updateRecentApplications();
-                updateCoachesGrid(); // YENİ
             } catch (error) {
-                console.error('Veri yüklenirken hata:', error);
-                // Fallback: localStorage'den yükle
+                console.error('Veri yÃ¼klenirken hata:', error);
+                // Fallback: localStorage'den yÃ¼kle
                 const savedStudents = localStorage.getItem('auraStudents');
                 const savedApplications = localStorage.getItem('auraApplications');
                 
@@ -1333,10 +1231,8 @@
         function updateStats() {
             document.getElementById('totalStudents').textContent = students.length;
             document.getElementById('totalApplications').textContent = applications.length;
-            document.getElementById('coachCount').textContent = coaches.length; // YENİ
-            document.getElementById('coachCountBadge').textContent = coaches.length; // YENİ
             
-            // Toplam ders sayısını hesapla (haftalık programlardan)
+            // Toplam ders sayÄ±sÄ±nÄ± hesapla (haftalÄ±k programlardan)
             let totalLessons = 0;
             students.forEach(student => {
                 if (student.weeklySchedule) {
@@ -1355,7 +1251,7 @@
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="7" class="empty-state">
-                            <div>Henüz başvuru yok</div>
+                            <div>HenÃ¼z baÅŸvuru yok</div>
                         </td>
                     </tr>
                 `;
@@ -1371,7 +1267,7 @@
                     <td><span class="rank-badge rank-${app.targetRank.toLowerCase()}">${app.targetRank}</span></td>
                     <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
                     <td>
-                        <button class="action-btn btn-add-student" onclick="addStudentFromApplication(${index})">Öğrenci Ekle</button>
+                        <button class="action-btn btn-add-student" onclick="addStudentFromApplication(${index})">Ã–ÄŸrenci Ekle</button>
                         <button class="action-btn btn-delete" onclick="deleteApplication('${app._id || app.id}', ${index})">Sil</button>
                     </td>
                 </tr>
@@ -1386,7 +1282,7 @@
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="5" class="empty-state">
-                            <div>Henüz başvuru yok</div>
+                            <div>HenÃ¼z baÅŸvuru yok</div>
                         </td>
                     </tr>
                 `;
@@ -1405,7 +1301,7 @@
         }
 
         async function deleteApplication(appId, index) {
-            if (!confirm('Bu başvuruyu silmek istediğinizden emin misiniz?')) {
+            if (!confirm('Bu baÅŸvuruyu silmek istediÄŸinizden emin misiniz?')) {
                 return;
             }
             
@@ -1421,13 +1317,13 @@
                     updateStats();
                     updateApplicationsTable();
                     updateRecentApplications();
-                    alert('✅ Başvuru silindi!');
+                    alert('âœ… BaÅŸvuru silindi!');
                 } else {
-                    alert('❌ Başvuru silinirken hata oluştu!');
+                    alert('âŒ BaÅŸvuru silinirken hata oluÅŸtu!');
                 }
             } catch (error) {
-                console.error('Başvuru silme hatası:', error);
-                alert('❌ Başvuru silinirken hata oluştu!');
+                console.error('BaÅŸvuru silme hatasÄ±:', error);
+                alert('âŒ BaÅŸvuru silinirken hata oluÅŸtu!');
             }
         }
 
@@ -1440,11 +1336,11 @@
                         <div class="detail-value">${app.name} ${app.surname}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Yaş</div>
+                        <div class="detail-label">YaÅŸ</div>
                         <div class="detail-value">${app.age}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Ülke</div>
+                        <div class="detail-label">Ãœlke</div>
                         <div class="detail-value">${app.country}</div>
                     </div>
                     <div class="detail-item">
@@ -1466,16 +1362,16 @@
                         </div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
-                        <div class="detail-label">Koçluktan Beklenti</div>
+                        <div class="detail-label">KoÃ§luktan Beklenti</div>
                         <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.expectations}</div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
-                        <div class="detail-label">Kendini Tanıt</div>
+                        <div class="detail-label">Kendini TanÄ±t</div>
                         <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.introduction}</div>
                     </div>
                 </div>
                 <div style="margin-top: 25px; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <button class="add-lesson-btn" onclick="addStudentFromApplication(${index}); closeApplicationModal();">BU BAŞVURUYU ÖĞRENCİ OLARAK EKLE</button>
+                    <button class="add-lesson-btn" onclick="addStudentFromApplication(${index}); closeApplicationModal();">BU BAÅžVURUYU Ã–ÄžRENCÄ° OLARAK EKLE</button>
                 </div>
             `;
             
@@ -1504,7 +1400,7 @@
             };
             
             try {
-                // API'ye öğrenci ekle
+                // API'ye Ã¶ÄŸrenci ekle
                 const response = await fetch(`${API_URL}/api/students`, {
                     method: 'POST',
                     headers: {
@@ -1516,12 +1412,12 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    // API'den başvuruyu sil
+                    // API'den baÅŸvuruyu sil
                     await fetch(`${API_URL}/api/applications/${app._id || app.id}`, {
                         method: 'DELETE'
                     });
                     
-                    // Local verileri güncelle
+                    // Local verileri gÃ¼ncelle
                     applications.splice(index, 1);
                     students.push({ ...student, id: result.studentId || Date.now() });
                     
@@ -1531,11 +1427,11 @@
                     updateStudentsGrid();
                     updateScheduleStudentsGrid();
                     
-                    alert('✅ Öğrenci başarıyla eklendi!');
+                    alert('âœ… Ã–ÄŸrenci baÅŸarÄ±yla eklendi!');
                 }
             } catch (error) {
-                console.error('Öğrenci ekleme hatası:', error);
-                alert('❌ Öğrenci eklenirken hata oluştu!');
+                console.error('Ã–ÄŸrenci ekleme hatasÄ±:', error);
+                alert('âŒ Ã–ÄŸrenci eklenirken hata oluÅŸtu!');
             }
         }
 
@@ -1547,7 +1443,7 @@
             if (students.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state" style="grid-column: 1 / -1;">
-                        <div>Henüz kayıtlı öğrenci yok</div>
+                        <div>HenÃ¼z kayÄ±tlÄ± Ã¶ÄŸrenci yok</div>
                     </div>
                 `;
                 return;
@@ -1555,22 +1451,17 @@
             
             grid.innerHTML = students.map(student => `
                 <div class="student-card">
-                    ${student.profileImage ? `
-                        <div style="text-align: center;">
-                            <img src="${student.profileImage}" class="student-avatar" alt="${student.name}">
-                        </div>
-                    ` : ''}
                     <div class="student-card-header">
                         <div class="student-name">${student.name} ${student.surname}</div>
                         <button class="action-btn btn-delete" onclick="deleteStudent('${student._id || student.id}', event)">Sil</button>
                     </div>
                     <div class="student-info" onclick="showStudentDetail('${student._id || student.id}')">
                         <div class="info-row">
-                            <span class="info-label">Yaş:</span>
+                            <span class="info-label">YaÅŸ:</span>
                             <span class="info-value">${student.age}</span>
                         </div>
                         <div class="info-row">
-                            <span class="info-label">Ülke:</span>
+                            <span class="info-label">Ãœlke:</span>
                             <span class="info-value">${student.country}</span>
                         </div>
                         <div class="info-row">
@@ -1589,7 +1480,7 @@
         async function deleteStudent(studentId, event) {
             if (event) event.stopPropagation();
             
-            if (!confirm('Bu öğrenciyi silmek istediğinizden emin misiniz?')) {
+            if (!confirm('Bu Ã¶ÄŸrenciyi silmek istediÄŸinizden emin misiniz?')) {
                 return;
             }
             
@@ -1607,18 +1498,18 @@
                     updateStats();
                     updateStudentsGrid();
                     updateScheduleStudentsGrid();
-                    alert('✅ Öğrenci silindi!');
+                    alert('âœ… Ã–ÄŸrenci silindi!');
                     
-                    // Eğer detay modal'ı açıksa kapat
+                    // EÄŸer detay modal'Ä± aÃ§Ä±ksa kapat
                     if (currentDetailStudentId === studentId) {
                         closeStudentDetailModal();
                     }
                 } else {
-                    alert('❌ Öğrenci silinirken hata oluştu!');
+                    alert('âŒ Ã–ÄŸrenci silinirken hata oluÅŸtu!');
                 }
             } catch (error) {
-                console.error('Öğrenci silme hatası:', error);
-                alert('❌ Öğrenci silinirken hata oluştu!');
+                console.error('Ã–ÄŸrenci silme hatasÄ±:', error);
+                alert('âŒ Ã–ÄŸrenci silinirken hata oluÅŸtu!');
             }
         }
 
@@ -1628,7 +1519,7 @@
             if (students.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state" style="grid-column: 1 / -1;">
-                        <div>Henüz kayıtlı öğrenci yok</div>
+                        <div>HenÃ¼z kayÄ±tlÄ± Ã¶ÄŸrenci yok</div>
                     </div>
                 `;
                 return;
@@ -1642,7 +1533,7 @@
                     <div class="student-info">
                         <div class="info-row">
                             <span class="info-label">Program:</span>
-                            <span class="info-value">${student.weeklySchedule ? '✅ Var' : '❌ Yok'}</span>
+                            <span class="info-value">${student.weeklySchedule ? 'âœ… Var' : 'âŒ Yok'}</span>
                         </div>
                     </div>
                 </div>
@@ -1656,22 +1547,17 @@
             currentDetailStudentId = studentId;
 
             const content = `
-                ${student.profileImage ? `
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <img src="${student.profileImage}" class="student-avatar" alt="${student.name}" style="width: 100px; height: 100px;">
-                    </div>
-                ` : ''}
                 <div class="detail-grid">
                     <div class="detail-item">
                         <div class="detail-label">Ad Soyad</div>
                         <div class="detail-value">${student.name} ${student.surname}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Yaş</div>
+                        <div class="detail-label">YaÅŸ</div>
                         <div class="detail-value">${student.age}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Ülke</div>
+                        <div class="detail-label">Ãœlke</div>
                         <div class="detail-value">${student.country}</div>
                     </div>
                     <div class="detail-item">
@@ -1687,28 +1573,17 @@
                         <div class="detail-value"><span class="rank-badge rank-${student.targetRank.toLowerCase()}">${student.targetRank}</span></div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
-                        <div class="detail-label">Profil Resmi URL</div>
-                        <div class="detail-value">
-                            <input type="text" id="editProfileImage" value="${student.profileImage || ''}" 
-                                   placeholder="Imgur vb. link girin" 
-                                   style="width: 100%; padding: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white;">
-                            <button onclick="updateProfileImage('${student._id || student.id}')" 
-                                    class="action-btn btn-edit" 
-                                    style="margin-top: 10px; width: 100%;">Profil Resmini Güncelle</button>
-                        </div>
-                    </div>
-                    <div class="detail-item" style="grid-column: 1 / -1;">
                         <div class="detail-label">Tracker Link</div>
                         <div class="detail-value" style="font-size: 13px; word-break: break-all;">
                             ${student.tracker ? `<a href="${student.tracker}" target="_blank" style="color: #6366f1; text-decoration: none;">${student.tracker}</a>` : '-'}
                         </div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
-                        <div class="detail-label">Koçluktan Beklenti</div>
+                        <div class="detail-label">KoÃ§luktan Beklenti</div>
                         <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${student.expectations || '-'}</div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
-                        <div class="detail-label">Kendini Tanıt</div>
+                        <div class="detail-label">Kendini TanÄ±t</div>
                         <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${student.introduction || '-'}</div>
                     </div>
                 </div>
@@ -1721,145 +1596,6 @@
         function closeStudentDetailModal() {
             document.getElementById('studentDetailModal').classList.remove('active');
             currentDetailStudentId = null;
-        }
-
-        async function updateProfileImage(studentId) {
-            const newImageUrl = document.getElementById('editProfileImage').value;
-            
-            if (!newImageUrl.trim()) {
-                alert('⚠️ Lütfen bir resim URL\'si girin!');
-                return;
-            }
-            
-            try {
-                const response = await fetch(`${API_URL}/api/students/${studentId}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ profileImage: newImageUrl })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Local veriyi güncelle
-                    const student = students.find(s => (s._id || s.id) == studentId);
-                    if (student) {
-                        student.profileImage = newImageUrl;
-                    }
-                    
-                    updateStudentsGrid();
-                    closeStudentDetailModal();
-                    alert('✅ Profil resmi güncellendi!');
-                } else {
-                    alert('❌ Güncelleme başarısız!');
-                }
-            } catch (error) {
-                console.error('Profil resmi güncelleme hatası:', error);
-                alert('❌ Profil resmi güncellenirken hata oluştu!');
-            }
-        }
-
-        // ============ COACHES ============
-        function updateCoachesGrid() {
-            const grid = document.getElementById('coachesGrid');
-            
-            if (coaches.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1 / -1;">
-                        <div>Henüz kayıtlı koç yok</div>
-                    </div>
-                `;
-                return;
-            }
-            
-            grid.innerHTML = coaches.map(coach => `
-                <div class="student-card">
-                    <div class="student-card-header">
-                        <div class="student-name">${coach.name} ${coach.surname}</div>
-                        <button class="action-btn btn-delete" onclick="deleteCoach('${coach._id}', event)">Sil</button>
-                    </div>
-                    <div class="student-info">
-                        <div class="info-row">
-                            <span class="info-label">E-posta:</span>
-                            <span class="info-value">${coach.email || '-'}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Discord:</span>
-                            <span class="info-value">${coach.discord || '-'}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Uzmanlık:</span>
-                            <span class="info-value">${coach.specialization || '-'}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openAddCoachModal() {
-            document.getElementById('addCoachModal').classList.add('active');
-        }
-
-        function closeAddCoachModal() {
-            document.getElementById('addCoachModal').classList.remove('active');
-            document.getElementById('addCoachForm').reset();
-        }
-
-        document.getElementById('addCoachForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const coachData = {
-                name: document.getElementById('coachName').value,
-                surname: document.getElementById('coachSurname').value,
-                email: document.getElementById('coachEmail').value,
-                discord: document.getElementById('coachDiscord').value,
-                specialization: document.getElementById('coachSpecialization').value
-            };
-            
-            try {
-                const response = await fetch(`${API_URL}/api/coaches`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(coachData)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    await loadData();
-                    updateStats();
-                    closeAddCoachModal();
-                    alert('✅ Koç başarıyla eklendi!');
-                }
-            } catch (error) {
-                console.error('Koç ekleme hatası:', error);
-                alert('❌ Koç eklenirken hata oluştu!');
-            }
-        });
-
-        async function deleteCoach(coachId, event) {
-            if (event) event.stopPropagation();
-            
-            if (!confirm('Bu koçu silmek istediğinizden emin misiniz?')) {
-                return;
-            }
-            
-            try {
-                const response = await fetch(`${API_URL}/api/coaches/${coachId}`, {
-                    method: 'DELETE'
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    await loadData();
-                    updateStats();
-                    alert('✅ Koç silindi!');
-                }
-            } catch (error) {
-                console.error('Koç silme hatası:', error);
-                alert('❌ Koç silinirken hata oluştu!');
-            }
         }
 
         // ============ WEEKLY SCHEDULE ============
@@ -1877,13 +1613,11 @@
         }
 
         function displayWeeklySchedule(student) {
-            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const days = ['Pazartesi', 'SalÄ±', 'Ã‡arÅŸamba', 'PerÅŸembe', 'Cuma', 'Cumartesi', 'Pazar'];
             let html = '';
 
             days.forEach(day => {
                 const lesson = student.weeklySchedule && student.weeklySchedule[day];
-                const coach = lesson && coaches.find(c => c._id == lesson.coachId);
-                
                 html += `
                     <div class="day-column">
                         <div class="day-header">${day}</div>
@@ -1891,8 +1625,6 @@
                             <div class="time-slot">
                                 <div class="time-slot-time">${lesson.time}</div>
                                 <div class="time-slot-duration">${lesson.duration} dakika</div>
-                                ${lesson.lessonType ? `<div style="margin-top: 8px; padding: 4px 8px; background: rgba(99, 102, 241, 0.3); border-radius: 6px; font-size: 11px;">${lesson.lessonType}</div>` : ''}
-                                ${coach ? `<div class="coach-badge">${coach.name} ${coach.surname}</div>` : ''}
                             </div>
                         ` : '<div style="text-align: center; color: rgba(255,255,255,0.3); padding: 20px;">Ders yok</div>'}
                     </div>
@@ -1900,7 +1632,7 @@
             });
 
             document.getElementById('weeklyScheduleGrid').innerHTML = html;
-            document.getElementById('scheduleStudentName').textContent = `${student.name} ${student.surname} - Haftalık Program`;
+            document.getElementById('scheduleStudentName').textContent = `${student.name} ${student.surname} - HaftalÄ±k Program`;
             document.getElementById('weeklyScheduleModal').classList.add('active');
         }
 
@@ -1925,7 +1657,7 @@
             if (!student) return;
 
             editingStudentId = studentId;
-            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const days = ['Pazartesi', 'SalÄ±', 'Ã‡arÅŸamba', 'PerÅŸembe', 'Cuma', 'Cumartesi', 'Pazar'];
             
             let formContent = '';
             days.forEach((day, index) => {
@@ -1938,32 +1670,17 @@
                         </label>
                         <div id="dayInputs${index}" style="${lesson ? 'display: block;' : 'display: none;'} margin-top: 10px; padding-left: 20px;">
                             <div class="form-group">
-                                <label for="dayCoach${index}">Koç</label>
-                                <select id="dayCoach${index}">
-                                    <option value="">Seçiniz</option>
-                                    ${coaches.map(coach => `
-                                        <option value="${coach._id}" ${lesson && lesson.coachId == coach._id ? 'selected' : ''}>
-                                            ${coach.name} ${coach.surname}
-                                        </option>
-                                    `).join('')}
-                                </select>
-                            </div>
-                            <div class="form-group">
                                 <label for="dayTime${index}">Saat</label>
                                 <input type="time" id="dayTime${index}" value="${lesson ? lesson.time : ''}" onchange="checkScheduleConflict(${index})">
-                                <div id="conflictWarning${index}" class="btn-conflict">Bu saatte aynı koça başka ders var!</div>
+                                <div id="conflictWarning${index}" class="btn-conflict">Bu saatte baÅŸka bir Ã¶ÄŸrenciye ders var!</div>
                             </div>
                             <div class="form-group">
-                                <label for="dayDuration${index}">Süre (Dakika)</label>
+                                <label for="dayDuration${index}">SÃ¼re (Dakika)</label>
                                 <select id="dayDuration${index}">
                                     <option value="60" ${lesson && lesson.duration == 60 ? 'selected' : ''}>60 dk</option>
                                     <option value="90" ${lesson && lesson.duration == 90 ? 'selected' : ''}>90 dk</option>
                                     <option value="120" ${lesson && lesson.duration == 120 ? 'selected' : ''}>120 dk</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="dayLessonType${index}">Ders Tipi</label>
-                                <input type="text" id="dayLessonType${index}" value="${lesson ? lesson.lessonType || '' : ''}" placeholder="örn: Vod, Aim, Ranked">
                             </div>
                         </div>
                     </div>
@@ -1971,7 +1688,7 @@
             });
 
             document.getElementById('editScheduleDays').innerHTML = formContent;
-            document.getElementById('editScheduleTitle').textContent = `${student.name} ${student.surname} - Haftalık Program Düzenle`;
+            document.getElementById('editScheduleTitle').textContent = `${student.name} ${student.surname} - HaftalÄ±k Program DÃ¼zenle`;
             document.getElementById('editScheduleModal').classList.add('active');
         }
 
@@ -1980,7 +1697,7 @@
             const inputs = document.getElementById(`dayInputs${dayIndex}`);
             inputs.style.display = checkbox.checked ? 'block' : 'none';
             
-            // Çakışma kontrolünü temizle
+            // Ã‡akÄ±ÅŸma kontrolÃ¼nÃ¼ temizle
             const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
             if (conflictWarning) {
                 conflictWarning.classList.remove('show');
@@ -1988,22 +1705,20 @@
         }
 
         function checkScheduleConflict(dayIndex) {
-            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const days = ['Pazartesi', 'SalÄ±', 'Ã‡arÅŸamba', 'PerÅŸembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const day = days[dayIndex];
             const timeInput = document.getElementById(`dayTime${dayIndex}`);
-            const coachSelect = document.getElementById(`dayCoach${dayIndex}`);
             const time = timeInput.value;
-            const coachId = coachSelect.value;
             
-            if (!time || !coachId) return;
+            if (!time) return;
             
-            // Aynı gün, saat ve koçta başka öğrenci var mı kontrol et
+            // AynÄ± gÃ¼n ve saatte baÅŸka Ã¶ÄŸrenci var mÄ± kontrol et
             let hasConflict = false;
             students.forEach(student => {
-                if ((student._id || student.id) == editingStudentId) return;
+                if (student._id || student.id === editingStudentId) return;
                 if (student.weeklySchedule && student.weeklySchedule[day]) {
                     const lesson = student.weeklySchedule[day];
-                    if (lesson.time === time && lesson.coachId === coachId) {
+                    if (lesson.time === time) {
                         hasConflict = true;
                     }
                 }
@@ -2027,24 +1742,44 @@
         document.getElementById('editScheduleForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const days = ['Pazartesi', 'SalÄ±', 'Ã‡arÅŸamba', 'PerÅŸembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const schedule = {};
 
+            // Ã–nce Ã§akÄ±ÅŸma kontrolÃ¼ yap
+            let hasConflict = false;
             days.forEach((day, index) => {
                 const checkbox = document.getElementById(`day${index}`);
                 if (checkbox.checked) {
-                    const coachId = document.getElementById(`dayCoach${index}`).value;
+                    const time = document.getElementById(`dayTime${index}`).value;
+                    if (time) {
+                        // Ã‡akÄ±ÅŸma kontrolÃ¼
+                        students.forEach(student => {
+                            if ((student._id || student.id) == editingStudentId) return;
+                            if (student.weeklySchedule && student.weeklySchedule[day]) {
+                                const lesson = student.weeklySchedule[day];
+                                if (lesson.time === time) {
+                                    hasConflict = true;
+                                    document.getElementById(`conflictWarning${index}`).classList.add('show');
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+
+            if (hasConflict) {
+                alert('âŒ BazÄ± saatlerde Ã§akÄ±ÅŸma var! LÃ¼tfen dÃ¼zelttikten sonra tekrar deneyin.');
+                return;
+            }
+
+            // Ã‡akÄ±ÅŸma yoksa devam et
+            days.forEach((day, index) => {
+                const checkbox = document.getElementById(`day${index}`);
+                if (checkbox.checked) {
                     const time = document.getElementById(`dayTime${index}`).value;
                     const duration = document.getElementById(`dayDuration${index}`).value;
-                    const lessonType = document.getElementById(`dayLessonType${index}`).value;
-                    
-                    if (time && coachId) {
-                        schedule[day] = { 
-                            time, 
-                            duration, 
-                            lessonType,
-                            coachId 
-                        };
+                    if (time) {
+                        schedule[day] = { time, duration };
                     }
                 }
             });
@@ -2054,7 +1789,9 @@
                 try {
                     const response = await fetch(`${API_URL}/api/students/${editingStudentId}`, {
                         method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
                         body: JSON.stringify({ weeklySchedule: schedule })
                     });
                     
@@ -2066,11 +1803,11 @@
                         updateScheduleStudentsGrid();
                         closeEditScheduleModal();
                         displayWeeklySchedule(student);
-                        alert('✅ Haftalık program güncellendi!');
+                        alert('âœ… HaftalÄ±k program gÃ¼ncellendi!');
                     }
                 } catch (error) {
-                    console.error('Program kaydetme hatası:', error);
-                    alert('❌ Program kaydedilirken hata oluştu!');
+                    console.error('Program kaydetme hatasÄ±:', error);
+                    alert('âŒ Program kaydedilirken hata oluÅŸtu!');
                 }
             }
         });
