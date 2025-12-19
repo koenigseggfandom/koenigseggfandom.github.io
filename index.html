@@ -26,21 +26,28 @@
         }
 
         /* Logo */
-        .site-logo {
-            position: fixed;
-            top: 30px;
-            left: 40px;
-            z-index: 100;
-            font-family: 'Gruppo', cursive;
-            font-size: 48px;
-            font-weight: 400;
-            background: linear-gradient(135deg, #6366f1, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
+       .site-logo {
+    position: fixed;
+    top: 30px;
+    left: 40px;
+    z-index: 100;
+    font-family: 'Gruppo', cursive;
+    font-size: 48px;
+    font-weight: 400;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    opacity: 1;
+}
+
+.site-logo.hidden {
+    opacity: 0;
+    transform: translateY(-30px);
+    pointer-events: none;
+}
 
         .site-logo:hover {
             transform: scale(1.05);
@@ -153,17 +160,17 @@
 }
 
         /* YENİ: Typewriter Subtitle */
-        .hero-subtitle {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 40px;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+       .hero-subtitle {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -172,12 +179,16 @@
         }
 
         .typewriter-word {
-            display: inline-block;
-            border-right: 3px solid;
-            animation: blink 0.7s step-end infinite;
-            padding-right: 5px;
-            font-family: inherit;
-        }
+    display: inline-block;
+    border-right: 3px solid;
+    animation: blink 0.7s step-end infinite;
+    padding: 8px 15px;
+    padding-right: 20px;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin: 0 8px;
+}
 
         .word-1 {
             color: #6366f1;
@@ -206,15 +217,17 @@
             50% { border-color: transparent; }
         }
 
-        .hero-description {
-            font-size: 30px;
-            line-height: 1.9;
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 2500px;
-            margin: 0 auto 60px;
-            padding: 0 20px;
-            font-weight: 1500;
-        }
+       .hero-description {
+    font-size: 20px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 100%;
+    margin: 0 auto 60px;
+    padding: 0 60px;
+    font-weight: 1000;
+    text-align: justify;
+    text-align-last: center;
+}
 
         .features-grid {
             display: grid;
@@ -1111,6 +1124,11 @@
             .main-title { 
                 font-size: 56px;
             }
+            .hero-description {
+        padding: 0 20px;
+        text-align: center;
+        text-align-last: center;
+    }
             .hero-subtitle { 
                 font-size: 28px;
                 flex-direction: column;
@@ -1187,9 +1205,7 @@
             <p class="hero-description">
                 Profesyonel Valorant koçluk hizmetimizle oyun içi performansınızı en üst seviyeye taşıyoruz! Uzman ekibimiz, aim, oyun bilgisi, movement, pozisyon alma, iletişim becerileri, taktiksel stratejiler, ajan yönetimi ve daha birçok kritik alanda size birebir destek sağlar. 
                 
-                Güçlü yönlerinizi öne çıkarırken, zayıf noktalarınızı etkili geliştirme teknikleriyle güçlendiriyoruz. Hedeflerinize daha hızlı, daha bilinçli ve daha güvenli bir şekilde ulaşmanız için her adımda yanınızdayız. 
-            
-                Sadece rank yükseltmekle kalmıyor, oyunu derinden anlamanızı, takım içinde etkili iletişim kurmanızı ve her maçta maksimum performans göstermenizi sağlıyoruz. Tek başına değil, güçlü bir ekiple gelişmeye hazır mısınız? 
+                Güçlü yönlerinizi öne çıkarırken, zayıf noktalarınızı etkili geliştirme teknikleriyle güçlendiriyoruz.
             </p>
             
             <div class="features-grid">
@@ -1794,7 +1810,20 @@
         window.addEventListener('load', function() {
             setTimeout(typeWriter, 1000);
         });
-
+// ============ LOGO SCROLL ANIMATION ============
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            const logo = document.querySelector('.site-logo');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+                logo.classList.add('hidden');
+            } else {
+                logo.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
         // ============ FAQ TOGGLE ============
         function toggleFaq(element) {
             const faqItem = element.parentElement;
