@@ -2027,6 +2027,7 @@
             closeStudentDetailModal();
         }
 
+        // 1. YENİ openEditScheduleModal FONKSİYONU
         function openEditScheduleModal(studentId) {
             const student = students.find(s => (s._id || s.id) == studentId);
             if (!student) return;
@@ -2036,44 +2037,20 @@
             
             let formContent = '';
             days.forEach((day, index) => {
-                const lessons = student.weeklySchedule && student.weeklySchedule[day];
-                const lesson = lessons && lessons.length > 0 ? lessons[0] : null;
+                const lessons = student.weeklySchedule && student.weeklySchedule[day] ? student.weeklySchedule[day] : [];
+                const lessonsArray = Array.isArray(lessons) ? lessons : (lessons ? [lessons] : []);
+                
                 formContent += `
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="day${index}" ${lesson ? 'checked' : ''} onchange="toggleDayInputs(${index})">
+                    <div class="form-group" style="border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <label style="font-size: 16px; font-weight: 600; color: #6366f1; margin-bottom: 15px; display: block;">
                             ${day}
                         </label>
-                        <div id="dayInputs${index}" style="${lesson ? 'display: block;' : 'display: none;'} margin-top: 10px; padding-left: 20px;">
-                            <div class="form-group">
-                                <label for="dayTime${index}">Saat</label>
-                                <input type="time" id="dayTime${index}" value="${lesson ? lesson.time : ''}" onchange="checkScheduleConflict(${index})">
-                                <div id="conflictWarning${index}" class="error-message" style="display: none; margin-top: 5px;">Bu saatte başka bir öğrenciye ders var!</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="dayDuration${index}">Süre (Dakika)</label>
-                                <select id="dayDuration${index}">
-                                    <option value="60" ${lesson && lesson.duration == 60 ? 'selected' : ''}>60 dk</option>
-                                    <option value="90" ${lesson && lesson.duration == 90 ? 'selected' : ''}>90 dk</option>
-                                    <option value="120" ${lesson && lesson.duration == 120 ? 'selected' : ''}>120 dk</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="dayCoach${index}">Koç</label>
-                                <select id="dayCoach${index}" onchange="checkScheduleConflict(${index})">
-                                    <option value="">Koç Seçin</option>
-                                    ${coaches.map(coach => `
-                                        <option value="${coach._id || coach.id}" ${lesson && lesson.coachId == (coach._id || coach.id) ? 'selected' : ''}>
-                                            ${coach.name} ${coach.surname}
-                                        </option>
-                                    `).join('')}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="dayNotes${index}">Ders Notları (VOD, ödev, vb.)</label>
-                                <textarea id="dayNotes${index}" placeholder="Ders için notlar...">${lesson ? lesson.notes || '' : ''}</textarea>
-                            </div>
+                        <div id="dayLessons${index}">
+                            ${lessonsArray.map((lesson, lessonIndex) => createLessonForm(index, lessonIndex, lesson)).join('')}
                         </div>
+                        <button type="button" class="action-btn btn-add" onclick="addNewLesson(${index})" style="width: 100%; margin-top: 10px;">
+                            + Ders Ekle
+                        </button>
                     </div>
                 `;
             });
@@ -2083,27 +2060,78 @@
             document.getElementById('editScheduleModal').classList.add('active');
         }
 
-        function toggleDayInputs(dayIndex) {
-            const checkbox = document.getElementById(`day${dayIndex}`);
-            const inputs = document.getElementById(`dayInputs${dayIndex}`);
-            inputs.style.display = checkbox.checked ? 'block' : 'none';
+        // 2. createLessonForm FONKSİYONU
+        function createLessonForm(dayIndex, lessonIndex, lesson = null) {
+            return `
+                <div class="lesson-form" id="lesson${dayIndex}_${lessonIndex}" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 15px; margin-bottom: 10px; position: relative;">
+                    <button type="button" onclick="removeLesson(${dayIndex}, ${lessonIndex})" style="position: absolute; top: 10px; right: 10px; background: rgba(239, 68, 68, 0.2); border: none; color: #fca5a5; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">
+                        Sil
+                    </button>
+                    
+                    <div class="form-group">
+                        <label for="dayTime${dayIndex}_${lessonIndex}">Saat</label>
+                        <input type="time" id="dayTime${dayIndex}_${lessonIndex}" value="${lesson ? lesson.time : ''}" onchange="checkScheduleConflictMulti(${dayIndex}, ${lessonIndex})">
+                        <div id="conflictWarning${dayIndex}_${lessonIndex}" class="error-message" style="display: none; margin-top: 5px;">Bu saatte başka bir öğrenciye ders var!</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dayDuration${dayIndex}_${lessonIndex}">Süre (Dakika)</label>
+                        <select id="dayDuration${dayIndex}_${lessonIndex}">
+                            <option value="60" ${lesson && lesson.duration == 60 ? 'selected' : ''}>60 dk</option>
+                            <option value="90" ${lesson && lesson.duration == 90 ? 'selected' : ''}>90 dk</option>
+                            <option value="120" ${lesson && lesson.duration == 120 ? 'selected' : ''}>120 dk</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dayCoach${dayIndex}_${lessonIndex}">Koç</label>
+                        <select id="dayCoach${dayIndex}_${lessonIndex}" onchange="checkScheduleConflictMulti(${dayIndex}, ${lessonIndex})">
+                            <option value="">Koç Seçin</option>
+                            ${coaches.map(coach => `
+                                <option value="${coach._id || coach.id}" ${lesson && lesson.coachId == (coach._id || coach.id) ? 'selected' : ''}>
+                                    ${coach.name} ${coach.surname}
+                                </option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dayNotes${dayIndex}_${lessonIndex}">Ders Notları (VOD, ödev, vb.)</label>
+                        <textarea id="dayNotes${dayIndex}_${lessonIndex}" placeholder="Ders için notlar...">${lesson ? lesson.notes || '' : ''}</textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. addNewLesson FONKSİYONU
+        function addNewLesson(dayIndex) {
+            const container = document.getElementById(`dayLessons${dayIndex}`);
+            const currentLessons = container.querySelectorAll('.lesson-form').length;
+            const newLessonIndex = currentLessons;
             
-            const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
-            if (conflictWarning) {
-                conflictWarning.style.display = 'none';
+            const newLessonHTML = createLessonForm(dayIndex, newLessonIndex);
+            container.insertAdjacentHTML('beforeend', newLessonHTML);
+        }
+
+        // 4. removeLesson FONKSİYONU
+        function removeLesson(dayIndex, lessonIndex) {
+            const lessonElement = document.getElementById(`lesson${dayIndex}_${lessonIndex}`);
+            if (lessonElement) {
+                lessonElement.remove();
             }
         }
 
-        function checkScheduleConflict(dayIndex) {
+        // 5. checkScheduleConflictMulti FONKSİYONU
+        function checkScheduleConflictMulti(dayIndex, lessonIndex) {
             const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const day = days[dayIndex];
-            const timeInput = document.getElementById(`dayTime${dayIndex}`);
+            const timeInput = document.getElementById(`dayTime${dayIndex}_${lessonIndex}`);
             const time = timeInput.value;
-            const coachSelect = document.getElementById(`dayCoach${dayIndex}`);
+            const coachSelect = document.getElementById(`dayCoach${dayIndex}_${lessonIndex}`);
             const coachId = coachSelect.value;
             
             if (!time || !coachId) {
-                const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
+                const conflictWarning = document.getElementById(`conflictWarning${dayIndex}_${lessonIndex}`);
                 if (conflictWarning) conflictWarning.style.display = 'none';
                 return;
             }
@@ -2111,18 +2139,14 @@
             let hasConflict = false;
             let conflictStudentName = '';
             
-            // Tüm öğrencileri kontrol et
             students.forEach(student => {
-                // Kendi öğrencisini atla
                 if ((student._id || student.id) == editingStudentId) return;
                 
-                // Öğrencinin o gündeki dersleri var mı?
                 if (student.weeklySchedule && student.weeklySchedule[day]) {
                     const lessons = Array.isArray(student.weeklySchedule[day]) 
                         ? student.weeklySchedule[day] 
                         : [student.weeklySchedule[day]];
                     
-                    // Aynı koç, aynı saat mi kontrol et
                     lessons.forEach(lesson => {
                         if (lesson.time === time && lesson.coachId == coachId) {
                             hasConflict = true;
@@ -2132,7 +2156,7 @@
                 }
             });
             
-            const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
+            const conflictWarning = document.getElementById(`conflictWarning${dayIndex}_${lessonIndex}`);
             if (hasConflict) {
                 conflictWarning.textContent = `Bu saatte ${conflictStudentName} ile koçun dersi var!`;
                 conflictWarning.style.display = 'block';
@@ -2150,6 +2174,7 @@
             editingStudentId = null;
         }
 
+        // 6. YENİ Form submit FONKSİYONU
         document.getElementById('editScheduleForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -2159,19 +2184,25 @@
             let hasConflict = false;
             let conflictMessages = [];
 
-            days.forEach((day, index) => {
-                const checkbox = document.getElementById(`day${index}`);
-                if (checkbox.checked) {
-                    const time = document.getElementById(`dayTime${index}`).value;
-                    const coachId = document.getElementById(`dayCoach${index}`).value;
+            days.forEach((day, dayIndex) => {
+                const container = document.getElementById(`dayLessons${dayIndex}`);
+                const lessonForms = container.querySelectorAll('.lesson-form');
+                const dayLessons = [];
+                
+                lessonForms.forEach((form, lessonIndex) => {
+                    const time = document.getElementById(`dayTime${dayIndex}_${lessonIndex}`)?.value;
+                    const duration = document.getElementById(`dayDuration${dayIndex}_${lessonIndex}`)?.value;
+                    const coachId = document.getElementById(`dayCoach${dayIndex}_${lessonIndex}`)?.value;
+                    const notes = document.getElementById(`dayNotes${dayIndex}_${lessonIndex}`)?.value;
                     
-                    if (!coachId) {
+                    if (!coachId && time) {
                         alert('⚠️ Lütfen tüm dersler için koç seçin!');
                         hasConflict = true;
                         return;
                     }
                     
                     if (time && coachId) {
+                        // Çakışma kontrolü
                         students.forEach(student => {
                             if ((student._id || student.id) == editingStudentId) return;
                             if (student.weeklySchedule && student.weeklySchedule[day]) {
@@ -2180,18 +2211,25 @@
                                     : [student.weeklySchedule[day]];
                                 
                                 lessons.forEach(lesson => {
-                                    // Sadece aynı koç ve aynı saat çakışması kontrolü
                                     if (lesson.time === time && lesson.coachId == coachId) {
                                         hasConflict = true;
                                         conflictMessages.push(`${day} ${time}: ${student.name} ${student.surname} ile koçun dersi var!`);
-                                        document.getElementById(`conflictWarning${index}`).style.display = 'block';
-                                        document.getElementById(`conflictWarning${index}`).textContent = 
-                                            `Bu saatte ${student.name} ${student.surname} ile koçun dersi var!`;
                                     }
                                 });
                             }
                         });
+                        
+                        dayLessons.push({
+                            time,
+                            duration,
+                            coachId: coachId || null,
+                            notes: notes || ''
+                        });
                     }
+                });
+                
+                if (dayLessons.length > 0) {
+                    schedule[day] = dayLessons;
                 }
             });
 
@@ -2199,26 +2237,6 @@
                 alert('❌ Çakışmalar var:\n\n' + conflictMessages.join('\n') + '\n\nLütfen düzelttikten sonra tekrar deneyin.');
                 return;
             }
-
-            days.forEach((day, index) => {
-                const checkbox = document.getElementById(`day${index}`);
-                if (checkbox.checked) {
-                    const time = document.getElementById(`dayTime${index}`).value;
-                    const duration = document.getElementById(`dayDuration${index}`).value;
-                    const coachId = document.getElementById(`dayCoach${index}`).value;
-                    const notes = document.getElementById(`dayNotes${index}`).value;
-                    
-                    if (time) {
-                        // Dizinin içine bir ders objesi koyuyoruz.
-                        schedule[day] = [ { 
-                            time, 
-                            duration, 
-                            coachId: coachId || null,
-                            notes: notes || ''
-                        } ];
-                    }
-                }
-            });
 
             const student = students.find(s => (s._id || s.id) == editingStudentId);
             if (student) {
