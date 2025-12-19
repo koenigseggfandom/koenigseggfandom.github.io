@@ -42,6 +42,36 @@
     transition: all 0.5s ease;
     opacity: 1;
 }
+.developer-credit {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.developer-link {
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.developer-text {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 13px;
+    margin-right: 5px;
+}
+
+.developer-name {
+    color: #6366f1;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.developer-link:hover .developer-name {
+    color: #8b5cf6;
+    transform: translateY(-2px);
+}
 
 .site-logo.hidden {
     opacity: 0;
@@ -1728,7 +1758,13 @@
                         📧
                     </a>
                 </div>
-            </div>
+                <div class="developer-credit">
+    <a href="https://mehmetakifkaraman.carrd.co/" target="_blank" class="developer-link">
+        <span class="developer-text">Developed by</span>
+        <span class="developer-name">4k1f.dev</span>
+    </a>
+</div>
+           </div>
         </div>
     </footer>
 
