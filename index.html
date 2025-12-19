@@ -1012,6 +1012,94 @@
             box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
         }
 
+        /* Yılbaşı Kar Efekti */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: #fff;
+            font-size: 1em;
+            animation: fall linear infinite;
+            opacity: 0.8;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Yılbaşı Işıkları */
+        .christmas-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            z-index: 9998;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .light {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        .light:nth-child(1) { background: #ff0000; animation-delay: 0s; }
+        .light:nth-child(2) { background: #00ff00; animation-delay: 0.3s; }
+        .light:nth-child(3) { background: #0000ff; animation-delay: 0.6s; }
+        .light:nth-child(4) { background: #ffff00; animation-delay: 0.9s; }
+        .light:nth-child(5) { background: #ff00ff; animation-delay: 1.2s; }
+        .light:nth-child(6) { background: #00ffff; animation-delay: 0.2s; }
+        .light:nth-child(7) { background: #ff8800; animation-delay: 0.5s; }
+        .light:nth-child(8) { background: #ff0088; animation-delay: 0.8s; }
+        .light:nth-child(9) { background: #88ff00; animation-delay: 1.1s; }
+        .light:nth-child(10) { background: #0088ff; animation-delay: 1.4s; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 20px currentColor; }
+            50% { opacity: 0.3; box-shadow: 0 0 5px currentColor; }
+        }
+
+        /* Fiyat Badge */
+        .price-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 15px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .price-badge-icon {
+            margin-right: 5px;
+        }
+
         @media (max-width: 1200px) {
             .features-grid { grid-template-columns: repeat(2, 1fr); }
             .testimonials-grid { grid-template-columns: 1fr; }
@@ -1044,6 +1132,39 @@
     </style>
 </head>
 <body>
+    <!-- Yılbaşı Kar Efekti -->
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+    </div>
+
+    <!-- Yılbaşı Işıkları -->
+    <div class="christmas-lights">
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+    </div>
+
     <div class="site-logo">AURA</div>
 
     <div class="animated-bg">
@@ -1112,8 +1233,14 @@
 
                     <div class="lesson-card">
                         <div class="lesson-icon">🧠</div>
-                        <h3 class="lesson-title">Sınıf (Grup) Dersleri</h3>
-                        <p class="lesson-description">Sınıf dersleri, sizinle aynı seviyedeki oyuncularla birlikte ilerlenen, kapsamlı ve öğretici bir eğitim sistemidir. Bu derslerde amaç, oyunun temel ve ileri seviye mekaniklerini birlikte işlemek, tartışmak ve farklı bakış açılarıyla gelişmeyi hızlandırmaktır.</p>
+                        <h3 class="lesson-title">
+                            Sınıf (Grup) Dersleri
+                            <span class="price-badge">
+                                <span class="price-badge-icon">💰</span>
+                                Uygun Fiyat
+                            </span>
+                        </h3>
+                        <p class="lesson-description">Sınıf dersleri, sizinle aynı seviyedeki oyuncularla birlikte ilerlenen, kapsamlı ve öğretici bir eğitim sistemidir. Bu derslerde amaç, oyunun temel ve ileri seviye mekaniklerini birlikte işlemek, tartışmak ve farklı bakış açılarıyla gelişmeyi hızlandırmaktır. <strong style="color: #22c55e;">Grup dersleri daha ekonomik bir seçenek sunar!</strong></p>
                         <ul class="lesson-features">
                             <li>Oyun içi ekonomi yönetimi ve makro-mikro kararlar</li>
                             <li>Pasif aim geliştirme yöntemleri</li>
@@ -1590,6 +1717,26 @@
     </footer>
 
     <script>
+        // ============ YILBAŞI KAR EFEKTİ ============
+        function createSnowflakes() {
+            const snowflakesContainer = document.querySelector('.snowflakes');
+            const snowflakes = snowflakesContainer.querySelectorAll('.snowflake');
+            
+            snowflakes.forEach((snowflake, index) => {
+                const startPosition = Math.random() * 100;
+                const duration = 10 + Math.random() * 20;
+                const delay = Math.random() * 5;
+                const size = 0.5 + Math.random() * 1;
+                
+                snowflake.style.left = `${startPosition}%`;
+                snowflake.style.animationDuration = `${duration}s`;
+                snowflake.style.animationDelay = `${delay}s`;
+                snowflake.style.fontSize = `${size}em`;
+            });
+        }
+
+        window.addEventListener('load', createSnowflakes);
+
         // ============ TYPEWRITER EFFECT ============
         const words = [
             { text: "Hadi", elementId: "word1", colorClass: "word-1" },
