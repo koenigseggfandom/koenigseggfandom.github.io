@@ -1113,19 +1113,19 @@
             </div>
             
             <div class="sidebar-menu">
-                <div class="menu-item active" onclick="showSection('overview')">
+                <div class="menu-item active" onclick="showSection('overview', event)">
                     <span>Genel Bakış</span>
                 </div>
-                <div class="menu-item" onclick="showSection('applications')">
+                <div class="menu-item" onclick="showSection('applications', event)">
                     <span>Başvurular</span>
                 </div>
-                <div class="menu-item" onclick="showSection('students')">
+                <div class="menu-item" onclick="showSection('students', event)">
                     <span>Öğrenciler</span>
                 </div>
-                <div class="menu-item" onclick="showSection('coaches')">
+                <div class="menu-item" onclick="showSection('coaches', event)">
                     <span>Koçlar</span>
                 </div>
-                <div class="menu-item" onclick="showSection('schedule')">
+                <div class="menu-item" onclick="showSection('schedule', event)">
                     <span>Haftalık Program</span>
                 </div>
             </div>
@@ -1458,53 +1458,60 @@
                 if (appsResponse.success) applications = appsResponse.applications;
                 if (studentsResponse.success) {
                     students = studentsResponse.students;
-                    // Öğrencilerin weeklySchedule'ını diziye çevir ve bozuk verileri temizle
+                    // Öğrencilerin weeklySchedule'ını normalize et
                     students.forEach(student => {
-                        if (student.weeklySchedule && typeof student.weeklySchedule === 'object' && !Array.isArray(student.weeklySchedule)) {
-                            const newSchedule = {};
-                            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-                            days.forEach(day => {
-                                if (student.weeklySchedule[day]) {
-                                    const lesson = student.weeklySchedule[day];
-                                    // Bozuk ders verilerini kontrol et ve temizle
-                                    if (lesson && typeof lesson === 'object' && lesson.time && typeof lesson.time === 'string') {
-                                        newSchedule[day] = [{
-                                            time: lesson.time,
-                                            duration: lesson.duration || 60,
-                                            coachId: lesson.coachId,
-                                            notes: lesson.notes || ''
-                                        }];
-                                    } else {
-                                        console.warn(`Bozuk ders verisi temizlendi: ${student.name} ${student.surname}, Gün: ${day}`, lesson);
-                                        newSchedule[day] = [];
-                                    }
-                                } else {
-                                    newSchedule[day] = [];
-                                }
-                            });
-                            student.weeklySchedule = newSchedule;
+                        if (!student.weeklySchedule) {
+                            student.weeklySchedule = {};
+                            return;
                         }
                         
-                        // Mevcut schedule'da bozuk verileri temizle
-                        if (student.weeklySchedule && typeof student.weeklySchedule === 'object') {
-                            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-                            days.forEach(day => {
-                                const lessons = student.weeklySchedule[day];
-                                if (Array.isArray(lessons)) {
-                                    student.weeklySchedule[day] = lessons.filter(lesson => 
+                        // Eğer string olarak gelmişse, parse et
+                        if (typeof student.weeklySchedule === 'string') {
+                            try {
+                                student.weeklySchedule = JSON.parse(student.weeklySchedule);
+                            } catch (e) {
+                                console.error('Schedule parse hatası:', e);
+                                student.weeklySchedule = {};
+                            }
+                        }
+                        
+                        // Schedule verisini normalize et
+                        const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+                        const normalizedSchedule = {};
+                        
+                        days.forEach(day => {
+                            normalizedSchedule[day] = [];
+                            
+                            if (student.weeklySchedule[day]) {
+                                const daySchedule = student.weeklySchedule[day];
+                                
+                                if (Array.isArray(daySchedule)) {
+                                    // Dizi ise geçerli dersleri filtrele
+                                    normalizedSchedule[day] = daySchedule.filter(lesson => 
                                         lesson && 
                                         lesson.time && 
                                         typeof lesson.time === 'string' && 
-                                        lesson.time.trim() !== ''
+                                        lesson.time.trim() !== '' &&
+                                        /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(lesson.time)
                                     ).map(lesson => ({
-                                        time: lesson.time,
-                                        duration: lesson.duration || 60,
-                                        coachId: lesson.coachId,
+                                        time: lesson.time.trim(),
+                                        duration: parseInt(lesson.duration) || 60,
+                                        coachId: lesson.coachId || null,
                                         notes: lesson.notes || ''
                                     }));
+                                } else if (daySchedule.time) {
+                                    // Tek ders nesnesi ise diziye çevir
+                                    normalizedSchedule[day] = [{
+                                        time: daySchedule.time.trim(),
+                                        duration: parseInt(daySchedule.duration) || 60,
+                                        coachId: daySchedule.coachId || null,
+                                        notes: daySchedule.notes || ''
+                                    }];
                                 }
-                            });
-                        }
+                            }
+                        });
+                        
+                        student.weeklySchedule = normalizedSchedule;
                     });
                 }
                 if (coachesResponse.success) coaches = coachesResponse.coaches || [];
@@ -1514,8 +1521,11 @@
                 updateRecentApplications();
                 updateCoachesGrid();
                 updateScheduleTable();
+                updateStats();
+                
             } catch (error) {
                 console.error('Veri yüklenirken hata:', error);
+                // Fallback: localStorage'dan yükle
                 const savedStudents = localStorage.getItem('auraStudents');
                 const savedApplications = localStorage.getItem('auraApplications');
                 const savedCoaches = localStorage.getItem('auraCoaches');
@@ -1532,16 +1542,33 @@
             }
         }
 
-        function showSection(sectionName) {
+        function showSection(sectionName, event) {
+            // Remove active class from all menu items
             document.querySelectorAll('.menu-item').forEach(item => {
                 item.classList.remove('active');
             });
-            event.target.closest('.menu-item').classList.add('active');
+            
+            // If event is provided, set active class to the clicked menu item
+            if (event) {
+                event.target.closest('.menu-item').classList.add('active');
+            } else {
+                // Otherwise, find the menu item that corresponds to the sectionName and activate it
+                const menuItems = document.querySelectorAll('.menu-item');
+                const sectionIndex = ['overview', 'applications', 'students', 'coaches', 'schedule'].indexOf(sectionName);
+                if (menuItems[sectionIndex]) {
+                    menuItems[sectionIndex].classList.add('active');
+                }
+            }
             
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
             document.getElementById(sectionName + 'Section').classList.add('active');
+            
+            // If the schedule section is shown, update the schedule table
+            if (sectionName === 'schedule') {
+                updateScheduleTable();
+            }
         }
 
         function updateStats() {
@@ -1719,7 +1746,7 @@
                 expectations: app.expectations,
                 introduction: app.introduction,
                 discord: app.discord,
-                weeklySchedule: null
+                weeklySchedule: {}
             };
             
             try {
@@ -1922,6 +1949,7 @@
         }
 
         function updateScheduleTable() {
+            console.log('updateScheduleTable çağrıldı');
             const tbody = document.getElementById('scheduleTableBody');
             const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             
@@ -1931,15 +1959,26 @@
             students.forEach(student => {
                 if (student.weeklySchedule && typeof student.weeklySchedule === 'object') {
                     days.forEach(day => {
-                        const lessons = student.weeklySchedule[day];
-                        const lessonsArray = lessons ? (Array.isArray(lessons) ? lessons : [lessons]) : [];
+                        let lessons = student.weeklySchedule[day];
+                        
+                        // Ders verilerini diziye çevir (null veya undefined kontrolü)
+                        if (!lessons) return;
+                        
+                        let lessonsArray = [];
+                        if (Array.isArray(lessons)) {
+                            lessonsArray = lessons.filter(lesson => 
+                                lesson && 
+                                lesson.time && 
+                                typeof lesson.time === 'string' && 
+                                lesson.time.trim() !== ''
+                            );
+                        } else if (lessons.time) {
+                            // Eğer tek ders nesnesi varsa, diziye çevir
+                            lessonsArray = [lessons];
+                        }
                         
                         lessonsArray.forEach(lesson => {
-                            // Ders verilerinin geçerli olduğundan emin ol
-                            if (!lesson || !lesson.time || typeof lesson.time !== 'string') {
-                                console.warn(`Geçersiz ders verisi: ${student.name} ${student.surname}, Gün: ${day}`, lesson);
-                                return; // Geçersiz dersi atla
-                            }
+                            if (!lesson || !lesson.time) return;
                             
                             const coach = coaches.find(c => (c._id || c.id) == lesson.coachId);
                             scheduleData.push({
@@ -1950,14 +1989,14 @@
                                 duration: lesson.duration || 60,
                                 coach: coach,
                                 notes: lesson.notes || '',
-                                // Sıralama için sayısal değer
-                                dayIndex: days.indexOf(day),
-                                timeValue: lesson.time ? lesson.time.replace(':', '') : '0000'
+                                dayIndex: days.indexOf(day)
                             });
                         });
                     });
                 }
             });
+            
+            console.log('Toplanan schedule verisi:', scheduleData);
             
             // Eğer ders yoksa
             if (scheduleData.length === 0) {
@@ -1976,7 +2015,15 @@
                 if (a.dayIndex !== b.dayIndex) {
                     return a.dayIndex - b.dayIndex;
                 }
-                return a.timeValue.localeCompare(b.timeValue);
+                
+                // Saatleri karşılaştır (HH:MM formatı)
+                const timeA = a.time.split(':').map(Number);
+                const timeB = b.time.split(':').map(Number);
+                
+                if (timeA[0] !== timeB[0]) {
+                    return timeA[0] - timeB[0];
+                }
+                return timeA[1] - timeB[1];
             });
             
             // Tabloyu oluştur
@@ -1994,7 +2041,7 @@
                         <td class="coach-cell">
                             ${item.coach ? `
                                 <div class="coach-avatar">${(item.coach.name || '').charAt(0)}${(item.coach.surname || '').charAt(0)}</div>
-                                <span>${item.coach.name ? item.coach.name.split(' ')[0] : ''}</span>
+                                <span>${item.coach.name} ${item.coach.surname}</span>
                             ` : '-'}
                         </td>
                         <td>
