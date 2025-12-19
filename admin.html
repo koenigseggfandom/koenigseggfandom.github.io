@@ -1826,7 +1826,7 @@
         async function deleteStudent(studentId, event) {
             if (event) event.stopPropagation();
             
-            if (!confirm('Bu öğrenciyi silmek istediğinizden emin misiniz?')) {
+            if (!confirm('Bu öğrenciyi silmek istediğinizden emin misiniz? Öğrencinin tüm ders programı da silinecektir.')) {
                 return;
             }
             
@@ -1843,7 +1843,7 @@
                     updateStats();
                     updateStudentsGrid();
                     updateScheduleTable();
-                    alert('✅ Öğrenci silindi!');
+                    alert('✅ Öğrenci ve ders programı silindi!');
                     
                     if (currentDetailStudentId === studentId) {
                         closeStudentDetailModal();
@@ -2560,6 +2560,41 @@
         });
 
         async function deleteCoach(coachId) {
+            // Önce bu koçun dersi olup olmadığını kontrol et
+            let hasLesson = false;
+            let lessonDetails = [];
+
+            students.forEach(student => {
+                if (student.weeklySchedule) {
+                    const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+                    days.forEach(day => {
+                        const lessons = student.weeklySchedule[day];
+                        if (lessons) {
+                            const lessonsArray = Array.isArray(lessons) ? lessons : [lessons];
+                            lessonsArray.forEach(lesson => {
+                                if (lesson && lesson.coachId == coachId) {
+                                    hasLesson = true;
+                                    lessonDetails.push({
+                                        student: `${student.name} ${student.surname}`,
+                                        day: day,
+                                        time: lesson.time
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            if (hasLesson) {
+                let message = `❌ Bu koçun şu anda dersleri bulunmaktadır. Silmek için önce dersleri kaldırın:\n\n`;
+                lessonDetails.forEach(detail => {
+                    message += `- ${detail.student} (${detail.day} ${detail.time})\n`;
+                });
+                alert(message);
+                return;
+            }
+
             if (!confirm('Bu koçu silmek istediğinizden emin misiniz?')) return;
             
             try {
