@@ -689,62 +689,74 @@
             font-weight: 500;
         }
 
-        /* Enhanced Schedule Display */
-        .weekly-schedule-display {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
+     .weekly-schedule-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
 
-        .day-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            min-height: 120px;
-        }
+.day-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
 
-        .day-name {
-            font-weight: 600;
-            color: #6366f1;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
+.day-name {
+    font-weight: 600;
+    color: #6366f1;
+    margin-bottom: 12px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
-        .day-time {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
+.day-time {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
 
-        .day-duration {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-            margin-bottom: 5px;
-        }
+.day-duration {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    margin-bottom: 8px;
+}
 
-        .day-coach {
-            color: #ec4899;
-            font-size: 12px;
-            font-weight: 500;
-        }
+.day-coach {
+    color: #ec4899;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
 
-        .day-notes {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 11px;
-            margin-top: 8px;
-            font-style: italic;
-            word-break: break-word;
-        }
+.day-notes {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    margin-top: auto;
+    padding-top: 8px;
+    font-style: italic;
+    word-break: break-word;
+    line-height: 1.4;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-        .day-empty {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 13px;
-            padding: 20px 0;
-        }
+.day-empty {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 13px;
+    padding: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
 
         /* Coach Badge */
         .coach-badge {
@@ -929,57 +941,73 @@
             margin-top: 15px;
         }
 
-        @media (max-width: 1200px) {
-            .weekly-schedule-display {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
+@media (max-width: 1200px) {
+    .weekly-schedule-display {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+}
 
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
 
-            .main-content {
-                margin-left: 0;
-                padding: 20px;
-            }
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
 
-            .search-box {
-                width: 100%;
-            }
+    .search-box {
+        width: 100%;
+    }
 
-            .students-grid {
-                grid-template-columns: 1fr;
-            }
+    .students-grid {
+        grid-template-columns: 1fr;
+    }
 
-            .day-schedule {
-                grid-template-columns: 1fr;
-            }
+    .day-schedule {
+        grid-template-columns: 1fr;
+    }
 
-            .add-lesson-btn {
-                padding: 16px 20px;
-                font-size: 15px;
-            }
+    .add-lesson-btn {
+        padding: 16px 20px;
+        font-size: 15px;
+    }
 
-            .weekly-schedule-display {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    .weekly-schedule-display {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
 
-            .detail-grid {
-                grid-template-columns: 1fr;
-            }
+    .day-box {
+        min-height: 120px;
+        padding: 12px;
+    }
 
-            .coaches-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+    .day-time {
+        font-size: 16px;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .coaches-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .weekly-schedule-display {
+        grid-template-columns: 1fr;
+    }
+}
     </style>
 </head>
 <body>
@@ -1612,10 +1640,10 @@
                         <button class="action-btn btn-delete" onclick="deleteStudent('${student._id || student.id}', event)">Sil</button>
                     </div>
                     <div class="student-info" onclick="showStudentDetail('${student._id || student.id}')">
-                        <div class="info-row">
-                            <span class="info-label">Yaş:</span>
-                            <span class="info-value">${student.age}</span>
-                        </div>
+                       <div class="info-row">
+    <span class="info-label">Discord:</span>
+    <span class="info-value">${student.discord || '-'}</span>
+</div>
                         <div class="info-row">
                             <span class="info-label">Ülke:</span>
                             <span class="info-value">${student.country}</span>
@@ -1869,7 +1897,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="dayCoach${index}">Koç</label>
-                                <select id="dayCoach${index}">
+                                <select id="dayCoach${index}" onchange="checkScheduleConflict(${index})">
                                     <option value="">Koç Seçin</option>
                                     ${coaches.map(coach => `
                                         <option value="${coach._id || coach.id}" ${lesson && lesson.coachId == (coach._id || coach.id) ? 'selected' : ''}>
@@ -1903,38 +1931,51 @@
             }
         }
 
-        function checkScheduleConflict(dayIndex) {
-            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-            const day = days[dayIndex];
-            const timeInput = document.getElementById(`dayTime${dayIndex}`);
-            const time = timeInput.value;
-            const coachSelect = document.getElementById(`dayCoach${dayIndex}`);
-            const coachId = coachSelect.value;
-            
-            if (!time) return;
-            
-            let hasConflict = false;
-            students.forEach(student => {
-                if ((student._id || student.id) == editingStudentId) return;
-                if (student.weeklySchedule && student.weeklySchedule[day]) {
-                    const lesson = student.weeklySchedule[day];
-                    if (lesson.time === time) {
-                        if (!coachId || lesson.coachId == coachId) {
-                            hasConflict = true;
-                        }
-                    }
-                }
-            });
-            
-            const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
-            if (hasConflict) {
-                conflictWarning.style.display = 'block';
-                timeInput.style.borderColor = '#ef4444';
-            } else {
-                conflictWarning.style.display = 'none';
-                timeInput.style.borderColor = '';
+function checkScheduleConflict(dayIndex) {
+    const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+    const day = days[dayIndex];
+    const timeInput = document.getElementById(`dayTime${dayIndex}`);
+    const time = timeInput.value;
+    const coachSelect = document.getElementById(`dayCoach${dayIndex}`);
+    const coachId = coachSelect.value;
+    
+    if (!time || !coachId) {
+        const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
+        if (conflictWarning) conflictWarning.style.display = 'none';
+        return;
+    }
+    
+    let hasConflict = false;
+    let conflictStudentName = '';
+    
+    // Tüm öğrencileri kontrol et
+    students.forEach(student => {
+        // Kendi öğrencisini atla
+        if ((student._id || student.id) == editingStudentId) return;
+        
+        // Öğrencinin o gündeki dersi var mı?
+        if (student.weeklySchedule && student.weeklySchedule[day]) {
+            const lesson = student.weeklySchedule[day];
+            // Aynı koç, aynı saat mi?
+            if (lesson.time === time && lesson.coachId == coachId) {
+                hasConflict = true;
+                conflictStudentName = `${student.name} ${student.surname}`;
             }
         }
+    });
+    
+    const conflictWarning = document.getElementById(`conflictWarning${dayIndex}`);
+    if (hasConflict) {
+        conflictWarning.textContent = `Bu saatte ${conflictStudentName} ile koçun dersi var!`;
+        conflictWarning.style.display = 'block';
+        timeInput.style.borderColor = '#ef4444';
+        coachSelect.style.borderColor = '#ef4444';
+    } else {
+        conflictWarning.style.display = 'none';
+        timeInput.style.borderColor = '';
+        coachSelect.style.borderColor = '';
+    }
+}
 
         function closeEditScheduleModal() {
             document.getElementById('editScheduleModal').classList.remove('active');
@@ -1947,34 +1988,44 @@
             const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const schedule = {};
 
-            let hasConflict = false;
-            days.forEach((day, index) => {
-                const checkbox = document.getElementById(`day${index}`);
-                if (checkbox.checked) {
-                    const time = document.getElementById(`dayTime${index}`).value;
-                    const coachId = document.getElementById(`dayCoach${index}`).value;
-                    
-                    if (time) {
-                        students.forEach(student => {
-                            if ((student._id || student.id) == editingStudentId) return;
-                            if (student.weeklySchedule && student.weeklySchedule[day]) {
-                                const lesson = student.weeklySchedule[day];
-                                if (lesson.time === time) {
-                                    if (!coachId || lesson.coachId == coachId) {
-                                        hasConflict = true;
-                                        document.getElementById(`conflictWarning${index}`).style.display = 'block';
-                                    }
-                                }
-                            }
-                        });
+let hasConflict = false;
+let conflictMessages = [];
+
+days.forEach((day, index) => {
+    const checkbox = document.getElementById(`day${index}`);
+    if (checkbox.checked) {
+        const time = document.getElementById(`dayTime${index}`).value;
+        const coachId = document.getElementById(`dayCoach${index}`).value;
+        
+        if (!coachId) {
+            alert('⚠️ Lütfen tüm dersler için koç seçin!');
+            hasConflict = true;
+            return;
+        }
+        
+        if (time && coachId) {
+            students.forEach(student => {
+                if ((student._id || student.id) == editingStudentId) return;
+                if (student.weeklySchedule && student.weeklySchedule[day]) {
+                    const lesson = student.weeklySchedule[day];
+                    // Sadece aynı koç ve aynı saat çakışması kontrolü
+                    if (lesson.time === time && lesson.coachId == coachId) {
+                        hasConflict = true;
+                        conflictMessages.push(`${day} ${time}: ${student.name} ${student.surname} ile koçun dersi var!`);
+                        document.getElementById(`conflictWarning${index}`).style.display = 'block';
+                        document.getElementById(`conflictWarning${index}`).textContent = 
+                            `Bu saatte ${student.name} ${student.surname} ile koçun dersi var!`;
                     }
                 }
             });
+        }
+    }
+});
 
-            if (hasConflict) {
-                alert('❌ Bazı saatlerde çakışma var! Lütfen düzelttikten sonra tekrar deneyin.');
-                return;
-            }
+if (hasConflict) {
+    alert('❌ Çakışmalar var:\n\n' + conflictMessages.join('\n') + '\n\nLütfen düzelttikten sonra tekrar deneyin.');
+    return;
+}
 
             days.forEach((day, index) => {
                 const checkbox = document.getElementById(`day${index}`);
