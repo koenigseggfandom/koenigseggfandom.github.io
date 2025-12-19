@@ -941,6 +941,67 @@
             margin-top: 15px;
         }
 
+        /* Schedule table için ek stiller */
+        #scheduleTableBody .student-name-cell {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #scheduleTableBody .day-cell {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        #scheduleTableBody .time-cell {
+            font-family: 'Courier New', monospace;
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        #scheduleTableBody .coach-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .coach-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(236, 72, 153, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: #f9a8d4;
+        }
+
+        .lesson-type-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .lesson-vod {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+        }
+
+        .lesson-aim {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+        }
+
+        tbody tr.clickable-row {
+            cursor: pointer;
+        }
+
+        tbody tr.clickable-row:hover {
+            background: rgba(99, 102, 241, 0.08);
+        }
+
 @media (max-width: 1200px) {
     .weekly-schedule-display {
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1202,16 +1263,32 @@
             <div class="content-section" id="scheduleSection">
                 <div class="page-header">
                     <h1 class="page-title">Haftalık Program</h1>
-                    <p class="page-subtitle">Öğrencilerin haftalık ders programları</p>
+                    <p class="page-subtitle">Tüm öğrencilerin haftalık ders programları</p>
                 </div>
 
                 <div class="data-table">
                     <div class="table-header">
-                        <h3 class="table-title">Öğrenci Seç</h3>
+                        <h3 class="table-title">Haftalık Ders Programı</h3>
+                        <input type="text" class="search-box" id="scheduleSearch" placeholder="Öğrenci veya koç ara...">
                     </div>
-                    <div class="students-grid" id="scheduleStudentsGrid">
-                        <!-- Students will be populated here -->
-                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>İsim</th>
+                                <th>Gün</th>
+                                <th>Saat (TR)</th>
+                                <th>Koç</th>
+                                <th>Ders</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleTableBody">
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    <div>Henüz programlanmış ders yok</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -1402,10 +1479,10 @@
                 if (coachesResponse.success) coaches = coachesResponse.coaches || [];
                 
                 updateStudentsGrid();
-                updateScheduleStudentsGrid();
                 updateApplicationsTable();
                 updateRecentApplications();
                 updateCoachesGrid();
+                updateScheduleTable();
             } catch (error) {
                 console.error('Veri yüklenirken hata:', error);
                 const savedStudents = localStorage.getItem('auraStudents');
@@ -1417,10 +1494,10 @@
                 if (savedCoaches) coaches = JSON.parse(savedCoaches);
                 
                 updateStudentsGrid();
-                updateScheduleStudentsGrid();
                 updateApplicationsTable();
                 updateRecentApplications();
                 updateCoachesGrid();
+                updateScheduleTable();
             }
         }
 
@@ -1455,6 +1532,7 @@
                 }
             });
             document.getElementById('totalLessons').textContent = totalLessons;
+            updateScheduleTable();
         }
 
         function updateApplicationsTable() {
@@ -1636,7 +1714,6 @@
                     updateApplicationsTable();
                     updateRecentApplications();
                     updateStudentsGrid();
-                    updateScheduleStudentsGrid();
                     
                     alert('✅ Öğrenci başarıyla eklendi!');
                 }
@@ -1706,7 +1783,7 @@
                     
                     updateStats();
                     updateStudentsGrid();
-                    updateScheduleStudentsGrid();
+                    updateScheduleTable();
                     alert('✅ Öğrenci silindi!');
                     
                     if (currentDetailStudentId === studentId) {
@@ -1813,31 +1890,82 @@
             currentDetailStudentId = null;
         }
 
-        function updateScheduleStudentsGrid() {
-            const grid = document.getElementById('scheduleStudentsGrid');
+        function updateScheduleTable() {
+            const tbody = document.getElementById('scheduleTableBody');
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             
-            if (students.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1 / -1;">
-                        <div>Henüz kayıtlı öğrenci yok</div>
-                    </div>
+            let scheduleData = [];
+            
+            // Tüm öğrencilerin derslerini topla
+            students.forEach(student => {
+                if (student.weeklySchedule) {
+                    days.forEach(day => {
+                        const lessons = student.weeklySchedule[day];
+                        const lessonsArray = lessons ? (Array.isArray(lessons) ? lessons : [lessons]) : [];
+                        
+                        lessonsArray.forEach(lesson => {
+                            const coach = coaches.find(c => (c._id || c.id) == lesson.coachId);
+                            scheduleData.push({
+                                studentName: `${student.name} ${student.surname}`,
+                                studentId: student._id || student.id,
+                                day: day,
+                                time: lesson.time,
+                                duration: lesson.duration,
+                                coach: coach,
+                                notes: lesson.notes || '',
+                                // Sıralama için sayısal değer
+                                dayIndex: days.indexOf(day),
+                                timeValue: lesson.time.replace(':', '')
+                            });
+                        });
+                    });
+                }
+            });
+            
+            // Eğer ders yoksa
+            if (scheduleData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <div>Henüz programlanmış ders yok</div>
+                        </td>
+                    </tr>
                 `;
                 return;
             }
             
-            grid.innerHTML = students.map(student => `
-                <div class="student-card" onclick="viewStudentSchedule('${student._id || student.id}')">
-                    <div class="student-card-header">
-                        <div class="student-name">${student.name} ${student.surname}</div>
-                    </div>
-                    <div class="student-info">
-                        <div class="info-row">
-                            <span class="info-label">Program:</span>
-                            <span class="info-value">${student.weeklySchedule ? '✅ Var' : '❌ Yok'}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            // Dersleri gün ve saate göre sırala
+            scheduleData.sort((a, b) => {
+                if (a.dayIndex !== b.dayIndex) {
+                    return a.dayIndex - b.dayIndex;
+                }
+                return a.timeValue.localeCompare(b.timeValue);
+            });
+            
+            // Tabloyu oluştur
+            tbody.innerHTML = scheduleData.map(item => {
+                const lessonType = item.notes.toLowerCase().includes('vod') ? 'Vod' : 
+                                  item.notes.toLowerCase().includes('aim') ? 'Aim' : 
+                                  'Ders';
+                const lessonClass = lessonType === 'Vod' ? 'lesson-vod' : lessonType === 'Aim' ? 'lesson-aim' : '';
+                
+                return `
+                    <tr class="clickable-row" onclick="showStudentDetail('${item.studentId}')">
+                        <td class="student-name-cell">${item.studentName}</td>
+                        <td class="day-cell">${item.day}</td>
+                        <td class="time-cell">${item.time}</td>
+                        <td class="coach-cell">
+                            ${item.coach ? `
+                                <div class="coach-avatar">${item.coach.name.charAt(0)}${item.coach.surname.charAt(0)}</div>
+                                <span>${item.coach.name.split(' ')[0]}</span>
+                            ` : '-'}
+                        </td>
+                        <td>
+                            <span class="lesson-type-badge ${lessonClass}">${lessonType}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function viewStudentSchedule(studentId) {
@@ -2108,7 +2236,7 @@
                     if (result.success) {
                         student.weeklySchedule = schedule;
                         updateStats();
-                        updateScheduleStudentsGrid();
+                        updateScheduleTable();
                         closeEditScheduleModal();
                         displayWeeklySchedule(student);
                         alert('✅ Haftalık program güncellendi!');
@@ -2248,6 +2376,17 @@
         document.getElementById('applicationSearch')?.addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
             const rows = document.querySelectorAll('#applicationsTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Schedule search functionality
+        document.getElementById('scheduleSearch')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#scheduleTableBody tr');
             
             rows.forEach(row => {
                 const text = row.textContent.toLowerCase();
