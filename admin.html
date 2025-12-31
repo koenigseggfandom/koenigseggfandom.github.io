@@ -994,16 +994,6 @@
             color: #86efac;
         }
 
-        .lesson-analiz {
-            background: rgba(245, 158, 11, 0.2);
-            color: #fcd34d;
-        }
-
-        .lesson-strateji {
-            background: rgba(139, 92, 246, 0.2);
-            color: #c4b5fd;
-        }
-
         tbody tr.clickable-row {
             cursor: pointer;
         }
@@ -1011,55 +1001,6 @@
         tbody tr.clickable-row:hover {
             background: rgba(99, 102, 241, 0.08);
         }
-
-/* 1. Görüldü/Görülmedi İndikatörü */
-.read-indicator {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-right: 10px;
-    position: relative;
-    vertical-align: middle;
-}
-
-.read-indicator.unread {
-    background: rgba(34, 197, 94, 0.2);
-    border: 2px solid #22c55e;
-}
-
-.read-indicator.unread::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #22c55e;
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse 2s infinite;
-}
-
-.read-indicator.read {
-    background: rgba(100, 116, 139, 0.2);
-    border: 2px solid #64748b;
-}
-
-.read-indicator.read::after {
-    content: '✓✓';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 10px;
-    color: #64748b;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
 
 @media (max-width: 1200px) {
     .weekly-schedule-display {
@@ -1328,23 +1269,7 @@
                 <div class="data-table">
                     <div class="table-header">
                         <h3 class="table-title">Haftalık Ders Programı</h3>
-                        <div style="display: flex; gap: 10px;">
-                            <select class="search-box" id="dayFilter" style="width: 150px;">
-                                <option value="">Tüm Günler</option>
-                                <option value="Pazartesi">Pazartesi</option>
-                                <option value="Salı">Salı</option>
-                                <option value="Çarşamba">Çarşamba</option>
-                                <option value="Perşembe">Perşembe</option>
-                                <option value="Cuma">Cuma</option>
-                                <option value="Cumartesi">Cumartesi</option>
-                                <option value="Pazar">Pazar</option>
-                            </select>
-                            <select class="search-box" id="coachFilter" style="width: 150px;">
-                                <option value="">Tüm Koçlar</option>
-                                <!-- JavaScript ile doldurulacak -->
-                            </select>
-                            <input type="text" class="search-box" id="scheduleSearch" placeholder="Öğrenci ara..." style="width: 200px;">
-                        </div>
+                        <input type="text" class="search-box" id="scheduleSearch" placeholder="Öğrenci veya koç ara...">
                     </div>
                     <table>
                         <thead>
@@ -1573,7 +1498,6 @@
                                         time: lesson.time.trim(),
                                         duration: parseInt(lesson.duration) || 60,
                                         coachId: lesson.coachId || null,
-                                        lessonType: lesson.lessonType || 'Ders',
                                         notes: lesson.notes || ''
                                     }));
                                 } else if (daySchedule.time) {
@@ -1582,7 +1506,6 @@
                                         time: daySchedule.time.trim(),
                                         duration: parseInt(daySchedule.duration) || 60,
                                         coachId: daySchedule.coachId || null,
-                                        lessonType: daySchedule.lessonType || 'Ders',
                                         notes: daySchedule.notes || ''
                                     }];
                                 }
@@ -1600,9 +1523,6 @@
                 updateCoachesGrid();
                 updateScheduleTable();
                 updateStats();
-                
-                // Koç filtresini güncelle
-                populateCoachFilter();
                 
             } catch (error) {
                 console.error('Veri yüklenirken hata:', error);
@@ -1691,10 +1611,7 @@
             
             tbody.innerHTML = applications.map((app, index) => `
                 <tr>
-                    <td onclick="showApplicationDetail(${index})" style="cursor: pointer;">
-                        <span class="read-indicator ${app.isRead ? 'read' : 'unread'}"></span>
-                        ${app.name} ${app.surname}
-                    </td>
+                    <td onclick="showApplicationDetail(${index})" style="cursor: pointer;">${app.name} ${app.surname}</td>
                     <td>${app.age}</td>
                     <td>${app.country}</td>
                     <td><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></td>
@@ -1725,10 +1642,7 @@
             
             tbody.innerHTML = recentApps.map((app, index) => `
                 <tr onclick="showApplicationDetail(${applications.indexOf(app)})" style="cursor: pointer;">
-                    <td>
-                        <span class="read-indicator ${app.isRead ? 'read' : 'unread'}"></span>
-                        ${app.name} ${app.surname}
-                    </td>
+                    <td>${app.name} ${app.surname}</td>
                     <td>${app.age}</td>
                     <td>${app.country}</td>
                     <td><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></td>
@@ -1764,26 +1678,8 @@
             }
         }
 
-        async function showApplicationDetail(index) {
+        function showApplicationDetail(index) {
             const app = applications[index];
-            
-            // Başvuruyu okundu olarak işaretle
-            if (!app.isRead) {
-                try {
-                    const response = await fetch(`${API_URL}/api/applications/${app._id || app.id}/mark-read`, {
-                        method: 'PUT'
-                    });
-                    const result = await response.json();
-                    if (result.success) {
-                        app.isRead = true;
-                        updateApplicationsTable();
-                        updateRecentApplications();
-                    }
-                } catch (error) {
-                    console.error('Okundu işareti eklenirken hata:', error);
-                }
-            }
-            
             const content = `
                 <div class="detail-grid">
                     <div class="detail-item">
@@ -2093,7 +1989,6 @@
                                 time: lesson.time,
                                 duration: lesson.duration || 60,
                                 coach: coach,
-                                lessonType: lesson.lessonType || 'Ders',
                                 notes: lesson.notes || '',
                                 dayIndex: days.indexOf(day)
                             });
@@ -2134,18 +2029,17 @@
             
             // Tabloyu oluştur
             tbody.innerHTML = scheduleData.map(item => {
-                const lessonType = item.lessonType || 'Ders';
-                const lessonClass = lessonType === 'VOD' ? 'lesson-vod' : 
-                                  lessonType === 'Aim' ? 'lesson-aim' :
-                                  lessonType === 'Analiz' ? 'lesson-analiz' :
-                                  lessonType === 'Strateji' ? 'lesson-strateji' : '';
+                const lessonType = item.notes && item.notes.toLowerCase().includes('vod') ? 'Vod' : 
+                                  item.notes && item.notes.toLowerCase().includes('aim') ? 'Aim' : 
+                                  'Ders';
+                const lessonClass = lessonType === 'Vod' ? 'lesson-vod' : lessonType === 'Aim' ? 'lesson-aim' : '';
                 
                 return `
                     <tr class="clickable-row" onclick="showStudentDetail('${item.studentId}')">
                         <td class="student-name-cell">${item.studentName}</td>
                         <td class="day-cell">${item.day}</td>
                         <td class="time-cell">${item.time || '-'}</td>
-                        <td class="coach-cell" data-coach-id="${item.coach ? (item.coach._id || item.coach.id) : ''}">
+                        <td class="coach-cell">
                             ${item.coach ? `
                                 <div class="coach-avatar">${(item.coach.name || '').charAt(0)}${(item.coach.surname || '').charAt(0)}</div>
                                 <span>${item.coach.name} ${item.coach.surname}</span>
@@ -2158,45 +2052,6 @@
                 `;
             }).join('');
         }
-
-        // Koç filtresini doldur
-        function populateCoachFilter() {
-            const coachFilter = document.getElementById('coachFilter');
-            if (!coachFilter) return;
-            
-            const coachOptions = coaches.map(coach => 
-                `<option value="${coach._id || coach.id}">${coach.name} ${coach.surname}</option>`
-            ).join('');
-            
-            coachFilter.innerHTML = `<option value="">Tüm Koçlar</option>${coachOptions}`;
-        }
-
-        // Filtreleme fonksiyonu
-        function applyScheduleFilters() {
-            const dayFilter = document.getElementById('dayFilter')?.value || '';
-            const coachFilter = document.getElementById('coachFilter')?.value || '';
-            const searchTerm = document.getElementById('scheduleSearch')?.value.toLowerCase() || '';
-            
-            const rows = document.querySelectorAll('#scheduleTableBody tr:not(.empty-state)');
-            
-            rows.forEach(row => {
-                const dayCell = row.querySelector('.day-cell')?.textContent || '';
-                const coachCell = row.querySelector('.coach-cell');
-                const coachId = coachCell?.dataset?.coachId || '';
-                const studentName = row.querySelector('.student-name-cell')?.textContent.toLowerCase() || '';
-                
-                const dayMatch = !dayFilter || dayCell === dayFilter;
-                const coachMatch = !coachFilter || coachId === coachFilter;
-                const searchMatch = !searchTerm || studentName.includes(searchTerm);
-                
-                row.style.display = (dayMatch && coachMatch && searchMatch) ? '' : 'none';
-            });
-        }
-
-        // Event listener'ları ekle
-        document.getElementById('dayFilter')?.addEventListener('change', applyScheduleFilters);
-        document.getElementById('coachFilter')?.addEventListener('change', applyScheduleFilters);
-        document.getElementById('scheduleSearch')?.addEventListener('input', applyScheduleFilters);
 
         function viewStudentSchedule(studentId) {
             const student = students.find(s => (s._id || s.id) == studentId);
@@ -2257,6 +2112,7 @@
             closeStudentDetailModal();
         }
 
+        // 1. YENİ openEditScheduleModal FONKSİYONU
         function openEditScheduleModal(studentId) {
             const student = students.find(s => (s._id || s.id) == studentId);
             if (!student) return;
@@ -2289,6 +2145,7 @@
             document.getElementById('editScheduleModal').classList.add('active');
         }
 
+        // 2. createLessonForm FONKSİYONU
         function createLessonForm(dayIndex, lessonIndex, lesson = null) {
             return `
                 <div class="lesson-form" id="lesson${dayIndex}_${lessonIndex}" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 15px; margin-bottom: 10px; position: relative;">
@@ -2324,24 +2181,14 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="dayLessonType${dayIndex}_${lessonIndex}">Ders Tipi</label>
-                        <select id="dayLessonType${dayIndex}_${lessonIndex}">
-                            <option value="Ders" ${!lesson || lesson.lessonType === 'Ders' ? 'selected' : ''}>Normal Ders</option>
-                            <option value="VOD" ${lesson && lesson.lessonType === 'VOD' ? 'selected' : ''}>VOD İnceleme</option>
-                            <option value="Aim" ${lesson && lesson.lessonType === 'Aim' ? 'selected' : ''}>Aim Antrenmanı</option>
-                            <option value="Analiz" ${lesson && lesson.lessonType === 'Analiz' ? 'selected' : ''}>Oyun Analizi</option>
-                            <option value="Strateji" ${lesson && lesson.lessonType === 'Strateji' ? 'selected' : ''}>Strateji Çalışması</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dayNotes${dayIndex}_${lessonIndex}">Ek Notlar (opsiyonel)</label>
-                        <textarea id="dayNotes${dayIndex}_${lessonIndex}" placeholder="Ek bilgiler...">${lesson ? lesson.notes || '' : ''}</textarea>
+                        <label for="dayNotes${dayIndex}_${lessonIndex}">Ders Notları (VOD, ödev, vb.)</label>
+                        <textarea id="dayNotes${dayIndex}_${lessonIndex}" placeholder="Ders için notlar...">${lesson ? lesson.notes || '' : ''}</textarea>
                     </div>
                 </div>
             `;
         }
 
+        // 3. addNewLesson FONKSİYONU
         function addNewLesson(dayIndex) {
             const container = document.getElementById(`dayLessons${dayIndex}`);
             const currentLessons = container.querySelectorAll('.lesson-form').length;
@@ -2351,6 +2198,7 @@
             container.insertAdjacentHTML('beforeend', newLessonHTML);
         }
 
+        // 4. removeLesson FONKSİYONU
         function removeLesson(dayIndex, lessonIndex) {
             const lessonElement = document.getElementById(`lesson${dayIndex}_${lessonIndex}`);
             if (lessonElement) {
@@ -2358,6 +2206,7 @@
             }
         }
 
+        // 5. checkScheduleConflictMulti FONKSİYONU
         function checkScheduleConflictMulti(dayIndex, lessonIndex) {
             const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const day = days[dayIndex];
@@ -2410,6 +2259,7 @@
             editingStudentId = null;
         }
 
+        // 6. YENİ Form submit FONKSİYONU
         document.getElementById('editScheduleForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -2440,10 +2290,9 @@
                     const time = document.getElementById(`dayTime${dayIndex}_${lessonIndex}`)?.value;
                     const duration = document.getElementById(`dayDuration${dayIndex}_${lessonIndex}`)?.value;
                     const coachId = document.getElementById(`dayCoach${dayIndex}_${lessonIndex}`)?.value;
-                    const lessonType = document.getElementById(`dayLessonType${dayIndex}_${lessonIndex}`)?.value;
                     const notes = document.getElementById(`dayNotes${dayIndex}_${lessonIndex}`)?.value;
                     
-                    console.log(`Gün: ${day}, Ders ${lessonIndex}:`, { time, duration, coachId, lessonType, notes });
+                    console.log(`Gün: ${day}, Ders ${lessonIndex}:`, { time, duration, coachId, notes });
                     
                     if (time && !coachId) {
                         alert('⚠️ Lütfen tüm dersler için koç seçin!');
@@ -2473,7 +2322,6 @@
                             time,
                             duration: parseInt(duration),
                             coachId: coachId || null,
-                            lessonType: lessonType || 'Ders',
                             notes: notes || ''
                         });
                     }
@@ -2545,6 +2393,7 @@
             });
         }
 
+        // YENİ: Öğrenci programı indirme fonksiyonu
         async function downloadStudentScheduleImage() {
             const student = students.find(s => (s._id || s.id) == currentDetailStudentId);
             if (!student) {
@@ -2775,6 +2624,17 @@
         document.getElementById('applicationSearch')?.addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
             const rows = document.querySelectorAll('#applicationsTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Schedule search functionality
+        document.getElementById('scheduleSearch')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#scheduleTableBody tr');
             
             rows.forEach(row => {
                 const text = row.textContent.toLowerCase();
