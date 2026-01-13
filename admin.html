@@ -689,74 +689,74 @@
             font-weight: 500;
         }
 
-     .weekly-schedule-display {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
-}
+        .weekly-schedule-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
 
-.day-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 16px;
-    text-align: center;
-    min-height: 140px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
+        .day-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
 
-.day-name {
-    font-weight: 600;
-    color: #6366f1;
-    margin-bottom: 12px;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+        .day-name {
+            font-weight: 600;
+            color: #6366f1;
+            margin-bottom: 12px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-.day-time {
-    color: #fff;
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 6px;
-}
+        .day-time {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
 
-.day-duration {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 13px;
-    margin-bottom: 8px;
-}
+        .day-duration {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
 
-.day-coach {
-    color: #ec4899;
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 8px;
-}
+        .day-coach {
+            color: #ec4899;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
 
-.day-notes {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 12px;
-    margin-top: auto;
-    padding-top: 8px;
-    font-style: italic;
-    word-break: break-word;
-    line-height: 1.4;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
+        .day-notes {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            margin-top: auto;
+            padding-top: 8px;
+            font-style: italic;
+            word-break: break-word;
+            line-height: 1.4;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.day-empty {
-    color: rgba(255, 255, 255, 0.3);
-    font-size: 13px;
-    padding: 30px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
+        .day-empty {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 13px;
+            padding: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
 
         /* Coach Badge */
         .coach-badge {
@@ -882,7 +882,7 @@
         }
 
         .form-group select:focus {
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
         }
 
         /* Edit schedule modal'ındaki checkbox düzenlemeleri */
@@ -1004,6 +1004,22 @@
             color: #c4b5fd;
         }
 
+        /* Yeni ders türleri için stiller */
+        .lesson-movement { 
+            background: rgba(236, 72, 153, 0.2); 
+            color: #f9a8d4; 
+        }
+
+        .lesson-gamesense { 
+            background: rgba(168, 85, 247, 0.2); 
+            color: #c4b5fd; 
+        }
+
+        .lesson-custom { 
+            background: rgba(59, 130, 246, 0.2); 
+            color: #93c5fd; 
+        }
+
         tbody tr.clickable-row {
             cursor: pointer;
         }
@@ -1012,122 +1028,122 @@
             background: rgba(99, 102, 241, 0.08);
         }
 
-/* 1. Görüldü/Görülmedi İndikatörü */
-.read-indicator {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-right: 10px;
-    position: relative;
-    vertical-align: middle;
-}
+        /* 1. Görüldü/Görülmedi İndikatörü */
+        .read-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+            position: relative;
+            vertical-align: middle;
+        }
 
-.read-indicator.unread {
-    background: rgba(34, 197, 94, 0.2);
-    border: 2px solid #22c55e;
-}
+        .read-indicator.unread {
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid #22c55e;
+        }
 
-.read-indicator.unread::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #22c55e;
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse 2s infinite;
-}
+        .read-indicator.unread::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
 
-.read-indicator.read {
-    background: rgba(100, 116, 139, 0.2);
-    border: 2px solid #64748b;
-}
+        .read-indicator.read {
+            background: rgba(100, 116, 139, 0.2);
+            border: 2px solid #64748b;
+        }
 
-.read-indicator.read::after {
-    content: '✓✓';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 10px;
-    color: #64748b;
-}
+        .read-indicator.read::after {
+            content: '✓✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            color: #64748b;
+        }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
 
-@media (max-width: 1200px) {
-    .weekly-schedule-display {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    }
-}
+        @media (max-width: 1200px) {
+            .weekly-schedule-display {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+        }
 
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
 
-    .main-content {
-        margin-left: 0;
-        padding: 20px;
-    }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
 
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
 
-    .search-box {
-        width: 100%;
-    }
+            .search-box {
+                width: 100%;
+            }
 
-    .students-grid {
-        grid-template-columns: 1fr;
-    }
+            .students-grid {
+                grid-template-columns: 1fr;
+            }
 
-    .day-schedule {
-        grid-template-columns: 1fr;
-    }
+            .day-schedule {
+                grid-template-columns: 1fr;
+            }
 
-    .add-lesson-btn {
-        padding: 16px 20px;
-        font-size: 15px;
-    }
+            .add-lesson-btn {
+                padding: 16px 20px;
+                font-size: 15px;
+            }
 
-    .weekly-schedule-display {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
+            .weekly-schedule-display {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
 
-    .day-box {
-        min-height: 120px;
-        padding: 12px;
-    }
+            .day-box {
+                min-height: 120px;
+                padding: 12px;
+            }
 
-    .day-time {
-        font-size: 16px;
-    }
+            .day-time {
+                font-size: 16px;
+            }
 
-    .detail-grid {
-        grid-template-columns: 1fr;
-    }
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
 
-    .coaches-grid {
-        grid-template-columns: 1fr;
-    }
-}
+            .coaches-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
-@media (max-width: 480px) {
-    .weekly-schedule-display {
-        grid-template-columns: 1fr;
-    }
-}
+        @media (max-width: 480px) {
+            .weekly-schedule-display {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1350,6 +1366,7 @@
                         <thead>
                             <tr>
                                 <th>İsim</th>
+                                <th>Discord</th>
                                 <th>Gün</th>
                                 <th>Saat (TR)</th>
                                 <th>Koç</th>
@@ -1358,7 +1375,7 @@
                         </thead>
                         <tbody id="scheduleTableBody">
                             <tr>
-                                <td colspan="5" class="empty-state">
+                                <td colspan="6" class="empty-state">
                                     <div>Henüz programlanmış ders yok</div>
                                 </td>
                             </tr>
@@ -1470,7 +1487,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-        const API_URL = 'https://aura-coaching-api-production.up.railway.app';
+        const API_URL = 'https://aura-coaching-api.up.railway.app';
         
         const ADMIN_CREDENTIALS = {
             username: 'admin',
@@ -1525,29 +1542,53 @@
 
         async function loadData() {
             try {
+                console.log('API verileri yükleniyor...');
+                
                 const [appsResponse, studentsResponse, coachesResponse] = await Promise.all([
                     fetch(`${API_URL}/api/applications`).then(res => res.json()),
                     fetch(`${API_URL}/api/students`).then(res => res.json()),
                     fetch(`${API_URL}/api/coaches`).then(res => res.json())
                 ]);
                 
-                if (appsResponse.success) applications = appsResponse.applications;
+                console.log('Apps response:', appsResponse);
+                console.log('Students response:', studentsResponse);
+                console.log('Coaches response:', coachesResponse);
+                
+                // PostgreSQL'den gelen veriyi işle
+                if (appsResponse.success) {
+                    applications = appsResponse.applications || appsResponse.data || [];
+                    console.log('Applications loaded:', applications.length);
+                }
+                
                 if (studentsResponse.success) {
-                    students = studentsResponse.students;
-                    // Öğrencilerin weeklySchedule'ını normalize et
-                    students.forEach(student => {
-                        if (!student.weeklySchedule) {
-                            student.weeklySchedule = {};
-                            return;
-                        }
+                    // PostgreSQL'den students.data veya students.students şeklinde gelebilir
+                    const studentsData = studentsResponse.students || studentsResponse.data || [];
+                    console.log('Students data received:', studentsData);
+                    
+                    students = studentsData.map(student => {
+                        // PostgreSQL'den gelen veriyi normalize et
+                        const normalizedStudent = {
+                            id: student.id || student._id,
+                            name: student.name,
+                            surname: student.surname,
+                            age: student.age,
+                            country: student.country,
+                            rank: student.rank,
+                            targetRank: student.target_rank || student.targetRank,
+                            tracker: student.tracker,
+                            expectations: student.expectations,
+                            introduction: student.introduction,
+                            discord: student.discord,
+                            weeklySchedule: student.weekly_schedule || student.weeklySchedule || {}
+                        };
                         
-                        // Eğer string olarak gelmişse, parse et
-                        if (typeof student.weeklySchedule === 'string') {
+                        // WeeklySchedule'ı parse et
+                        if (typeof normalizedStudent.weeklySchedule === 'string') {
                             try {
-                                student.weeklySchedule = JSON.parse(student.weeklySchedule);
+                                normalizedStudent.weeklySchedule = JSON.parse(normalizedStudent.weeklySchedule);
                             } catch (e) {
                                 console.error('Schedule parse hatası:', e);
-                                student.weeklySchedule = {};
+                                normalizedStudent.weeklySchedule = {};
                             }
                         }
                         
@@ -1558,11 +1599,10 @@
                         days.forEach(day => {
                             normalizedSchedule[day] = [];
                             
-                            if (student.weeklySchedule[day]) {
-                                const daySchedule = student.weeklySchedule[day];
+                            if (normalizedStudent.weeklySchedule[day]) {
+                                const daySchedule = normalizedStudent.weeklySchedule[day];
                                 
                                 if (Array.isArray(daySchedule)) {
-                                    // Dizi ise geçerli dersleri filtrele
                                     normalizedSchedule[day] = daySchedule.filter(lesson => 
                                         lesson && 
                                         lesson.time && 
@@ -1572,27 +1612,35 @@
                                     ).map(lesson => ({
                                         time: lesson.time.trim(),
                                         duration: parseInt(lesson.duration) || 60,
-                                        coachId: lesson.coachId || null,
-                                        lessonType: lesson.lessonType || 'Ders',
+                                        coachId: lesson.coachId || lesson.coach_id || null,
+                                        lessonType: lesson.lessonType || lesson.lesson_type || 'Aim',
+                                        customLessonName: lesson.customLessonName || '',
                                         notes: lesson.notes || ''
                                     }));
                                 } else if (daySchedule.time) {
-                                    // Tek ders nesnesi ise diziye çevir
                                     normalizedSchedule[day] = [{
                                         time: daySchedule.time.trim(),
                                         duration: parseInt(daySchedule.duration) || 60,
-                                        coachId: daySchedule.coachId || null,
-                                        lessonType: daySchedule.lessonType || 'Ders',
+                                        coachId: daySchedule.coachId || daySchedule.coach_id || null,
+                                        lessonType: daySchedule.lessonType || daySchedule.lesson_type || 'Aim',
+                                        customLessonName: daySchedule.customLessonName || '',
                                         notes: daySchedule.notes || ''
                                     }];
                                 }
                             }
                         });
                         
-                        student.weeklySchedule = normalizedSchedule;
+                        normalizedStudent.weeklySchedule = normalizedSchedule;
+                        return normalizedStudent;
                     });
+                    
+                    console.log('Processed students:', students);
                 }
-                if (coachesResponse.success) coaches = coachesResponse.coaches || [];
+                
+                if (coachesResponse.success) {
+                    coaches = coachesResponse.coaches || coachesResponse.data || [];
+                    console.log('Coaches loaded:', coaches.length);
+                }
                 
                 updateStudentsGrid();
                 updateApplicationsTable();
@@ -1689,23 +1737,26 @@
                 return;
             }
             
-            tbody.innerHTML = applications.map((app, index) => `
+            tbody.innerHTML = applications.map((app, index) => {
+                // PostgreSQL'den gelen created_at kullan, yoksa date kullan
+                const dateField = app.created_at || app.date;
+                return `
                 <tr>
                     <td onclick="showApplicationDetail(${index})" style="cursor: pointer;">
-                        <span class="read-indicator ${app.isRead ? 'read' : 'unread'}"></span>
+                        <span class="read-indicator ${app.is_read ? 'read' : 'unread'}"></span>
                         ${app.name} ${app.surname}
                     </td>
                     <td>${app.age}</td>
                     <td>${app.country}</td>
-                    <td><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></td>
-                    <td><span class="rank-badge rank-${app.targetRank.toLowerCase()}">${app.targetRank}</span></td>
-                    <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
+                    <td><span class="rank-badge rank-${(app.rank || '').toLowerCase()}">${app.rank}</span></td>
+                    <td><span class="rank-badge rank-${(app.target_rank || app.targetRank || '').toLowerCase()}">${app.target_rank || app.targetRank}</span></td>
+                    <td>${dateField ? new Date(dateField).toLocaleDateString('tr-TR') : '-'}</td>
                     <td>
                         <button class="action-btn btn-add-student" onclick="addStudentFromApplication(${index})">Öğrenci Ekle</button>
-                        <button class="action-btn btn-delete" onclick="deleteApplication('${app._id || app.id}', ${index})">Sil</button>
+                        <button class="action-btn btn-delete" onclick="deleteApplication(${app.id}, ${index})">Sil</button>
                     </td>
                 </tr>
-            `).join('');
+            `}).join('');
         }
 
         function updateRecentApplications() {
@@ -1723,16 +1774,18 @@
                 return;
             }
             
-            tbody.innerHTML = recentApps.map((app, index) => `
+            tbody.innerHTML = recentApps.map((app, index) => {
+                const dateField = app.created_at || app.date;
+                return `
                 <tr onclick="showApplicationDetail(${applications.indexOf(app)})" style="cursor: pointer;">
                     <td>
-                        <span class="read-indicator ${app.isRead ? 'read' : 'unread'}"></span>
+                        <span class="read-indicator ${app.is_read ? 'read' : 'unread'}"></span>
                         ${app.name} ${app.surname}
                     </td>
                     <td>${app.age}</td>
                     <td>${app.country}</td>
-                    <td><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></td>
-                    <td>${new Date(app.date).toLocaleDateString('tr-TR')}</td>
+                    <td><span class="rank-badge rank-${(app.rank || '').toLowerCase()}">${app.rank}</span></td>
+                    <td>${dateField ? new Date(dateField).toLocaleDateString('tr-TR') : '-'}</td>
                 </tr>
             `).join('');
         }
@@ -1767,15 +1820,15 @@
         async function showApplicationDetail(index) {
             const app = applications[index];
             
-            // Başvuruyu okundu olarak işaretle
-            if (!app.isRead) {
+            // Okundu işareti
+            if (!app.is_read) {
                 try {
-                    const response = await fetch(`${API_URL}/api/applications/${app._id || app.id}/mark-read`, {
+                    const response = await fetch(`${API_URL}/api/applications/${app.id}/mark-read`, {
                         method: 'PUT'
                     });
                     const result = await response.json();
                     if (result.success) {
-                        app.isRead = true;
+                        app.is_read = true;
                         updateApplicationsTable();
                         updateRecentApplications();
                     }
@@ -1804,11 +1857,11 @@
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Mevcut Rank</div>
-                        <div class="detail-value"><span class="rank-badge rank-${app.rank.toLowerCase()}">${app.rank}</span></div>
+                        <div class="detail-value"><span class="rank-badge rank-${(app.rank || '').toLowerCase()}">${app.rank}</span></div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Hedef Rank</div>
-                        <div class="detail-value"><span class="rank-badge rank-${app.targetRank.toLowerCase()}">${app.targetRank}</span></div>
+                        <div class="detail-value"><span class="rank-badge rank-${(app.target_rank || app.targetRank || '').toLowerCase()}">${app.target_rank || app.targetRank}</span></div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
                         <div class="detail-label">Tracker Link</div>
@@ -1818,11 +1871,11 @@
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
                         <div class="detail-label">Koçluktan Beklenti</div>
-                        <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.expectations}</div>
+                        <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.expectations || '-'}</div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
                         <div class="detail-label">Kendini Tanıt</div>
-                        <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.introduction}</div>
+                        <div class="detail-value" style="font-size: 14px; line-height: 1.6;">${app.introduction || '-'}</div>
                     </div>
                 </div>
                 <div style="margin-top: 25px; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
@@ -1846,7 +1899,7 @@
                 age: app.age,
                 country: app.country,
                 rank: app.rank,
-                targetRank: app.targetRank,
+                targetRank: app.target_rank || app.targetRank,
                 tracker: app.tracker,
                 expectations: app.expectations,
                 introduction: app.introduction,
@@ -1866,12 +1919,12 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    await fetch(`${API_URL}/api/applications/${app._id || app.id}`, {
+                    await fetch(`${API_URL}/api/applications/${app.id}`, {
                         method: 'DELETE'
                     });
                     
                     applications.splice(index, 1);
-                    students.push({ ...student, id: result.studentId || Date.now() });
+                    students.push({ ...student, id: result.studentId || result.id || Date.now() });
                     
                     updateStats();
                     updateApplicationsTable();
@@ -1890,6 +1943,8 @@
             const grid = document.getElementById('studentsGrid');
             document.getElementById('studentCount').textContent = students.length;
             
+            console.log('Updating students grid with:', students);
+            
             if (students.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state" style="grid-column: 1 / -1;">
@@ -1903,24 +1958,24 @@
                 <div class="student-card">
                     <div class="student-card-header">
                         <div class="student-name">${student.name} ${student.surname}</div>
-                        <button class="action-btn btn-delete" onclick="deleteStudent('${student._id || student.id}', event)">Sil</button>
+                        <button class="action-btn btn-delete" onclick="deleteStudent('${student.id}', event)">Sil</button>
                     </div>
-                    <div class="student-info" onclick="showStudentDetail('${student._id || student.id}')">
+                    <div class="student-info" onclick="showStudentDetail('${student.id}')">
                        <div class="info-row">
     <span class="info-label">Discord:</span>
     <span class="info-value">${student.discord || '-'}</span>
 </div>
                         <div class="info-row">
                             <span class="info-label">Ülke:</span>
-                            <span class="info-value">${student.country}</span>
+                            <span class="info-value">${student.country || '-'}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">Mevcut Rank:</span>
-                            <span class="info-value"><span class="rank-badge rank-${student.rank.toLowerCase()}">${student.rank}</span></span>
+                            <span class="info-value"><span class="rank-badge rank-${(student.rank || '').toLowerCase()}">${student.rank || '-'}</span></span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">Hedef Rank:</span>
-                            <span class="info-value"><span class="rank-badge rank-${student.targetRank.toLowerCase()}">${student.targetRank}</span></span>
+                            <span class="info-value"><span class="rank-badge rank-${(student.targetRank || '').toLowerCase()}">${student.targetRank || '-'}</span></span>
                         </div>
                     </div>
                 </div>
@@ -1942,7 +1997,7 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    students = students.filter(s => (s._id || s.id) != studentId);
+                    students = students.filter(s => s.id != studentId);
                     
                     updateStats();
                     updateStudentsGrid();
@@ -1962,7 +2017,7 @@
         }
 
         async function showStudentDetail(studentId) {
-            const student = students.find(s => (s._id || s.id) == studentId);
+            const student = students.find(s => s.id == studentId);
             if (!student) return;
 
             currentDetailStudentId = studentId;
@@ -1983,7 +2038,7 @@
                                 }
                                 
                                 return lessonsArray.map(lesson => {
-                                    const coach = coaches.find(c => (c._id || c.id) == lesson.coachId);
+                                    const coach = coaches.find(c => c.id == lesson.coachId);
                                     return `
                                         <div class="day-box">
                                             <div class="day-name">${day}</div>
@@ -2020,11 +2075,11 @@
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Mevcut Rank</div>
-                        <div class="detail-value"><span class="rank-badge rank-${student.rank.toLowerCase()}">${student.rank}</span></div>
+                        <div class="detail-value"><span class="rank-badge rank-${(student.rank || '').toLowerCase()}">${student.rank || '-'}</span></div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Hedef Rank</div>
-                        <div class="detail-value"><span class="rank-badge rank-${student.targetRank.toLowerCase()}">${student.targetRank}</span></div>
+                        <div class="detail-value"><span class="rank-badge rank-${(student.targetRank || '').toLowerCase()}">${student.targetRank || '-'}</span></div>
                     </div>
                     <div class="detail-item" style="grid-column: 1 / -1;">
                         <div class="detail-label">Tracker Link</div>
@@ -2085,15 +2140,17 @@
                         lessonsArray.forEach(lesson => {
                             if (!lesson || !lesson.time) return;
                             
-                            const coach = coaches.find(c => (c._id || c.id) == lesson.coachId);
+                            const coach = coaches.find(c => c.id == lesson.coachId);
                             scheduleData.push({
                                 studentName: `${student.name} ${student.surname}`,
-                                studentId: student._id || student.id,
+                                studentId: student.id,
+                                studentDiscord: student.discord,
                                 day: day,
                                 time: lesson.time,
                                 duration: lesson.duration || 60,
                                 coach: coach,
-                                lessonType: lesson.lessonType || 'Ders',
+                                lessonType: lesson.lessonType || 'Aim',
+                                customLessonName: lesson.customLessonName || '',
                                 notes: lesson.notes || '',
                                 dayIndex: days.indexOf(day)
                             });
@@ -2108,7 +2165,7 @@
             if (scheduleData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="5" class="empty-state">
+                        <td colspan="6" class="empty-state">
                             <div>Henüz programlanmış ders yok</div>
                         </td>
                     </tr>
@@ -2134,25 +2191,31 @@
             
             // Tabloyu oluştur
             tbody.innerHTML = scheduleData.map(item => {
-                const lessonType = item.lessonType || 'Ders';
+                const lessonType = item.lessonType || 'Aim';
+                const displayLessonType = lessonType === 'Özel' && item.customLessonName 
+                    ? item.customLessonName 
+                    : lessonType;
+                
                 const lessonClass = lessonType === 'VOD' ? 'lesson-vod' : 
                                   lessonType === 'Aim' ? 'lesson-aim' :
-                                  lessonType === 'Analiz' ? 'lesson-analiz' :
-                                  lessonType === 'Strateji' ? 'lesson-strateji' : '';
+                                  lessonType === 'Movement' ? 'lesson-movement' :
+                                  lessonType === 'Gamesense' ? 'lesson-gamesense' :
+                                  lessonType === 'Özel' ? 'lesson-custom' : '';
                 
                 return `
                     <tr class="clickable-row" onclick="showStudentDetail('${item.studentId}')">
                         <td class="student-name-cell">${item.studentName}</td>
+                        <td class="student-discord-cell">${item.studentDiscord || '-'}</td>
                         <td class="day-cell">${item.day}</td>
                         <td class="time-cell">${item.time || '-'}</td>
-                        <td class="coach-cell" data-coach-id="${item.coach ? (item.coach._id || item.coach.id) : ''}">
+                        <td class="coach-cell" data-coach-id="${item.coach ? item.coach.id : ''}">
                             ${item.coach ? `
                                 <div class="coach-avatar">${(item.coach.name || '').charAt(0)}${(item.coach.surname || '').charAt(0)}</div>
                                 <span>${item.coach.name} ${item.coach.surname}</span>
                             ` : '-'}
                         </td>
                         <td>
-                            <span class="lesson-type-badge ${lessonClass}">${lessonType}</span>
+                            <span class="lesson-type-badge ${lessonClass}">${displayLessonType}</span>
                         </td>
                     </tr>
                 `;
@@ -2165,7 +2228,7 @@
             if (!coachFilter) return;
             
             const coachOptions = coaches.map(coach => 
-                `<option value="${coach._id || coach.id}">${coach.name} ${coach.surname}</option>`
+                `<option value="${coach.id}">${coach.name} ${coach.surname}</option>`
             ).join('');
             
             coachFilter.innerHTML = `<option value="">Tüm Koçlar</option>${coachOptions}`;
@@ -2199,7 +2262,7 @@
         document.getElementById('scheduleSearch')?.addEventListener('input', applyScheduleFilters);
 
         function viewStudentSchedule(studentId) {
-            const student = students.find(s => (s._id || s.id) == studentId);
+            const student = students.find(s => s.id == studentId);
             if (!student) return;
 
             currentScheduleStudentId = studentId;
@@ -2223,7 +2286,7 @@
                     <div class="day-column">
                         <div class="day-header">${day}</div>
                         ${lessonsArray.length > 0 ? lessonsArray.map(lesson => {
-                            const coach = lesson.coachId ? coaches.find(c => (c._id || c.id) == lesson.coachId) : null;
+                            const coach = lesson.coachId ? coaches.find(c => c.id == lesson.coachId) : null;
                             return `
                                 <div class="time-slot">
                                     <div class="time-slot-time">${lesson.time}</div>
@@ -2257,8 +2320,77 @@
             closeStudentDetailModal();
         }
 
+        function createLessonForm(dayIndex, lessonIndex, lesson = null) {
+            return `
+                <div class="lesson-form" id="lesson${dayIndex}_${lessonIndex}" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 15px; margin-bottom: 10px; position: relative;">
+                    <button type="button" onclick="removeLesson(${dayIndex}, ${lessonIndex})" style="position: absolute; top: 10px; right: 10px; background: rgba(239, 68, 68, 0.2); border: none; color: #fca5a5; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">
+                        Sil
+                    </button>
+                    
+                    <div class="form-group">
+                        <label for="dayTime${dayIndex}_${lessonIndex}">Saat</label>
+                        <input type="time" id="dayTime${dayIndex}_${lessonIndex}" value="${lesson ? lesson.time : ''}" onchange="checkScheduleConflictMulti(${dayIndex}, ${lessonIndex})">
+                        <div id="conflictWarning${dayIndex}_${lessonIndex}" class="error-message" style="display: none; margin-top: 5px;">Bu saatte başka bir öğrenciye ders var!</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dayDuration${dayIndex}_${lessonIndex}">Süre (Dakika)</label>
+                        <select id="dayDuration${dayIndex}_${lessonIndex}">
+                            <option value="60" ${lesson && lesson.duration == 60 ? 'selected' : ''}>60 dk</option>
+                            <option value="90" ${lesson && lesson.duration == 90 ? 'selected' : ''}>90 dk</option>
+                            <option value="120" ${lesson && lesson.duration == 120 ? 'selected' : ''}>120 dk</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dayCoach${dayIndex}_${lessonIndex}">Koç</label>
+                        <select id="dayCoach${dayIndex}_${lessonIndex}" onchange="checkScheduleConflictMulti(${dayIndex}, ${lessonIndex})">
+                            <option value="">Koç Seçin</option>
+                            ${coaches.map(coach => `
+                                <option value="${coach.id}" ${lesson && lesson.coachId == coach.id ? 'selected' : ''}>
+                                    ${coach.name} ${coach.surname}
+                                </option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dayLessonType${dayIndex}_${lessonIndex}">Ders Tipi</label>
+                        <select id="dayLessonType${dayIndex}_${lessonIndex}" onchange="toggleCustomLessonType(${dayIndex}, ${lessonIndex})">
+                            <option value="Aim" ${lesson && lesson.lessonType === 'Aim' ? 'selected' : ''}>Aim</option>
+                            <option value="Movement" ${lesson && lesson.lessonType === 'Movement' ? 'selected' : ''}>Movement</option>
+                            <option value="VOD" ${lesson && lesson.lessonType === 'VOD' ? 'selected' : ''}>VOD</option>
+                            <option value="Gamesense" ${lesson && lesson.lessonType === 'Gamesense' ? 'selected' : ''}>Gamesense</option>
+                            <option value="Özel" ${lesson && lesson.lessonType === 'Özel' ? 'selected' : ''}>Özel</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="customLessonType${dayIndex}_${lessonIndex}" style="${lesson && lesson.lessonType === 'Özel' ? '' : 'display: none;'}">
+                        <label for="customLessonName${dayIndex}_${lessonIndex}">Özel Ders Adı</label>
+                        <input type="text" id="customLessonName${dayIndex}_${lessonIndex}" placeholder="Ders adını girin..." value="${lesson && lesson.customLessonName ? lesson.customLessonName : ''}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dayNotes${dayIndex}_${lessonIndex}">Ek Notlar (opsiyonel)</label>
+                        <textarea id="dayNotes${dayIndex}_${lessonIndex}" placeholder="Ek bilgiler...">${lesson ? lesson.notes || '' : ''}</textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleCustomLessonType(dayIndex, lessonIndex) {
+            const select = document.getElementById(`dayLessonType${dayIndex}_${lessonIndex}`);
+            const customDiv = document.getElementById(`customLessonType${dayIndex}_${lessonIndex}`);
+            
+            if (select.value === 'Özel') {
+                customDiv.style.display = 'block';
+            } else {
+                customDiv.style.display = 'none';
+            }
+        }
+
         function openEditScheduleModal(studentId) {
-            const student = students.find(s => (s._id || s.id) == studentId);
+            const student = students.find(s => s.id == studentId);
             if (!student) return;
 
             editingStudentId = studentId;
@@ -2287,59 +2419,6 @@
             document.getElementById('editScheduleDays').innerHTML = formContent;
             document.getElementById('editScheduleTitle').textContent = `${student.name} ${student.surname} - Haftalık Program Düzenle`;
             document.getElementById('editScheduleModal').classList.add('active');
-        }
-
-        function createLessonForm(dayIndex, lessonIndex, lesson = null) {
-            return `
-                <div class="lesson-form" id="lesson${dayIndex}_${lessonIndex}" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 15px; margin-bottom: 10px; position: relative;">
-                    <button type="button" onclick="removeLesson(${dayIndex}, ${lessonIndex})" style="position: absolute; top: 10px; right: 10px; background: rgba(239, 68, 68, 0.2); border: none; color: #fca5a5; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">
-                        Sil
-                    </button>
-                    
-                    <div class="form-group">
-                        <label for="dayTime${dayIndex}_${lessonIndex}">Saat</label>
-                        <input type="time" id="dayTime${dayIndex}_${lessonIndex}" value="${lesson ? lesson.time : ''}" onchange="checkScheduleConflictMulti(${dayIndex}, ${lessonIndex})">
-                        <div id="conflictWarning${dayIndex}_${lessonIndex}" class="error-message" style="display: none; margin-top: 5px;">Bu saatte başka bir öğrenciye ders var!</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dayDuration${dayIndex}_${lessonIndex}">Süre (Dakika)</label>
-                        <select id="dayDuration${dayIndex}_${lessonIndex}">
-                            <option value="60" ${lesson && lesson.duration == 60 ? 'selected' : ''}>60 dk</option>
-                            <option value="90" ${lesson && lesson.duration == 90 ? 'selected' : ''}>90 dk</option>
-                            <option value="120" ${lesson && lesson.duration == 120 ? 'selected' : ''}>120 dk</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dayCoach${dayIndex}_${lessonIndex}">Koç</label>
-                        <select id="dayCoach${dayIndex}_${lessonIndex}" onchange="checkScheduleConflictMulti(${dayIndex}, ${lessonIndex})">
-                            <option value="">Koç Seçin</option>
-                            ${coaches.map(coach => `
-                                <option value="${coach._id || coach.id}" ${lesson && lesson.coachId == (coach._id || coach.id) ? 'selected' : ''}>
-                                    ${coach.name} ${coach.surname}
-                                </option>
-                            `).join('')}
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dayLessonType${dayIndex}_${lessonIndex}">Ders Tipi</label>
-                        <select id="dayLessonType${dayIndex}_${lessonIndex}">
-                            <option value="Ders" ${!lesson || lesson.lessonType === 'Ders' ? 'selected' : ''}>Normal Ders</option>
-                            <option value="VOD" ${lesson && lesson.lessonType === 'VOD' ? 'selected' : ''}>VOD İnceleme</option>
-                            <option value="Aim" ${lesson && lesson.lessonType === 'Aim' ? 'selected' : ''}>Aim Antrenmanı</option>
-                            <option value="Analiz" ${lesson && lesson.lessonType === 'Analiz' ? 'selected' : ''}>Oyun Analizi</option>
-                            <option value="Strateji" ${lesson && lesson.lessonType === 'Strateji' ? 'selected' : ''}>Strateji Çalışması</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dayNotes${dayIndex}_${lessonIndex}">Ek Notlar (opsiyonel)</label>
-                        <textarea id="dayNotes${dayIndex}_${lessonIndex}" placeholder="Ek bilgiler...">${lesson ? lesson.notes || '' : ''}</textarea>
-                    </div>
-                </div>
-            `;
         }
 
         function addNewLesson(dayIndex) {
@@ -2376,7 +2455,7 @@
             let conflictStudentName = '';
             
             students.forEach(student => {
-                if ((student._id || student.id) == editingStudentId) return;
+                if (student.id == editingStudentId) return;
                 
                 if (student.weeklySchedule && student.weeklySchedule[day]) {
                     const lessons = Array.isArray(student.weeklySchedule[day]) 
@@ -2441,9 +2520,10 @@
                     const duration = document.getElementById(`dayDuration${dayIndex}_${lessonIndex}`)?.value;
                     const coachId = document.getElementById(`dayCoach${dayIndex}_${lessonIndex}`)?.value;
                     const lessonType = document.getElementById(`dayLessonType${dayIndex}_${lessonIndex}`)?.value;
+                    const customLessonName = document.getElementById(`customLessonName${dayIndex}_${lessonIndex}`)?.value;
                     const notes = document.getElementById(`dayNotes${dayIndex}_${lessonIndex}`)?.value;
                     
-                    console.log(`Gün: ${day}, Ders ${lessonIndex}:`, { time, duration, coachId, lessonType, notes });
+                    console.log(`Gün: ${day}, Ders ${lessonIndex}:`, { time, duration, coachId, lessonType, customLessonName, notes });
                     
                     if (time && !coachId) {
                         alert('⚠️ Lütfen tüm dersler için koç seçin!');
@@ -2454,7 +2534,7 @@
                     if (time && coachId) {
                         // Çakışma kontrolü
                         students.forEach(student => {
-                            if ((student._id || student.id) == editingStudentId) return;
+                            if (student.id == editingStudentId) return;
                             if (student.weeklySchedule && student.weeklySchedule[day]) {
                                 const lessons = Array.isArray(student.weeklySchedule[day]) 
                                     ? student.weeklySchedule[day] 
@@ -2473,7 +2553,8 @@
                             time,
                             duration: parseInt(duration),
                             coachId: coachId || null,
-                            lessonType: lessonType || 'Ders',
+                            lessonType: lessonType || 'Aim',
+                            customLessonName: lessonType === 'Özel' ? customLessonName : '',
                             notes: notes || ''
                         });
                     }
@@ -2491,7 +2572,7 @@
                 return;
             }
 
-            const student = students.find(s => (s._id || s.id) == editingStudentId);
+            const student = students.find(s => s.id == editingStudentId);
             if (!student) {
                 alert('❌ Öğrenci bulunamadı!');
                 return;
@@ -2546,7 +2627,7 @@
         }
 
         async function downloadStudentScheduleImage() {
-            const student = students.find(s => (s._id || s.id) == currentDetailStudentId);
+            const student = students.find(s => s.id == currentDetailStudentId);
             if (!student) {
                 alert('❌ Öğrenci bulunamadı!');
                 return;
@@ -2645,8 +2726,8 @@
                     <div class="coach-specialty">${coach.specialty}</div>
                     <div class="coach-contact">${coach.contact}</div>
                     <div class="coach-actions">
-                        <button class="action-btn btn-edit" onclick="editCoach('${coach._id || coach.id}')">Düzenle</button>
-                        <button class="action-btn btn-delete" onclick="deleteCoach('${coach._id || coach.id}')">Sil</button>
+                        <button class="action-btn btn-edit" onclick="editCoach('${coach.id}')">Düzenle</button>
+                        <button class="action-btn btn-delete" onclick="deleteCoach('${coach.id}')">Sil</button>
                     </div>
                 </div>
             `).join('');
@@ -2660,7 +2741,7 @@
         }
 
         function editCoach(coachId) {
-            const coach = coaches.find(c => (c._id || c.id) == coachId);
+            const coach = coaches.find(c => c.id == coachId);
             if (!coach) return;
             
             document.getElementById('coachModalTitle').textContent = 'Koç Düzenle';
