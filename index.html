@@ -4,2885 +4,1602 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EHÖ — Eda Hocaya Özel | 8. Sınıf Matematik</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Nunito:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-  :root {
-    --bg: #0a0b0f;
-    --surface: #12141a;
-    --surface2: #1a1d25;
-    --border: #252830;
-    --accent: #6c63ff;
-    --accent2: #ff6b6b;
-    --accent3: #43e97b;
-    --accent4: #f7971e;
-    --text: #e8eaf0;
-    --text2: #8b8fa8;
-    --text3: #5a5e73;
-    --white: #ffffff;
-    --card-bg: rgba(26,29,37,0.95);
-    --glow: rgba(108,99,255,0.15);
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
-
-  /* ---- SCROLLBAR ---- */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--surface); }
-  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
-
-  /* ---- NOISE OVERLAY ---- */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.35;
-  }
-
-  /* ---- HEADER ---- */
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    padding: 0 2rem;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(10,11,15,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .logo {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    text-decoration: none;
-  }
-
-  .logo-main {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.8rem;
-    background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 50%, var(--accent2) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -1px;
-  }
-
-  .logo-sub {
-    font-size: 0.65rem;
-    color: var(--text3);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.03em;
-  }
-
-  nav {
-    display: flex;
-    gap: 0.25rem;
-    align-items: center;
-  }
-
-  nav a {
-    color: var(--text2);
-    text-decoration: none;
-    font-size: 0.82rem;
-    font-weight: 500;
-    padding: 0.4rem 0.9rem;
-    border-radius: 8px;
-    transition: all 0.2s;
-    letter-spacing: 0.01em;
-  }
-
-  nav a:hover {
-    color: var(--text);
-    background: var(--surface2);
-  }
-
-  .nav-cta {
-    background: var(--accent) !important;
-    color: white !important;
-    margin-left: 0.5rem;
-  }
-
-  .nav-cta:hover {
-    background: #7c74ff !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(108,99,255,0.4);
-  }
-
-  /* ---- HERO ---- */
-  #hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 4rem;
-    padding: 100px 5vw 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .hero-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.12;
-  }
-
-  .hero-orb-1 {
-    width: 600px; height: 600px;
-    background: var(--accent);
-    top: -200px; right: -100px;
-  }
-
-  .hero-orb-2 {
-    width: 400px; height: 400px;
-    background: var(--accent2);
-    bottom: -100px; left: -150px;
-  }
-
-  .hero-orb-3 {
-    width: 300px; height: 300px;
-    background: var(--accent3);
-    top: 50%; left: 40%;
-    transform: translate(-50%,-50%);
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(108,99,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(108,99,255,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(108,99,255,0.12);
-    border: 1px solid rgba(108,99,255,0.25);
-    color: #a78bfa;
-    padding: 0.35rem 0.85rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .hero-badge-dot {
-    width: 6px; height: 6px;
-    background: var(--accent3);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .hero-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2.8rem, 5vw, 4.2rem);
-    line-height: 1.05;
-    letter-spacing: -2px;
-    margin-bottom: 1.5rem;
-    color: var(--white);
-  }
-
-  .hero-title span {
-    background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero-desc {
-    color: var(--text2);
-    font-size: 1.05rem;
-    line-height: 1.75;
-    margin-bottom: 2.5rem;
-    max-width: 480px;
-    font-weight: 300;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--accent);
-    color: white;
-    padding: 0.85rem 1.8rem;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: all 0.25s;
-    border: none;
-    cursor: pointer;
-    letter-spacing: 0.01em;
-  }
-
-  .btn-primary:hover {
-    background: #7c74ff;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(108,99,255,0.4);
-  }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: transparent;
-    color: var(--text);
-    padding: 0.85rem 1.8rem;
-    border-radius: 12px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: all 0.25s;
-    border: 1px solid var(--border);
-    cursor: pointer;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(108,99,255,0.06);
-  }
-
-  .hero-stats {
-    display: flex;
-    gap: 2.5rem;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .hero-stat-val {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.8rem;
-    color: var(--white);
-    letter-spacing: -1px;
-  }
-
-  .hero-stat-val span {
-    color: var(--accent);
-  }
-
-  .hero-stat-label {
-    font-size: 0.75rem;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 0.15rem;
-  }
-
-  /* ---- HERO 3D CANVAS ---- */
-  .hero-visual {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  #hero-canvas {
-    width: 100%;
-    max-width: 500px;
-    aspect-ratio: 1;
-    border-radius: 24px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  #hero-canvas canvas {
-    border-radius: 24px;
-  }
-
-  .canvas-border {
-    position: absolute;
-    inset: 0;
-    border-radius: 24px;
-    border: 1px solid rgba(108,99,255,0.2);
-    pointer-events: none;
-  }
-
-  /* ---- SECTION BASE ---- */
-  section {
-    padding: 5rem 5vw;
-    position: relative;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 3.5rem;
-  }
-
-  .section-tag {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.75rem;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2rem, 4vw, 3rem);
-    color: var(--white);
-    letter-spacing: -1px;
-    line-height: 1.1;
-  }
-
-  .section-desc {
-    color: var(--text2);
-    font-size: 1rem;
-    margin-top: 0.85rem;
-    font-weight: 300;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.7;
-  }
-
-  /* ---- KONULAR GRID ---- */
-  #konular {
-    background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);
-  }
-
-  .konular-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .konu-card {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 1.75rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    display: block;
-  }
-
-  .konu-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--card-accent, var(--accent));
-    border-radius: 20px 20px 0 0;
-    transform: scaleX(0);
-    transition: transform 0.3s;
-  }
-
-  .konu-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(108,99,255,0.3);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(108,99,255,0.1);
-  }
-
-  .konu-card:hover::before {
-    transform: scaleX(1);
-  }
-
-  .konu-icon {
-    width: 52px; height: 52px;
-    background: var(--icon-bg, rgba(108,99,255,0.12));
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .konu-unite {
-    font-size: 0.68rem;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--text3);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-  }
-
-  .konu-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--white);
-    margin-bottom: 0.6rem;
-    letter-spacing: -0.3px;
-  }
-
-  .konu-desc {
-    font-size: 0.82rem;
-    color: var(--text3);
-    line-height: 1.6;
-  }
-
-  .konu-arrow {
-    position: absolute;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 28px; height: 28px;
-    background: rgba(108,99,255,0.1);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    font-size: 0.9rem;
-    transition: all 0.25s;
-  }
-
-  .konu-card:hover .konu-arrow {
-    background: var(--accent);
-    color: white;
-    transform: translate(2px,-2px);
-  }
-
-  /* ---- ARAÇLAR (HESAPLAYICILAR) ---- */
-  #araclar {
-    padding: 5rem 5vw;
-  }
-
-  .araclar-tabs {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .tab-btn {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text2);
-    padding: 0.55rem 1.2rem;
-    border-radius: 10px;
-    font-size: 0.82rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .tab-btn.active, .tab-btn:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-  }
-
-  .calc-panel {
-    display: none;
-    animation: fadeIn 0.3s ease;
-  }
-
-  .calc-panel.active {
-    display: block;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .calc-container {
-    max-width: 700px;
-    margin: 0 auto;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 2.5rem;
-  }
-
-  .calc-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.4rem;
-    color: var(--white);
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.5px;
-  }
-
-  .calc-subtitle {
-    color: var(--text3);
-    font-size: 0.82rem;
-    margin-bottom: 2rem;
-    line-height: 1.5;
-  }
-
-  .calc-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .calc-row.single {
-    grid-template-columns: 1fr;
-  }
-
-  .calc-row.triple {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .input-group label {
-    font-size: 0.75rem;
-    color: var(--text2);
-    font-weight: 500;
-    letter-spacing: 0.03em;
-  }
-
-  .calc-input {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text);
-    padding: 0.7rem 1rem;
-    font-size: 0.95rem;
-    font-family: 'JetBrains Mono', monospace;
-    width: 100%;
-    transition: border-color 0.2s;
-    outline: none;
-  }
-
-  .calc-input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(108,99,255,0.12);
-  }
-
-  .calc-select {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text);
-    padding: 0.7rem 1rem;
-    font-size: 0.9rem;
-    font-family: 'DM Sans', sans-serif;
-    width: 100%;
-    transition: border-color 0.2s;
-    outline: none;
-    cursor: pointer;
-  }
-
-  .calc-select:focus {
-    border-color: var(--accent);
-  }
-
-  .calc-btn {
-    width: 100%;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 0.85rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s;
-    margin-top: 0.5rem;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.01em;
-  }
-
-  .calc-btn:hover {
-    background: #7c74ff;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(108,99,255,0.35);
-  }
-
-  .calc-result {
-    margin-top: 1.5rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.25rem 1.5rem;
-    display: none;
-  }
-
-  .calc-result.show {
-    display: block;
-    animation: fadeIn 0.3s ease;
-  }
-
-  .result-label {
-    font-size: 0.7rem;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .result-value {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 2rem;
-    color: var(--accent3);
-    letter-spacing: -1px;
-  }
-
-  .result-steps {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .result-steps p {
-    font-size: 0.82rem;
-    color: var(--text2);
-    line-height: 1.7;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  /* ---- 3D GEOMETRİK CİSİMLER ---- */
-  #geometri {
-    background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);
-  }
-
-  .geometri-layout {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 2rem;
-    align-items: start;
-  }
-
-  .cisim-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .cisim-btn {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 0.85rem 1.2rem;
-    color: var(--text2);
-    cursor: pointer;
-    text-align: left;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .cisim-btn.active, .cisim-btn:hover {
-    background: rgba(108,99,255,0.12);
-    border-color: rgba(108,99,255,0.3);
-    color: var(--white);
-  }
-
-  .cisim-btn.active {
-    border-color: var(--accent);
-  }
-
-  .cisim-icon-sm {
-    font-size: 1.2rem;
-    width: 28px;
-    text-align: center;
-  }
-
-  .geometri-right {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .geometri-viewer {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    overflow: hidden;
-    position: relative;
-    aspect-ratio: 16/9;
-  }
-
-  #geo-canvas {
-    width: 100%;
-    height: 100%;
-  }
-
-  .geo-info-bar {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(transparent, rgba(10,11,15,0.9));
-    padding: 2rem 1.5rem 1rem;
-  }
-
-  .geo-cisim-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: var(--white);
-    margin-bottom: 0.25rem;
-  }
-
-  .geo-cisim-desc {
-    font-size: 0.78rem;
-    color: var(--text2);
-  }
-
-  .geo-controls {
-    display: flex;
-    gap: 0.5rem;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-  }
-
-  .geo-ctrl-btn {
-    background: rgba(10,11,15,0.7);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.4rem 0.7rem;
-    color: var(--text2);
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'DM Sans', sans-serif;
-    backdrop-filter: blur(10px);
-  }
-
-  .geo-ctrl-btn:hover {
-    background: rgba(108,99,255,0.2);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .geo-formulas {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 1.75rem;
-  }
-
-  .formula-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .formula-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1rem;
-  }
-
-  .formula-label {
-    font-size: 0.7rem;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.4rem;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .formula-text {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--accent3);
-    font-weight: 500;
-    line-height: 1.5;
-  }
-
-  .geo-hesapla {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 1.75rem;
-  }
-
-  /* ---- MODAL ---- */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(10px);
-    z-index: 5000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-  }
-
-  .modal-overlay.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .modal {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 2.5rem;
-    max-width: 700px;
-    width: 100%;
-    max-height: 85vh;
-    overflow-y: auto;
-    transform: translateY(20px) scale(0.97);
-    transition: transform 0.3s;
-  }
-
-  .modal-overlay.open .modal {
-    transform: translateY(0) scale(1);
-  }
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
-  }
-
-  .modal-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.5rem;
-    color: var(--white);
-    letter-spacing: -0.5px;
-  }
-
-  .modal-close {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text2);
-    width: 36px; height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
-
-  .modal-close:hover {
-    background: var(--accent2);
-    border-color: var(--accent2);
-    color: white;
-  }
-
-  .modal-body {
-    color: var(--text2);
-    line-height: 1.75;
-    font-size: 0.92rem;
-  }
-
-  .modal-body h3 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    color: var(--white);
-    font-size: 1.05rem;
-    margin: 1.25rem 0 0.5rem;
-  }
-
-  .modal-body ul {
-    padding-left: 1.25rem;
-  }
-
-  .modal-body li {
-    margin-bottom: 0.4rem;
-    color: var(--text2);
-  }
-
-  .formula-box {
-    background: var(--surface);
-    border: 1px solid rgba(108,99,255,0.2);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    margin: 0.75rem 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-    color: var(--accent3);
-  }
-
-  /* ---- VERI ANALİZİ ---- */
-  .veri-chart-container {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 2rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .chart-area {
-    display: flex;
-    align-items: flex-end;
-    gap: 0.75rem;
-    height: 200px;
-    margin-top: 1.5rem;
-    padding: 0 0.5rem;
-  }
-
-  .chart-bar-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    flex: 1;
-  }
-
-  .chart-bar {
-    width: 100%;
-    background: linear-gradient(180deg, var(--accent) 0%, rgba(108,99,255,0.4) 100%);
-    border-radius: 6px 6px 0 0;
-    transition: height 0.5s cubic-bezier(0.4,0,0.2,1);
-    min-height: 4px;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .chart-bar:hover {
-    background: linear-gradient(180deg, #a78bfa 0%, rgba(108,99,255,0.6) 100%);
-  }
-
-  .chart-label {
-    font-size: 0.7rem;
-    color: var(--text3);
-    text-align: center;
-  }
-
-  .chart-val {
-    font-size: 0.7rem;
-    color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500;
-  }
-
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-
-  .stat-chip {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 0.85rem;
-    text-align: center;
-  }
-
-  .stat-chip-val {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: var(--white);
-  }
-
-  .stat-chip-label {
-    font-size: 0.68rem;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 0.2rem;
-  }
-
-  /* ---- FOOTER ---- */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 3rem 5vw;
-    text-align: center;
-  }
-
-  .footer-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 2rem;
-    background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -1px;
-    margin-bottom: 0.5rem;
-  }
-
-  .footer-sub {
-    font-size: 0.75rem;
-    color: var(--text3);
-    margin-bottom: 1.5rem;
-  }
-
-  .footer-text {
-    font-size: 0.8rem;
-    color: var(--text3);
-    line-height: 1.6;
-  }
-
-  /* ---- OLASALIK ---- */
-  .olasilik-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  /* ---- RESPONSIVE ---- */
-  @media (max-width: 900px) {
-    #hero {
-      grid-template-columns: 1fr;
-      text-align: center;
-    }
-    .hero-visual { order: -1; }
-    .hero-desc { max-width: 100%; }
-    .hero-actions { justify-content: center; }
-    .hero-stats { justify-content: center; }
-    .geometri-layout { grid-template-columns: 1fr; }
-    .cisim-list { flex-direction: row; flex-wrap: wrap; }
-    .olasilik-container { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 640px) {
-    nav { display: none; }
-    .calc-row { grid-template-columns: 1fr; }
-    .calc-row.triple { grid-template-columns: 1fr; }
-    .konular-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ---- LOADING / ENTRY ANIMATION ---- */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ---- KOORDINAT DÜZLEMİ ---- */
-  .koordinat-canvas {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 1;
-    cursor: crosshair;
-  }
-
-  /* ---- PROGRESS BARS ---- */
-  .progress-list { margin-top: 1.5rem; }
-
-  .progress-item {
-    margin-bottom: 1.25rem;
-  }
-
-  .progress-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.4rem;
-    font-size: 0.82rem;
-  }
-
-  .progress-bar-bg {
-    background: var(--surface);
-    border-radius: 4px;
-    height: 6px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-
-  .progress-bar-fill {
-    height: 100%;
-    border-radius: 4px;
-    background: linear-gradient(90deg, var(--accent) 0%, #a78bfa 100%);
-    transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
-    width: 0;
-  }
-
-  /* ---- BENZER/EŞ ŞEKİL CANVAS ---- */
-  .benzer-canvas {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    display: block;
-    margin: 1rem auto;
-  }
-
-  /* ---- DÖNÜŞÜM GEOMETRİSİ ---- */
-  .donusum-canvas {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    display: block;
-    margin: 0 auto;
-    cursor: pointer;
-  }
+:root {
+  --bg: #0d0e14;
+  --s1: #13151e;
+  --s2: #181b26;
+  --s3: #1e2130;
+  --border: #272b3a;
+  --accent: #7c6ff7;
+  --accent-h: #9b96ff;
+  --green: #3ecf8e;
+  --orange: #ff9f43;
+  --red: #ff6b81;
+  --blue: #54a0ff;
+  --pink: #fd79a8;
+  --txt: #dde1f0;
+  --txt2: #8890b0;
+  --txt3: #4a5070;
+  --white: #fff;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--txt); font-family:'Nunito',sans-serif; overflow-x:hidden; }
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--s1); }
+::-webkit-scrollbar-thumb { background:var(--accent); border-radius:3px; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:999;
+  height:64px; padding:0 2rem;
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(13,14,20,0.9); backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.logo { display:flex; align-items:baseline; gap:8px; text-decoration:none; }
+.logo-main {
+  font-family:'Syne',sans-serif; font-weight:800; font-size:1.7rem;
+  background:linear-gradient(135deg,var(--accent) 0%,#c084fc 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  letter-spacing:-1px;
+}
+.logo-alt { font-size:0.62rem; color:var(--txt3); }
+.nav-links { display:flex; gap:0.2rem; }
+.nav-links a {
+  color:var(--txt2); text-decoration:none; font-size:0.82rem; font-weight:600;
+  padding:0.35rem 0.8rem; border-radius:8px; transition:all 0.2s;
+}
+.nav-links a:hover { color:var(--white); background:var(--s3); }
+
+/* HERO */
+#hero {
+  min-height:100vh; padding:80px 5vw 4rem;
+  display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center;
+  position:relative; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 70% 40%, rgba(124,111,247,0.08) 0%, transparent 70%),
+             radial-gradient(ellipse 40% 40% at 20% 70%, rgba(62,207,142,0.05) 0%, transparent 60%);
+}
+.hero-grid-lines {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(rgba(124,111,247,0.035) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(124,111,247,0.035) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+.hero-left { position:relative; z-index:2; }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(124,111,247,0.1); border:1px solid rgba(124,111,247,0.2);
+  color:#c084fc; padding:0.3rem 0.8rem; border-radius:20px;
+  font-size:0.72rem; font-weight:700; margin-bottom:1.25rem;
+  text-transform:uppercase; letter-spacing:0.06em;
+}
+.badge-dot { width:5px; height:5px; background:var(--green); border-radius:50%; animation:blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero-title {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(2.5rem,4.5vw,3.8rem); line-height:1.07;
+  letter-spacing:-1.5px; color:var(--white); margin-bottom:1.2rem;
+}
+.hero-title em { font-style:normal; color:var(--accent); }
+.hero-desc { color:var(--txt2); font-size:1rem; line-height:1.7; margin-bottom:2rem; max-width:460px; font-weight:500; }
+.hero-btns { display:flex; gap:0.75rem; flex-wrap:wrap; }
+.btn-p {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--accent); color:white; padding:0.75rem 1.6rem;
+  border-radius:12px; font-weight:700; font-size:0.88rem;
+  text-decoration:none; transition:all 0.25s; border:none; cursor:pointer;
+  font-family:'Nunito',sans-serif;
+}
+.btn-p:hover { background:var(--accent-h); transform:translateY(-2px); box-shadow:0 8px 24px rgba(124,111,247,0.35); }
+.btn-s {
+  display:inline-flex; align-items:center; gap:6px;
+  background:transparent; color:var(--txt); padding:0.75rem 1.6rem;
+  border-radius:12px; font-weight:600; font-size:0.88rem;
+  text-decoration:none; transition:all 0.25s; border:1px solid var(--border); cursor:pointer;
+  font-family:'Nunito',sans-serif;
+}
+.btn-s:hover { border-color:var(--accent); color:var(--accent); background:rgba(124,111,247,0.06); }
+.hero-stats { display:flex; gap:2rem; margin-top:2.5rem; padding-top:2rem; border-top:1px solid var(--border); }
+.stat-v { font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem; color:var(--white); letter-spacing:-0.5px; }
+.stat-v span { color:var(--accent); }
+.stat-l { font-size:0.72rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.08em; }
+.hero-right { position:relative; z-index:2; }
+#hero-canvas { width:100%; aspect-ratio:1; border-radius:20px; overflow:hidden; border:1px solid var(--border); }
+#hero-canvas canvas { border-radius:20px; }
+
+/* SECTIONS */
+section { padding:5rem 5vw; }
+.sec-head { text-align:center; margin-bottom:3rem; }
+.sec-tag { font-size:0.7rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); font-family:'JetBrains Mono',monospace; display:block; margin-bottom:0.6rem; }
+.sec-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(1.9rem,3.5vw,2.8rem); color:var(--white); letter-spacing:-1px; line-height:1.1; }
+.sec-desc { color:var(--txt2); margin-top:0.7rem; font-size:0.95rem; max-width:480px; margin-left:auto; margin-right:auto; line-height:1.7; font-weight:500; }
+
+/* KONU KARTLARI */
+#konular { background:linear-gradient(180deg,var(--bg) 0%,var(--s1) 50%,var(--bg) 100%); }
+.konular-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; }
+.k-card {
+  background:var(--s2); border:1px solid var(--border); border-radius:18px; padding:1.5rem;
+  cursor:pointer; transition:all 0.28s cubic-bezier(0.4,0,0.2,1); position:relative; overflow:hidden;
+  text-decoration:none; display:block;
+}
+.k-card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:var(--c-accent,var(--accent)); border-radius:18px 18px 0 0;
+  transform:scaleX(0); transition:transform 0.3s; transform-origin:left;
+}
+.k-card:hover { transform:translateY(-4px); border-color:rgba(124,111,247,0.25); box-shadow:0 16px 36px rgba(0,0,0,0.35); }
+.k-card:hover::after { transform:scaleX(1); }
+.k-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:1rem; background:var(--c-bg,rgba(124,111,247,0.12)); }
+.k-tag { font-size:0.65rem; color:var(--txt3); font-family:'JetBrains Mono',monospace; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.3rem; }
+.k-name { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; color:var(--white); margin-bottom:0.5rem; }
+.k-desc { font-size:0.8rem; color:var(--txt3); line-height:1.55; }
+.k-arrow { position:absolute; bottom:1.25rem; right:1.25rem; background:rgba(124,111,247,0.1); border-radius:7px; width:26px; height:26px; display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:0.85rem; transition:all 0.2s; }
+.k-card:hover .k-arrow { background:var(--accent); color:white; transform:translate(2px,-2px); }
+
+/* HESAPLAYICILAR */
+.calc-tabs { display:flex; gap:0.4rem; flex-wrap:wrap; justify-content:center; margin-bottom:2rem; }
+.tab-b { background:var(--s2); border:1px solid var(--border); color:var(--txt2); padding:0.45rem 1rem; border-radius:9px; font-size:0.8rem; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'Nunito',sans-serif; }
+.tab-b.on, .tab-b:hover { background:var(--accent); border-color:var(--accent); color:white; }
+.calc-panel { display:none; animation:fadeUp 0.3s ease; }
+.calc-panel.on { display:block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.calc-box { max-width:680px; margin:0 auto; background:var(--s2); border:1px solid var(--border); border-radius:22px; padding:2.25rem; }
+.calc-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1.3rem; color:var(--white); margin-bottom:0.35rem; }
+.calc-sub { color:var(--txt3); font-size:0.8rem; margin-bottom:1.75rem; line-height:1.5; }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+.row3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.75rem; margin-bottom:1rem; }
+.row1 { margin-bottom:1rem; }
+.lbl { display:block; font-size:0.75rem; font-weight:700; color:var(--txt2); margin-bottom:0.35rem; }
+.inp {
+  background:var(--s1); border:1px solid var(--border); border-radius:10px;
+  color:var(--txt); padding:0.65rem 0.9rem; font-size:0.92rem; width:100%;
+  font-family:'JetBrains Mono',monospace; outline:none; transition:border-color 0.2s;
+}
+.inp:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,111,247,0.1); }
+.sel {
+  background:var(--s1); border:1px solid var(--border); border-radius:10px;
+  color:var(--txt); padding:0.65rem 0.9rem; font-size:0.88rem; width:100%;
+  font-family:'Nunito',sans-serif; outline:none; cursor:pointer;
+}
+.calc-btn {
+  width:100%; background:var(--accent); color:white; border:none; border-radius:12px;
+  padding:0.8rem; font-size:0.92rem; font-weight:700; cursor:pointer; margin-top:0.5rem;
+  font-family:'Nunito',sans-serif; transition:all 0.25s;
+}
+.calc-btn:hover { background:var(--accent-h); transform:translateY(-1px); box-shadow:0 6px 18px rgba(124,111,247,0.3); }
+.result-box { margin-top:1.25rem; background:var(--s1); border:1px solid var(--border); border-radius:14px; padding:1.25rem 1.5rem; display:none; }
+.result-box.show { display:block; animation:fadeUp 0.3s ease; }
+.r-tag { font-size:0.68rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.1em; font-family:'JetBrains Mono',monospace; margin-bottom:0.4rem; }
+.r-val { font-family:'Syne',sans-serif; font-weight:800; font-size:1.9rem; color:var(--green); letter-spacing:-0.5px; }
+.r-val2 { font-family:'Syne',sans-serif; font-weight:800; font-size:1.9rem; color:var(--orange); letter-spacing:-0.5px; }
+.r-steps { margin-top:0.9rem; padding-top:0.9rem; border-top:1px solid var(--border); font-size:0.82rem; color:var(--txt2); line-height:1.75; font-family:'JetBrains Mono',monospace; }
+
+/* SLIDER */
+.slider-row { margin-bottom:1.25rem; }
+.slider-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; }
+.slider-label { font-size:0.78rem; font-weight:700; color:var(--txt2); }
+.slider-val { font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:var(--accent); font-weight:500; background:rgba(124,111,247,0.1); padding:2px 8px; border-radius:6px; }
+input[type=range] {
+  width:100%; height:6px; -webkit-appearance:none; appearance:none;
+  background:var(--border); border-radius:3px; outline:none; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+  background:var(--accent); cursor:pointer; transition:transform 0.15s;
+  box-shadow:0 0 0 3px rgba(124,111,247,0.2);
+}
+input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.2); }
+.slider-marks { display:flex; justify-content:space-between; font-size:0.65rem; color:var(--txt3); margin-top:0.25rem; font-family:'JetBrains Mono',monospace; }
+
+/* GEOMETRİ */
+#geometri { background:linear-gradient(180deg,var(--bg) 0%,var(--s1) 50%,var(--bg) 100%); }
+.geo-layout { display:grid; grid-template-columns:240px 1fr; gap:1.5rem; align-items:start; }
+.cisim-list { display:flex; flex-direction:column; gap:0.4rem; }
+.cisim-btn {
+  background:var(--s2); border:1px solid var(--border); border-radius:11px;
+  padding:0.7rem 1rem; color:var(--txt2); cursor:pointer; text-align:left;
+  font-family:'Nunito',sans-serif; font-size:0.85rem; font-weight:600;
+  transition:all 0.2s; display:flex; align-items:center; gap:0.6rem;
+}
+.cisim-btn.on, .cisim-btn:hover { background:rgba(124,111,247,0.1); border-color:rgba(124,111,247,0.3); color:var(--white); }
+.cisim-btn.on { border-color:var(--accent); }
+.geo-right { display:flex; flex-direction:column; gap:1.25rem; }
+.geo-viewer { background:var(--s2); border:1px solid var(--border); border-radius:22px; overflow:hidden; position:relative; }
+#geo-canvas { width:100%; display:block; }
+.geo-overlay { position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; }
+.geo-name-bar { position:absolute; bottom:0; left:0; right:0; padding:1.5rem 1.5rem 1rem; background:linear-gradient(transparent,rgba(13,14,20,0.95)); }
+.geo-cisim-ad { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; color:var(--white); }
+.geo-cisim-not { font-size:0.75rem; color:var(--txt2); margin-top:0.2rem; }
+.geo-btns { position:absolute; top:0.8rem; right:0.8rem; display:flex; gap:0.4rem; }
+.geo-btn {
+  background:rgba(13,14,20,0.75); border:1px solid var(--border); border-radius:8px;
+  padding:0.35rem 0.6rem; color:var(--txt2); font-size:0.72rem; cursor:pointer;
+  backdrop-filter:blur(8px); font-family:'Nunito',sans-serif; font-weight:600; transition:all 0.2s;
+}
+.geo-btn:hover { background:rgba(124,111,247,0.2); border-color:var(--accent); color:var(--accent); }
+.geo-drag-hint { position:absolute; top:0.8rem; left:0.8rem; background:rgba(13,14,20,0.75); border:1px solid var(--border); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.68rem; color:var(--txt3); backdrop-filter:blur(8px); }
+.geo-panel { background:var(--s2); border:1px solid var(--border); border-radius:18px; padding:1.5rem; }
+.panel-title { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; color:var(--white); margin-bottom:1rem; }
+.formula-chips { display:flex; flex-wrap:wrap; gap:0.6rem; }
+.f-chip { background:var(--s1); border:1px solid var(--border); border-radius:10px; padding:0.6rem 0.85rem; }
+.f-chip-lbl { font-size:0.65rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem; }
+.f-chip-val { font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:var(--green); font-weight:500; }
+
+/* SONUÇ GRID */
+.r-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:0.75rem; margin-top:0.75rem; }
+.r-item { background:var(--s2); border:1px solid var(--border); border-radius:10px; padding:0.85rem; }
+.r-item-lbl { font-size:0.65rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.3rem; }
+.r-item-val { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; color:var(--white); }
+
+/* MODAL */
+.modal-bg { position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:9000; display:flex; align-items:center; justify-content:center; padding:1.5rem; opacity:0; pointer-events:none; transition:opacity 0.25s; }
+.modal-bg.open { opacity:1; pointer-events:all; }
+.modal { background:var(--s2); border:1px solid var(--border); border-radius:22px; padding:2rem; max-width:660px; width:100%; max-height:82vh; overflow-y:auto; transform:translateY(16px) scale(0.98); transition:transform 0.25s; }
+.modal-bg.open .modal { transform:translateY(0) scale(1); }
+.modal-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.25rem; }
+.modal-tit { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; color:var(--white); }
+.modal-x { background:var(--s1); border:1px solid var(--border); border-radius:8px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--txt2); font-size:1rem; transition:all 0.2s; flex-shrink:0; }
+.modal-x:hover { background:var(--red); border-color:var(--red); color:white; }
+.modal-body { font-size:0.88rem; color:var(--txt2); line-height:1.75; }
+.modal-body h3 { font-family:'Syne',sans-serif; font-weight:700; color:var(--white); font-size:1rem; margin:1.1rem 0 0.5rem; }
+.modal-body p { margin-bottom:0.6rem; }
+.modal-body ul { padding-left:1.2rem; }
+.modal-body li { margin-bottom:0.35rem; }
+.fbox { background:var(--s1); border:1px solid rgba(124,111,247,0.2); border-radius:10px; padding:0.85rem 1.1rem; margin:0.6rem 0; font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--green); line-height:1.8; }
+
+/* VERİ */
+.chart-wrap { background:var(--s2); border:1px solid var(--border); border-radius:18px; padding:1.5rem; }
+.chart-bars { display:flex; align-items:flex-end; gap:0.5rem; height:180px; padding:0 0.25rem; }
+.c-bar-wrap { display:flex; flex-direction:column; align-items:center; gap:0.3rem; flex:1; min-width:0; }
+.c-bar-v { font-size:0.65rem; color:var(--accent); font-family:'JetBrains Mono',monospace; }
+.c-bar { width:100%; border-radius:5px 5px 0 0; transition:height 0.5s cubic-bezier(0.4,0,0.2,1); min-height:3px; cursor:pointer; }
+.c-bar:hover { filter:brightness(1.2); }
+.c-bar-l { font-size:0.65rem; color:var(--txt3); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+.stat-chips { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1rem; }
+.stat-chip { background:var(--s1); border:1px solid var(--border); border-radius:10px; padding:0.65rem 0.9rem; }
+.sc-v { font-family:'Syne',sans-serif; font-weight:700; font-size:1.2rem; color:var(--white); }
+.sc-l { font-size:0.65rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.08em; }
+
+/* FOOTER */
+footer { border-top:1px solid var(--border); padding:2.5rem 5vw; text-align:center; }
+.ft-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.8rem; background:linear-gradient(135deg,var(--accent),#c084fc); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.ft-sub { font-size:0.7rem; color:var(--txt3); }
+.ft-note { font-size:0.78rem; color:var(--txt3); margin-top:1rem; line-height:1.6; }
+
+/* FADE ANIM */
+.fade { opacity:0; transform:translateY(20px); transition:opacity 0.55s ease,transform 0.55s ease; }
+.fade.vis { opacity:1; transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  #hero { grid-template-columns:1fr; text-align:center; }
+  .hero-right { order:-1; max-width:340px; margin:0 auto; }
+  .hero-btns { justify-content:center; }
+  .hero-stats { justify-content:center; }
+  .geo-layout { grid-template-columns:1fr; }
+  .cisim-list { flex-direction:row; flex-wrap:wrap; }
+  .cisim-btn { flex:1; min-width:120px; }
+}
+@media(max-width:600px){
+  .nav-links { display:none; }
+  .row2,.row3 { grid-template-columns:1fr; }
+  .konular-grid { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
+<!-- NAV -->
+<nav>
   <a href="#" class="logo">
     <span class="logo-main">EHÖ</span>
-    <span class="logo-sub">(Eda Hocaya Özel)</span>
+    <span class="logo-alt">(Eda Hocaya Özel)</span>
   </a>
-  <nav>
+  <div class="nav-links">
     <a href="#konular">Konular</a>
-    <a href="#araclar">Hesaplayıcılar</a>
+    <a href="#hesap">Hesaplayıcılar</a>
     <a href="#geometri">3D Geometri</a>
-    <a href="#veri">Veri Analizi</a>
-    <a href="#araclar" class="nav-cta">Araçlar →</a>
-  </nav>
-</header>
+    <a href="#veri">Veri</a>
+  </div>
+</nav>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-bg">
-    <div class="hero-grid"></div>
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-    <div class="hero-orb hero-orb-3"></div>
-  </div>
-
-  <div class="hero-content fade-up">
-    <div class="hero-badge">
-      <span class="hero-badge-dot"></span>
-      8. Sınıf · MEB Müfredatı 2024–2025
-    </div>
-    <h1 class="hero-title">
-      Matematiği<br><span>Birlikte</span><br>Keşfedelim
-    </h1>
-    <p class="hero-desc">
-      8. sınıf matematik konularını eğlenceli hesaplayıcılar, 3D görselleştirmeler ve interaktif araçlarla çalışın. LGS'ye en iyi şekilde hazırlanın.
-    </p>
-    <div class="hero-actions">
-      <a href="#konular" class="btn-primary">Konulara Git →</a>
-      <a href="#araclar" class="btn-secondary">Hesaplayıcılar</a>
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-left fade">
+    <div class="hero-badge"><span class="badge-dot"></span> 8. Sınıf · LGS 2025</div>
+    <h1 class="hero-title">Matematiği<br><em>Birlikte</em><br>Öğrenelim</h1>
+    <p class="hero-desc">8. sınıf matematik konularının tamamı, eğlenceli hesaplayıcılar ve 3D şekillerle bir arada.</p>
+    <div class="hero-btns">
+      <a href="#konular" class="btn-p">Konulara Git →</a>
+      <a href="#hesap" class="btn-s">Hesaplayıcılar</a>
     </div>
     <div class="hero-stats">
-      <div>
-        <div class="hero-stat-val">6<span>+</span></div>
-        <div class="hero-stat-label">Ünite</div>
-      </div>
-      <div>
-        <div class="hero-stat-val">12<span>+</span></div>
-        <div class="hero-stat-label">Ana Konu</div>
-      </div>
-      <div>
-        <div class="hero-stat-val">20<span>+</span></div>
-        <div class="hero-stat-label">İnteraktif Araç</div>
-      </div>
+      <div><div class="stat-v">6<span>+</span></div><div class="stat-l">Ünite</div></div>
+      <div><div class="stat-v">12<span>+</span></div><div class="stat-l">Konu</div></div>
+      <div><div class="stat-v">20<span>+</span></div><div class="stat-l">Araç</div></div>
     </div>
   </div>
-
-  <div class="hero-visual fade-up">
-    <div id="hero-canvas">
-      <canvas id="heroWebGL"></canvas>
-      <div class="canvas-border"></div>
-    </div>
+  <div class="hero-right fade">
+    <div id="hero-canvas"></div>
   </div>
 </section>
 
 <!-- KONULAR -->
 <section id="konular">
-  <div class="section-header fade-up">
-    <span class="section-tag">// müfredat</span>
-    <h2 class="section-title">Tüm Konular</h2>
-    <p class="section-desc">MEB 2024–2025 müfredatına göre 8. sınıf matematik konularının tamamı</p>
-  </div>
-
+  <div class="sec-head fade"><span class="sec-tag">// tüm konular</span><h2 class="sec-title">8. Sınıf Konuları</h2><p class="sec-desc">MEB 2024–2025 programındaki tüm konular</p></div>
   <div class="konular-grid">
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#6c63ff; --icon-bg:rgba(108,99,255,0.12);"
-       onclick="openModal('carpanlar'); return false;">
-      <div class="konu-icon">🔢</div>
-      <div class="konu-unite">Ünite 1 · Sayılar</div>
-      <div class="konu-name">Çarpanlar ve Katlar</div>
-      <div class="konu-desc">EBOB, EKOK, asal çarpanlara ayırma ve aralarında asal sayılar</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#7c6ff7;--c-bg:rgba(124,111,247,0.1)" onclick="openM('carpanlar');return false">
+      <div class="k-icon">🔢</div><div class="k-tag">Ünite 1</div>
+      <div class="k-name">Çarpanlar ve Katlar</div>
+      <div class="k-desc">EBOB, EKOK ve asal çarpanlara ayırma</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#f7971e; --icon-bg:rgba(247,151,30,0.12);"
-       onclick="openModal('uslu'); return false;">
-      <div class="konu-icon">⚡</div>
-      <div class="konu-unite">Ünite 1 · Sayılar</div>
-      <div class="konu-name">Üslü İfadeler</div>
-      <div class="konu-desc">Tam sayı kuvvetleri, üslü ifade kuralları ve bilimsel notasyon</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#ff9f43;--c-bg:rgba(255,159,67,0.1)" onclick="openM('uslu');return false">
+      <div class="k-icon">⚡</div><div class="k-tag">Ünite 1</div>
+      <div class="k-name">Üslü İfadeler</div>
+      <div class="k-desc">Kuvvet alma, üs kuralları ve büyük sayıları kısa yazma</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#43e97b; --icon-bg:rgba(67,233,123,0.12);"
-       onclick="openModal('karekok'); return false;">
-      <div class="konu-icon">√</div>
-      <div class="konu-unite">Ünite 2 · Sayılar</div>
-      <div class="konu-name">Kareköklü İfadeler</div>
-      <div class="konu-desc">Karekök işlemleri, rasyonel ve irrasyonel sayılar, gerçek sayılar</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#3ecf8e;--c-bg:rgba(62,207,142,0.1)" onclick="openM('karekok');return false">
+      <div class="k-icon">√</div><div class="k-tag">Ünite 2</div>
+      <div class="k-name">Kareköklü İfadeler</div>
+      <div class="k-desc">Karekök hesabı, sadeleştirme ve gerçek sayılar</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#ff6b6b; --icon-bg:rgba(255,107,107,0.12);"
-       onclick="openModal('veri'); return false;">
-      <div class="konu-icon">📊</div>
-      <div class="konu-unite">Ünite 2 · İstatistik</div>
-      <div class="konu-name">Veri Analizi</div>
-      <div class="konu-desc">Çizgi ve sütun grafikleri, ortalama, ortanca, tepe değer, mod</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#ff6b81;--c-bg:rgba(255,107,129,0.1)" onclick="openM('veriK');return false">
+      <div class="k-icon">📊</div><div class="k-tag">Ünite 2</div>
+      <div class="k-name">Veri Analizi</div>
+      <div class="k-desc">Ortalama, ortanca, mod ve grafik okuma</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#a78bfa; --icon-bg:rgba(167,139,250,0.12);"
-       onclick="openModal('olasilik'); return false;">
-      <div class="konu-icon">🎲</div>
-      <div class="konu-unite">Ünite 3 · Olasılık</div>
-      <div class="konu-name">Basit Olayların Olasılığı</div>
-      <div class="konu-desc">Olasılık kavramı, deney, olay, örnek uzay ve olasılık hesabı</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#c084fc;--c-bg:rgba(192,132,252,0.1)" onclick="openM('olasilik');return false">
+      <div class="k-icon">🎲</div><div class="k-tag">Ünite 3</div>
+      <div class="k-name">Olasılık</div>
+      <div class="k-desc">Bir olayın gerçekleşme ihtimalini hesaplama</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#38bdf8; --icon-bg:rgba(56,189,248,0.12);"
-       onclick="openModal('cebir'); return false;">
-      <div class="konu-icon">📐</div>
-      <div class="konu-unite">Ünite 3 · Cebir</div>
-      <div class="konu-name">Cebirsel İfadeler & Özdeşlikler</div>
-      <div class="konu-desc">Çarpanlara ayırma, özdeşlikler ve cebirsel işlemler</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#54a0ff;--c-bg:rgba(84,160,255,0.1)" onclick="openM('cebir');return false">
+      <div class="k-icon">🔣</div><div class="k-tag">Ünite 3</div>
+      <div class="k-name">Cebirsel İfadeler</div>
+      <div class="k-desc">Çarpanlara ayırma ve özdeşlikler</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#f7971e; --icon-bg:rgba(247,151,30,0.12);"
-       onclick="openModal('denklem'); return false;">
-      <div class="konu-icon">⚖️</div>
-      <div class="konu-unite">Ünite 4 · Cebir</div>
-      <div class="konu-name">Doğrusal Denklemler</div>
-      <div class="konu-desc">1. dereceden 1 bilinmeyenli denklemler, çözüm kümesi, problemler</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#ff9f43;--c-bg:rgba(255,159,67,0.1)" onclick="openM('denklem');return false">
+      <div class="k-icon">⚖️</div><div class="k-tag">Ünite 4</div>
+      <div class="k-name">Doğrusal Denklemler</div>
+      <div class="k-desc">ax + b = c biçimindeki denklemleri çözme</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#43e97b; --icon-bg:rgba(67,233,123,0.12);"
-       onclick="openModal('esitsizlik'); return false;">
-      <div class="konu-icon">↔️</div>
-      <div class="konu-unite">Ünite 4 · Cebir</div>
-      <div class="konu-name">Eşitsizlikler</div>
-      <div class="konu-desc">1. dereceden eşitsizlikler, çözüm kümesi, sayı doğrusunda gösterim</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#3ecf8e;--c-bg:rgba(62,207,142,0.1)" onclick="openM('esitsizlik');return false">
+      <div class="k-icon">↔️</div><div class="k-tag">Ünite 4</div>
+      <div class="k-name">Eşitsizlikler</div>
+      <div class="k-desc">Büyük-küçük ilişkisi ve sayı doğrusunda gösterme</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#6c63ff; --icon-bg:rgba(108,99,255,0.12);"
-       onclick="openModal('ucgenler'); return false;">
-      <div class="konu-icon">🔺</div>
-      <div class="konu-unite">Ünite 5 · Geometri</div>
-      <div class="konu-name">Üçgenler</div>
-      <div class="konu-desc">Kenarortay, açıortay, yükseklik, Pisagor bağıntısı, üçgen eşitsizliği</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#7c6ff7;--c-bg:rgba(124,111,247,0.1)" onclick="openM('ucgenler');return false">
+      <div class="k-icon">🔺</div><div class="k-tag">Ünite 5</div>
+      <div class="k-name">Üçgenler</div>
+      <div class="k-desc">Pisagor bağıntısı, kenarortay ve yükseklik</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#ff6b6b; --icon-bg:rgba(255,107,107,0.12);"
-       onclick="openModal('eslik'); return false;">
-      <div class="konu-icon">🔁</div>
-      <div class="konu-unite">Ünite 5 · Geometri</div>
-      <div class="konu-name">Eşlik ve Benzerlik</div>
-      <div class="konu-desc">Eş şekiller, benzer çokgenler, benzerlik oranı ve uygulamalar</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#ff6b81;--c-bg:rgba(255,107,129,0.1)" onclick="openM('eslik');return false">
+      <div class="k-icon">🔁</div><div class="k-tag">Ünite 5</div>
+      <div class="k-name">Eşlik ve Benzerlik</div>
+      <div class="k-desc">Aynı büyüklükte veya aynı biçimdeki şekiller</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#a78bfa; --icon-bg:rgba(167,139,250,0.12);"
-       onclick="openModal('donusum'); return false;">
-      <div class="konu-icon">🔄</div>
-      <div class="konu-unite">Ünite 6 · Geometri</div>
-      <div class="konu-name">Dönüşüm Geometrisi</div>
-      <div class="konu-desc">Öteleme, yansıma, döndürme ve bu dönüşümlerin özellikleri</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#c084fc;--c-bg:rgba(192,132,252,0.1)" onclick="openM('donusum');return false">
+      <div class="k-icon">🔄</div><div class="k-tag">Ünite 6</div>
+      <div class="k-name">Dönüşüm Geometrisi</div>
+      <div class="k-desc">Kaydırma, yansıma ve döndürme</div><div class="k-arrow">→</div>
     </a>
-
-    <a href="#" class="konu-card fade-up" style="--card-accent:#38bdf8; --icon-bg:rgba(56,189,248,0.12);"
-       onclick="openModal('cismler'); return false;">
-      <div class="konu-icon">🧊</div>
-      <div class="konu-unite">Ünite 6 · Geometri</div>
-      <div class="konu-name">Geometrik Cisimler</div>
-      <div class="konu-desc">Dik prizmalar, silindirler, koniler, küreler; alan, hacim, yüzey alanı</div>
-      <div class="konu-arrow">→</div>
+    <a href="#" class="k-card fade" style="--c-accent:#54a0ff;--c-bg:rgba(84,160,255,0.1)" onclick="openM('cismler');return false">
+      <div class="k-icon">🧊</div><div class="k-tag">Ünite 6</div>
+      <div class="k-name">Geometrik Cisimler</div>
+      <div class="k-desc">Prizma, silindir, koni ve küre; alan ve hacim</div><div class="k-arrow">→</div>
     </a>
-
   </div>
 </section>
 
 <!-- HESAPLAYICILAR -->
-<section id="araclar">
-  <div class="section-header fade-up">
-    <span class="section-tag">// hesaplayıcılar</span>
-    <h2 class="section-title">İnteraktif Araçlar</h2>
-    <p class="section-desc">Konuları anlamak ve hesap yapmak için tüm araçlar burada</p>
-  </div>
-
-  <div class="araclar-tabs fade-up">
-    <button class="tab-btn active" onclick="switchTab('ebob-ekok')">EBOB / EKOK</button>
-    <button class="tab-btn" onclick="switchTab('uslu-hesap')">Üslü İfadeler</button>
-    <button class="tab-btn" onclick="switchTab('karekok-hesap')">Karekök</button>
-    <button class="tab-btn" onclick="switchTab('denklem-hesap')">Denklem Çözücü</button>
-    <button class="tab-btn" onclick="switchTab('pisagor')">Pisagor</button>
-    <button class="tab-btn" onclick="switchTab('olasilik-hesap')">Olasılık</button>
-    <button class="tab-btn" onclick="switchTab('benzerlik')">Benzerlik Oranı</button>
-    <button class="tab-btn" onclick="switchTab('veri-hesap')">Veri Analizi</button>
+<section id="hesap">
+  <div class="sec-head fade"><span class="sec-tag">// araçlar</span><h2 class="sec-title">Hesaplayıcılar</h2><p class="sec-desc">Konuları anlamak için tüm hesap araçları</p></div>
+  <div class="calc-tabs fade">
+    <button class="tab-b on" onclick="setTab('ebob')">EBOB & EKOK</button>
+    <button class="tab-b" onclick="setTab('uslu')">Üslü İfadeler</button>
+    <button class="tab-b" onclick="setTab('kk')">Karekök</button>
+    <button class="tab-b" onclick="setTab('denk')">Denklem</button>
+    <button class="tab-b" onclick="setTab('esits')">Eşitsizlik</button>
+    <button class="tab-b" onclick="setTab('pis')">Pisagor</button>
+    <button class="tab-b" onclick="setTab('olas')">Olasılık</button>
+    <button class="tab-b" onclick="setTab('ben')">Benzerlik</button>
+    <button class="tab-b" onclick="setTab('veri')">Veri Analizi</button>
   </div>
 
   <!-- EBOB EKOK -->
-  <div id="panel-ebob-ekok" class="calc-panel active fade-up">
-    <div class="calc-container">
-      <div class="calc-title">EBOB & EKOK Hesaplayıcı</div>
-      <div class="calc-subtitle">İki doğal sayının En Büyük Ortak Bölenini ve En Küçük Ortak Katını hesaplar. Adım adım çözüm gösterir.</div>
-      <div class="calc-row">
-        <div class="input-group">
-          <label>Birinci Sayı</label>
-          <input class="calc-input" type="number" id="ebob-a" placeholder="örn: 24" min="1">
-        </div>
-        <div class="input-group">
-          <label>İkinci Sayı</label>
-          <input class="calc-input" type="number" id="ebob-b" placeholder="örn: 36" min="1">
-        </div>
+  <div id="p-ebob" class="calc-panel on">
+    <div class="calc-box">
+      <div class="calc-title">EBOB ve EKOK Hesaplayıcı</div>
+      <div class="calc-sub">İki sayının En Büyük Ortak Bölenini (EBOB) ve En Küçük Ortak Katını (EKOK) bulur. Adım adım çözümü gösterir.</div>
+      <div class="row2">
+        <div><label class="lbl">1. Sayı</label><input class="inp" id="ea" type="number" placeholder="örn: 24" min="1"></div>
+        <div><label class="lbl">2. Sayı</label><input class="inp" id="eb" type="number" placeholder="örn: 36" min="1"></div>
       </div>
-      <button class="calc-btn" onclick="calcEBOB()">Hesapla</button>
-      <div class="calc-result" id="ebob-result">
-        <div class="result-label">EBOB</div>
-        <div class="result-value" id="ebob-val">—</div>
-        <div class="result-label" style="margin-top:1rem;">EKOK</div>
-        <div class="result-value" id="ekok-val" style="color:var(--accent4);">—</div>
-        <div class="result-steps">
-          <p id="ebob-steps"></p>
+      <button class="calc-btn" onclick="hesapEbob()">Hesapla</button>
+      <div class="result-box" id="r-ebob">
+        <div class="row2" style="margin-bottom:0">
+          <div><div class="r-tag">EBOB</div><div class="r-val" id="rv-ebob">—</div></div>
+          <div><div class="r-tag">EKOK</div><div class="r-val2" id="rv-ekok">—</div></div>
         </div>
+        <div class="r-steps" id="rs-ebob"></div>
       </div>
     </div>
   </div>
 
-  <!-- ÜSLÜ İFADELER -->
-  <div id="panel-uslu-hesap" class="calc-panel fade-up">
-    <div class="calc-container">
+  <!-- ÜSLÜ -->
+  <div id="p-uslu" class="calc-panel">
+    <div class="calc-box">
       <div class="calc-title">Üslü İfade Hesaplayıcı</div>
-      <div class="calc-subtitle">aⁿ biçimindeki üslü ifadeleri ve üslü işlemlerini hesaplar.</div>
-      <div class="calc-row">
-        <div class="input-group">
-          <label>Taban (a)</label>
-          <input class="calc-input" type="number" id="uslu-a" placeholder="örn: 2">
-        </div>
-        <div class="input-group">
-          <label>Üs (n)</label>
-          <input class="calc-input" type="number" id="uslu-n" placeholder="örn: 8">
-        </div>
+      <div class="calc-sub">aⁿ biçimindeki üslü ifadeleri ve üs kurallarını hesaplar.</div>
+      <div class="row2">
+        <div><label class="lbl">Taban (a)</label><input class="inp" id="ua" type="number" placeholder="örn: 2"></div>
+        <div><label class="lbl">Üs (n)</label><input class="inp" id="un" type="number" placeholder="örn: 5"></div>
       </div>
-      <div class="calc-row single">
-        <div class="input-group">
-          <label>İşlem</label>
-          <select class="calc-select" id="uslu-op">
-            <option value="pow">aⁿ hesapla</option>
-            <option value="bilimsel">Bilimsel Gösterim (× 10ⁿ)</option>
-            <option value="kural1">aᵐ × aⁿ = aᵐ⁺ⁿ</option>
-            <option value="kural2">aᵐ ÷ aⁿ = aᵐ⁻ⁿ</option>
-            <option value="kural3">(aᵐ)ⁿ = aᵐˣⁿ</option>
-          </select>
-        </div>
+      <div class="row1"><label class="lbl">Kural Seç</label>
+        <select class="sel" id="ukural" onchange="usluExtra()">
+          <option value="pow">aⁿ değerini hesapla</option>
+          <option value="b">Büyük sayıyı bilimsel gösterimle yaz</option>
+          <option value="r1">Çarpma Kuralı: aᵐ × aⁿ = aᵐ⁺ⁿ</option>
+          <option value="r2">Bölme Kuralı: aᵐ ÷ aⁿ = aᵐ⁻ⁿ</option>
+          <option value="r3">Üs Alma Kuralı: (aᵐ)ⁿ = aᵐˣⁿ</option>
+        </select>
       </div>
-      <div class="calc-row" id="uslu-extra" style="display:none;">
-        <div class="input-group">
-          <label>İkinci Üs (m)</label>
-          <input class="calc-input" type="number" id="uslu-m" placeholder="örn: 3">
-        </div>
-      </div>
-      <button class="calc-btn" onclick="calcUslu()">Hesapla</button>
-      <div class="calc-result" id="uslu-result">
-        <div class="result-label">Sonuç</div>
-        <div class="result-value" id="uslu-val">—</div>
-        <div class="result-steps"><p id="uslu-steps"></p></div>
+      <div id="u-extra" style="display:none"><div class="row1"><label class="lbl">2. Üs (m)</label><input class="inp" id="um" type="number" placeholder="örn: 3"></div></div>
+      <button class="calc-btn" onclick="hesapUslu()">Hesapla</button>
+      <div class="result-box" id="r-uslu">
+        <div class="r-tag">Sonuç</div><div class="r-val" id="rv-uslu">—</div>
+        <div class="r-steps" id="rs-uslu"></div>
       </div>
     </div>
   </div>
 
   <!-- KAREKÖK -->
-  <div id="panel-karekok-hesap" class="calc-panel fade-up">
-    <div class="calc-container">
+  <div id="p-kk" class="calc-panel">
+    <div class="calc-box">
       <div class="calc-title">Karekök Hesaplayıcı</div>
-      <div class="calc-subtitle">Kareköklü ifadeleri sadeleştir, a√b biçimine yaz, işlemler yap.</div>
-      <div class="calc-row">
-        <div class="input-group">
-          <label>Sayı</label>
-          <input class="calc-input" type="number" id="kk-sayi" placeholder="örn: 72">
-        </div>
-        <div class="input-group">
-          <label>İşlem</label>
-          <select class="calc-select" id="kk-op">
-            <option value="sadele">a√b biçimine yaz</option>
-            <option value="karekok">√ hesapla (ondalık)</option>
-            <option value="carpim">√a × √b hesapla</option>
-            <option value="bolum">√a ÷ √b hesapla</option>
-            <option value="hangi">Hangi iki tam sayı arasında?</option>
+      <div class="calc-sub">Karekök sadeleştirme, hesaplama ve işlemler.</div>
+      <div class="row2">
+        <div><label class="lbl">Sayı</label><input class="inp" id="kka" type="number" placeholder="örn: 72"></div>
+        <div><label class="lbl">İşlem</label>
+          <select class="sel" id="kkop" onchange="kkExtra()">
+            <option value="sadele">a√b biçimine yaz (sadeleştir)</option>
+            <option value="hesap">Ondalık değerini bul</option>
+            <option value="aralik">Hangi iki tam sayı arasında?</option>
+            <option value="carp">√a × √b işlemi yap</option>
+            <option value="bol">√a ÷ √b işlemi yap</option>
           </select>
         </div>
       </div>
-      <div class="calc-row" id="kk-extra" style="display:none;">
-        <div class="input-group">
-          <label>İkinci Sayı</label>
-          <input class="calc-input" type="number" id="kk-sayi2" placeholder="örn: 8">
-        </div>
-      </div>
-      <button class="calc-btn" onclick="calcKarekök()">Hesapla</button>
-      <div class="calc-result" id="kk-result">
-        <div class="result-label">Sonuç</div>
-        <div class="result-value" id="kk-val">—</div>
-        <div class="result-steps"><p id="kk-steps"></p></div>
+      <div id="kk-extra" style="display:none"><div class="row1"><label class="lbl">2. Sayı (b)</label><input class="inp" id="kkb" type="number" placeholder="örn: 8"></div></div>
+      <button class="calc-btn" onclick="hesapKk()">Hesapla</button>
+      <div class="result-box" id="r-kk">
+        <div class="r-tag">Sonuç</div><div class="r-val" id="rv-kk">—</div>
+        <div class="r-steps" id="rs-kk"></div>
       </div>
     </div>
   </div>
 
-  <!-- DENKLEM ÇÖZÜCÜ -->
-  <div id="panel-denklem-hesap" class="calc-panel fade-up">
-    <div class="calc-container">
-      <div class="calc-title">Denklem & Eşitsizlik Çözücü</div>
-      <div class="calc-subtitle">ax + b = c veya ax + b &lt; c biçimindeki 1. derece denklemleri ve eşitsizlikleri çözer.</div>
-      <div class="calc-row triple">
-        <div class="input-group">
-          <label>a (x katsayısı)</label>
-          <input class="calc-input" type="number" id="denk-a" placeholder="2">
-        </div>
-        <div class="input-group">
-          <label>b (sabit terim)</label>
-          <input class="calc-input" type="number" id="denk-b" placeholder="3">
-        </div>
-        <div class="input-group">
-          <label>c (sağ taraf)</label>
-          <input class="calc-input" type="number" id="denk-c" placeholder="11">
-        </div>
+  <!-- DENKLEM -->
+  <div id="p-denk" class="calc-panel">
+    <div class="calc-box">
+      <div class="calc-title">Denklem Çözücü</div>
+      <div class="calc-sub">ax + b = c biçimindeki denklemi adım adım çözer.</div>
+      <div class="row3">
+        <div><label class="lbl">a (x'in önündeki sayı)</label><input class="inp" id="da" type="number" placeholder="2"></div>
+        <div><label class="lbl">b (sabit terim)</label><input class="inp" id="db" type="number" placeholder="3"></div>
+        <div><label class="lbl">c (sağ taraf)</label><input class="inp" id="dc" type="number" placeholder="11"></div>
       </div>
-      <div class="calc-row single">
-        <div class="input-group">
-          <label>İşlem Türü</label>
-          <select class="calc-select" id="denk-tip">
-            <option value="esit">ax + b = c (Denklem)</option>
-            <option value="buyuk">ax + b &gt; c</option>
-            <option value="kucuk">ax + b &lt; c</option>
-            <option value="buyukeş">ax + b ≥ c</option>
-            <option value="kucukesit">ax + b ≤ c</option>
-          </select>
-        </div>
+      <div style="background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:0.65rem 0.9rem;margin-bottom:1rem;font-family:'JetBrains Mono',monospace;font-size:0.88rem;color:var(--txt2);" id="denk-preview">ax + b = c</div>
+      <button class="calc-btn" onclick="hesapDenk()">Çöz</button>
+      <div class="result-box" id="r-denk">
+        <div class="r-tag">x =</div><div class="r-val" id="rv-denk">—</div>
+        <div class="r-steps" id="rs-denk"></div>
       </div>
-      <button class="calc-btn" onclick="calcDenklem()">Çöz</button>
-      <div class="calc-result" id="denk-result">
-        <div class="result-label">Denklem / Eşitsizlik</div>
-        <div class="result-value" id="denk-ifade" style="font-size:1.2rem;">—</div>
-        <div class="result-label" style="margin-top:1rem;">Çözüm</div>
-        <div class="result-value" id="denk-val">—</div>
-        <div class="result-steps"><p id="denk-steps"></p></div>
+    </div>
+  </div>
+
+  <!-- EŞİTSİZLİK -->
+  <div id="p-esits" class="calc-panel">
+    <div class="calc-box">
+      <div class="calc-title">Eşitsizlik Çözücü</div>
+      <div class="calc-sub">ax + b &lt; c (veya &gt;, ≤, ≥) biçimindeki eşitsizlikleri çözer.</div>
+      <div class="row3">
+        <div><label class="lbl">a</label><input class="inp" id="esa" type="number" placeholder="2"></div>
+        <div><label class="lbl">b</label><input class="inp" id="esb" type="number" placeholder="3"></div>
+        <div><label class="lbl">c</label><input class="inp" id="esc" type="number" placeholder="11"></div>
+      </div>
+      <div class="row1"><label class="lbl">İşaret</label>
+        <select class="sel" id="esop">
+          <option value="lt">ax + b &lt; c</option>
+          <option value="gt">ax + b &gt; c</option>
+          <option value="le">ax + b ≤ c</option>
+          <option value="ge">ax + b ≥ c</option>
+        </select>
+      </div>
+      <button class="calc-btn" onclick="hesapEsits()">Çöz</button>
+      <div class="result-box" id="r-esits">
+        <div class="r-tag">Çözüm</div><div class="r-val" id="rv-esits">—</div>
+        <div class="r-steps" id="rs-esits"></div>
+        <canvas id="sayiDogru" width="580" height="70" style="margin-top:1rem;border-radius:8px;background:var(--s2);width:100%;"></canvas>
       </div>
     </div>
   </div>
 
   <!-- PİSAGOR -->
-  <div id="panel-pisagor" class="calc-panel fade-up">
-    <div class="calc-container">
-      <div class="calc-title">Pisagor Bağıntısı Hesaplayıcı</div>
-      <div class="calc-subtitle">Dik üçgende a² + b² = c² bağıntısı. İki kenarı gir, üçüncüsü hesaplansın.</div>
-      <div class="calc-row triple">
-        <div class="input-group">
-          <label>a (dik kenar)</label>
-          <input class="calc-input" type="number" id="pis-a" placeholder="3">
-        </div>
-        <div class="input-group">
-          <label>b (dik kenar)</label>
-          <input class="calc-input" type="number" id="pis-b" placeholder="4">
-        </div>
-        <div class="input-group">
-          <label>c (hipotenüs)</label>
-          <input class="calc-input" type="number" id="pis-c" placeholder="?">
-        </div>
+  <div id="p-pis" class="calc-panel">
+    <div class="calc-box">
+      <div class="calc-title">Pisagor Bağıntısı</div>
+      <div class="calc-sub">Dik üçgende a² + b² = c²  Bulmak istediğin kenarı boş bırak, diğer ikisini yaz.</div>
+      <div class="row3">
+        <div><label class="lbl">a (dik kenar)</label><input class="inp" id="pa" type="number" placeholder="3"></div>
+        <div><label class="lbl">b (dik kenar)</label><input class="inp" id="pb" type="number" placeholder="4"></div>
+        <div><label class="lbl">c (en uzun kenar)</label><input class="inp" id="pc" type="number" placeholder="?"></div>
       </div>
-      <p style="font-size:0.78rem;color:var(--text3);margin-bottom:1rem;">💡 Bulmak istediğin kenarı boş bırak, diğer ikisini yaz.</p>
-      <button class="calc-btn" onclick="calcPisagor()">Hesapla</button>
-      <div class="calc-result" id="pis-result">
-        <div class="result-label">Bulunan Kenar</div>
-        <div class="result-value" id="pis-val">—</div>
-        <div class="result-steps"><p id="pis-steps"></p></div>
+      <button class="calc-btn" onclick="hesapPis()">Hesapla</button>
+      <div class="result-box" id="r-pis">
+        <div class="r-tag">Bulunan Kenar</div><div class="r-val" id="rv-pis">—</div>
+        <div class="r-steps" id="rs-pis"></div>
+        <canvas id="pisCanvas" width="300" height="220" style="margin-top:1rem;display:block;margin-left:auto;margin-right:auto;border-radius:10px;"></canvas>
       </div>
     </div>
   </div>
 
   <!-- OLASILIK -->
-  <div id="panel-olasilik-hesap" class="calc-panel fade-up">
-    <div class="calc-container">
+  <div id="p-olas" class="calc-panel">
+    <div class="calc-box">
       <div class="calc-title">Olasılık Hesaplayıcı</div>
-      <div class="calc-subtitle">P(A) = Olumlu Sonuç Sayısı / Toplam Sonuç Sayısı</div>
-      <div class="calc-row">
-        <div class="input-group">
-          <label>Olumlu Sonuç Sayısı</label>
-          <input class="calc-input" type="number" id="olas-olumlu" placeholder="örn: 3" min="0">
-        </div>
-        <div class="input-group">
-          <label>Toplam Sonuç Sayısı</label>
-          <input class="calc-input" type="number" id="olas-toplam" placeholder="örn: 6" min="1">
-        </div>
+      <div class="calc-sub">P(A) = İstenen sonuç sayısı ÷ Toplam sonuç sayısı</div>
+      <div class="row1"><label class="lbl">Hazır Senaryo Seç (opsiyonel)</label>
+        <select class="sel" id="oScn" onchange="olasScen()">
+          <option value="">Manuel giriş yap</option>
+          <option value="para">Para atma — Yazı gelme</option>
+          <option value="zar1">Zar atma — Tek sayı gelme</option>
+          <option value="zar2">Zar atma — 4'ten büyük gelme</option>
+          <option value="zar3">Zar atma — Asal sayı gelme</option>
+          <option value="top">10 toplu torba (3 kırmızı) — Kırmızı çekme</option>
+        </select>
       </div>
-      <div class="calc-row single">
-        <div class="input-group">
-          <label>Senaryo (opsiyonel)</label>
-          <select class="calc-select" id="olas-senaryo">
-            <option value="">Manuel Giriş</option>
-            <option value="para">Para Atma (Yazı gelme)</option>
-            <option value="zar1">Zar Atma (Tek sayı)</option>
-            <option value="zar2">Zar Atma (4'ten büyük)</option>
-            <option value="top">Torba: 3K, 4M, 3Y top</option>
-          </select>
-        </div>
+      <div class="row2">
+        <div><label class="lbl">İstenen Sonuç Sayısı</label><input class="inp" id="oa" type="number" placeholder="3" min="0"></div>
+        <div><label class="lbl">Toplam Sonuç Sayısı</label><input class="inp" id="ob" type="number" placeholder="6" min="1"></div>
       </div>
-      <button class="calc-btn" onclick="calcOlasilik()">Hesapla</button>
-      <div class="calc-result" id="olas-result">
-        <div class="result-label">Olasılık P(A)</div>
-        <div class="result-value" id="olas-val">—</div>
-        <div class="result-steps"><p id="olas-steps"></p></div>
+      <button class="calc-btn" onclick="hesapOlas()">Hesapla</button>
+      <div class="result-box" id="r-olas">
+        <div class="r-tag">Olasılık P(A)</div><div class="r-val" id="rv-olas">—</div>
+        <div class="r-steps" id="rs-olas"></div>
       </div>
     </div>
   </div>
 
   <!-- BENZERLİK -->
-  <div id="panel-benzerlik" class="calc-panel fade-up">
-    <div class="calc-container">
-      <div class="calc-title">Benzerlik Oranı & Benzer Çokgen Hesaplayıcı</div>
-      <div class="calc-subtitle">İki benzer çokgenin benzerlik oranını, karşılıklı kenarları ve alanlarını hesaplar.</div>
-      <div class="calc-row">
-        <div class="input-group">
-          <label>Küçük Şeklin Kenarı (a₁)</label>
-          <input class="calc-input" type="number" id="ben-a1" placeholder="5">
-        </div>
-        <div class="input-group">
-          <label>Büyük Şeklin Kenarı (a₂)</label>
-          <input class="calc-input" type="number" id="ben-a2" placeholder="10">
-        </div>
+  <div id="p-ben" class="calc-panel">
+    <div class="calc-box">
+      <div class="calc-title">Benzerlik Oranı Hesaplayıcı</div>
+      <div class="calc-sub">İki benzer şeklin kenar ve alan oranlarını hesaplar.</div>
+      <div class="row2">
+        <div><label class="lbl">Küçük şeklin bir kenarı</label><input class="inp" id="bena" type="number" placeholder="5"></div>
+        <div><label class="lbl">Büyük şeklin karşılıklı kenarı</label><input class="inp" id="benb" type="number" placeholder="10"></div>
       </div>
-      <div class="calc-row">
-        <div class="input-group">
-          <label>Bulmak İstediğin Kenar (b₁)</label>
-          <input class="calc-input" type="number" id="ben-b1" placeholder="7">
-        </div>
-        <div class="input-group">
-          <label>Küçük Şeklin Alanı (opsiyonel)</label>
-          <input class="calc-input" type="number" id="ben-alan" placeholder="25">
-        </div>
+      <div class="row2">
+        <div><label class="lbl">Bulmak istediğin kenar (küçük)</label><input class="inp" id="benc" type="number" placeholder="7"></div>
+        <div><label class="lbl">Küçük şeklin alanı (opsiyonel)</label><input class="inp" id="bend" type="number" placeholder="25"></div>
       </div>
-      <button class="calc-btn" onclick="calcBenzerlik()">Hesapla</button>
-      <div class="calc-result" id="ben-result">
-        <div class="result-label">Benzerlik Oranı</div>
-        <div class="result-value" id="ben-oran">—</div>
-        <div class="result-steps"><p id="ben-steps"></p></div>
+      <button class="calc-btn" onclick="hesapBen()">Hesapla</button>
+      <div class="result-box" id="r-ben">
+        <div class="r-tag">Benzerlik Oranı</div><div class="r-val" id="rv-ben">—</div>
+        <div class="r-steps" id="rs-ben"></div>
       </div>
     </div>
   </div>
 
   <!-- VERİ ANALİZİ HESAP -->
-  <div id="panel-veri-hesap" class="calc-panel fade-up">
-    <div class="calc-container">
-      <div class="calc-title">Veri Analizi Hesaplayıcı</div>
-      <div class="calc-subtitle">Veri setinin ortalama, ortanca, mod, ranj değerlerini hesaplar ve görselleştirir.</div>
-      <div class="calc-row single">
-        <div class="input-group">
-          <label>Verileri virgülle ayırarak gir</label>
-          <input class="calc-input" type="text" id="veri-input" placeholder="örn: 3, 7, 5, 12, 8, 5, 9">
-        </div>
-      </div>
-      <button class="calc-btn" onclick="calcVeri()">Analiz Et</button>
-      <div class="calc-result" id="veri-result">
-        <div class="stats-row" id="veri-stats"></div>
-        <div class="veri-chart-container" id="veri-chart-wrap" style="margin-top:1rem; padding:1rem;">
-          <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.5rem;font-family:'JetBrains Mono',monospace;">// SÜTUN GRAFİĞİ</div>
-          <div class="chart-area" id="veri-bars"></div>
-        </div>
+  <div id="p-veri" class="calc-panel">
+    <div class="calc-box">
+      <div class="calc-title">Veri Analizi</div>
+      <div class="calc-sub">Sayıları virgülle yazınca otomatik analiz eder ve grafik çizer.</div>
+      <div class="row1"><label class="lbl">Veriler (virgülle ayır)</label><input class="inp" id="veriGir" type="text" placeholder="örn: 3, 7, 5, 12, 8, 5, 9, 11"></div>
+      <button class="calc-btn" onclick="hesapVeri()">Analiz Et ve Grafik Çiz</button>
+      <div class="result-box" id="r-veri">
+        <div class="stat-chips" id="veriStats"></div>
+        <div class="chart-bars" id="veriBars" style="margin-top:1.25rem;"></div>
       </div>
     </div>
   </div>
-
 </section>
 
 <!-- 3D GEOMETRİK CİSİMLER -->
 <section id="geometri">
-  <div class="section-header fade-up">
-    <span class="section-tag">// 3d görselleştirme</span>
-    <h2 class="section-title">Geometrik Cisimler</h2>
-    <p class="section-desc">3D modelleri döndür, formülleri gör ve ölçüleri hesapla</p>
-  </div>
-
-  <div class="geometri-layout fade-up">
+  <div class="sec-head fade"><span class="sec-tag">// 3d şekiller</span><h2 class="sec-title">Geometrik Cisimler</h2><p class="sec-desc">Şekli seç, kenar sayısını ayarla, ölçüleri değiştir — 3D model anında güncellenir</p></div>
+  <div class="geo-layout fade">
     <div class="cisim-list">
-      <button class="cisim-btn active" onclick="selectCisim('kare-prizma')">
-        <span class="cisim-icon-sm">🧊</span> Kare Prizma
-      </button>
-      <button class="cisim-btn" onclick="selectCisim('dikdortgen-prizma')">
-        <span class="cisim-icon-sm">📦</span> Dikdörtgen Prizma
-      </button>
-      <button class="cisim-btn" onclick="selectCisim('ucgen-prizma')">
-        <span class="cisim-icon-sm">🔺</span> Üçgen Prizma
-      </button>
-      <button class="cisim-btn" onclick="selectCisim('silindir')">
-        <span class="cisim-icon-sm">🥫</span> Silindir
-      </button>
-      <button class="cisim-btn" onclick="selectCisim('koni')">
-        <span class="cisim-icon-sm">🍦</span> Koni
-      </button>
-      <button class="cisim-btn" onclick="selectCisim('kure')">
-        <span class="cisim-icon-sm">🔵</span> Küre
-      </button>
-      <button class="cisim-btn" onclick="selectCisim('piramit')">
-        <span class="cisim-icon-sm">🔷</span> Kare Piramit
-      </button>
+      <button class="cisim-btn on" onclick="setCisim('prizma',this)">🏗️ Prizma</button>
+      <button class="cisim-btn" onclick="setCisim('silindir',this)">🥫 Silindir</button>
+      <button class="cisim-btn" onclick="setCisim('koni',this)">🍦 Koni</button>
+      <button class="cisim-btn" onclick="setCisim('kure',this)">🔵 Küre</button>
+      <button class="cisim-btn" onclick="setCisim('piramit',this)">🔷 Piramit</button>
     </div>
-
-    <div class="geometri-right">
-      <div class="geometri-viewer">
+    <div class="geo-right">
+      <div class="geo-viewer">
         <canvas id="geo-canvas"></canvas>
-        <div class="geo-info-bar">
-          <div class="geo-cisim-name" id="geo-name">Kare Prizma</div>
-          <div class="geo-cisim-desc" id="geo-desc">Taban ve üst yüzü kare olan dik prizma</div>
+        <div class="geo-name-bar">
+          <div class="geo-cisim-ad" id="geoAd">Kare Prizma</div>
+          <div class="geo-cisim-not" id="geoNot">Taban: kare (4 köşeli)</div>
         </div>
-        <div class="geo-controls">
-          <button class="geo-ctrl-btn" onclick="toggleWireframe()">⬡ Tel Kafes</button>
-          <button class="geo-ctrl-btn" onclick="toggleAutoRotate()">⟳ Otomatik</button>
-          <button class="geo-ctrl-btn" onclick="resetCamera()">⌂ Sıfırla</button>
+        <div class="geo-btns">
+          <button class="geo-btn" onclick="geoWire()">⬡ Tel Kafes</button>
+          <button class="geo-btn" onclick="geoRotate()">⟳ Döndür</button>
+          <button class="geo-btn" onclick="geoReset()">↺ Sıfırla</button>
         </div>
+        <div class="geo-drag-hint">🖱️ Sürükle: döndür</div>
       </div>
 
-      <div class="geo-formulas">
-        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--white);margin-bottom:0.25rem;" id="geo-formula-title">Kare Prizma Formülleri</div>
-        <div style="font-size:0.8rem;color:var(--text3);margin-bottom:1rem;" id="geo-formula-subtitle">a: taban kenarı, h: yükseklik</div>
-        <div class="formula-grid" id="formula-grid">
-          <div class="formula-item">
-            <div class="formula-label">Hacim</div>
-            <div class="formula-text">V = a² × h</div>
-          </div>
-          <div class="formula-item">
-            <div class="formula-label">Toplam Yüzey Alanı</div>
-            <div class="formula-text">TYA = 2a² + 4ah</div>
-          </div>
-          <div class="formula-item">
-            <div class="formula-label">Yan Yüzey Alanı</div>
-            <div class="formula-text">YYA = 4ah</div>
-          </div>
-          <div class="formula-item">
-            <div class="formula-label">Taban Alanı</div>
-            <div class="formula-text">A = a²</div>
-          </div>
+      <!-- PRIZMA SLIDERS -->
+      <div id="prizma-ctrl" class="geo-panel">
+        <div class="panel-title">⚙️ Prizma Ayarları</div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Köşe Sayısı (kaç kenarlı taban?)</span><span class="slider-val" id="sv-kenar">4</span></div>
+          <input type="range" id="sl-kenar" min="3" max="8" step="1" value="4" oninput="guncellePrizma()">
+          <div class="slider-marks"><span>3 (Üçgen)</span><span>4 (Kare)</span><span>5 (Beşgen)</span><span>6 (Altıgen)</span><span>8</span></div>
         </div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Taban Kenar Uzunluğu (cm)</span><span class="slider-val" id="sv-tabanK">5</span></div>
+          <input type="range" id="sl-tabanK" min="1" max="10" step="0.5" value="5" oninput="guncellePrizma()">
+          <div class="slider-marks"><span>1</span><span>5</span><span>10</span></div>
+        </div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Yükseklik (cm)</span><span class="slider-val" id="sv-yuksek">8</span></div>
+          <input type="range" id="sl-yuksek" min="1" max="15" step="0.5" value="8" oninput="guncellePrizma()">
+          <div class="slider-marks"><span>1</span><span>8</span><span>15</span></div>
+        </div>
+        <div id="prizma-formulas" class="formula-chips" style="margin-top:0.75rem;"></div>
+        <div class="r-grid" id="prizma-sonuc" style="margin-top:0.75rem;"></div>
       </div>
 
-      <div class="geo-hesapla">
-        <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:0.5rem;">Hesapla</div>
-        <div id="geo-inputs" class="calc-row triple">
-          <div class="input-group">
-            <label>a (taban kenarı)</label>
-            <input class="calc-input" type="number" id="geo-a" placeholder="5">
-          </div>
-          <div class="input-group" id="geo-input-b-wrap">
-            <label id="geo-label-b">h (yükseklik)</label>
-            <input class="calc-input" type="number" id="geo-b" placeholder="8">
-          </div>
-          <div class="input-group" id="geo-input-c-wrap" style="display:none;">
-            <label id="geo-label-c">c</label>
-            <input class="calc-input" type="number" id="geo-c" placeholder="">
-          </div>
+      <!-- SİLİNDİR CTRL -->
+      <div id="silindir-ctrl" class="geo-panel" style="display:none">
+        <div class="panel-title">⚙️ Silindir Ayarları</div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Yarıçap (r cm)</span><span class="slider-val" id="sv-silr">4</span></div>
+          <input type="range" id="sl-silr" min="1" max="8" step="0.5" value="4" oninput="guncelleSilindir()">
         </div>
-        <button class="calc-btn" onclick="calcGeo()" style="margin-top:0.75rem;">Hesapla</button>
-        <div class="calc-result" id="geo-result">
-          <div class="result-label">Sonuçlar</div>
-          <div id="geo-result-content"></div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Yükseklik (h cm)</span><span class="slider-val" id="sv-silh">7</span></div>
+          <input type="range" id="sl-silh" min="1" max="15" step="0.5" value="7" oninput="guncelleSilindir()">
         </div>
+        <div class="formula-chips" style="margin-top:0.75rem">
+          <div class="f-chip"><div class="f-chip-lbl">Hacim</div><div class="f-chip-val">V = π × r² × h</div></div>
+          <div class="f-chip"><div class="f-chip-lbl">Yan Yüzey</div><div class="f-chip-val">YY = 2π × r × h</div></div>
+          <div class="f-chip"><div class="f-chip-lbl">Toplam Yüzey</div><div class="f-chip-val">TY = 2πr² + 2πrh</div></div>
+        </div>
+        <div class="r-grid" id="silindir-sonuc" style="margin-top:0.75rem;"></div>
       </div>
+
+      <!-- KONİ CTRL -->
+      <div id="koni-ctrl" class="geo-panel" style="display:none">
+        <div class="panel-title">⚙️ Koni Ayarları</div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Taban Yarıçapı (r cm)</span><span class="slider-val" id="sv-konr">3</span></div>
+          <input type="range" id="sl-konr" min="1" max="8" step="0.5" value="3" oninput="guncelleKoni()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Yükseklik (h cm)</span><span class="slider-val" id="sv-konh">6</span></div>
+          <input type="range" id="sl-konh" min="1" max="15" step="0.5" value="6" oninput="guncelleKoni()">
+        </div>
+        <div class="formula-chips" style="margin-top:0.75rem">
+          <div class="f-chip"><div class="f-chip-lbl">Hacim</div><div class="f-chip-val">V = (π×r²×h) ÷ 3</div></div>
+          <div class="f-chip"><div class="f-chip-lbl">Yan Kenar (l)</div><div class="f-chip-val">l = √(r²+h²)</div></div>
+          <div class="f-chip"><div class="f-chip-lbl">Yan Yüzey</div><div class="f-chip-val">YY = π×r×l</div></div>
+        </div>
+        <div class="r-grid" id="koni-sonuc" style="margin-top:0.75rem;"></div>
+      </div>
+
+      <!-- KÜRE CTRL -->
+      <div id="kure-ctrl" class="geo-panel" style="display:none">
+        <div class="panel-title">⚙️ Küre Ayarları</div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Yarıçap (r cm)</span><span class="slider-val" id="sv-kurer">5</span></div>
+          <input type="range" id="sl-kurer" min="1" max="10" step="0.5" value="5" oninput="guncelleKure()">
+        </div>
+        <div class="formula-chips" style="margin-top:0.75rem">
+          <div class="f-chip"><div class="f-chip-lbl">Hacim</div><div class="f-chip-val">V = (4÷3) × π × r³</div></div>
+          <div class="f-chip"><div class="f-chip-lbl">Yüzey Alanı</div><div class="f-chip-val">A = 4 × π × r²</div></div>
+          <div class="f-chip"><div class="f-chip-lbl">Çap</div><div class="f-chip-val">d = 2r</div></div>
+        </div>
+        <div class="r-grid" id="kure-sonuc" style="margin-top:0.75rem;"></div>
+      </div>
+
+      <!-- PİRAMİT CTRL -->
+      <div id="piramit-ctrl" class="geo-panel" style="display:none">
+        <div class="panel-title">⚙️ Kare Piramit Ayarları</div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Taban Kenarı (a cm)</span><span class="slider-val" id="sv-pira">6</span></div>
+          <input type="range" id="sl-pira" min="1" max="10" step="0.5" value="6" oninput="guncellePiramit()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">Yükseklik (h cm)</span><span class="slider-val" id="sv-pirh">8</span></div>
+          <input type="range" id="sl-pirh" min="1" max="15" step="0.5" value="8" oninput="guncellePiramit()">
+        </div>
+        <div class="formula-chips" style="margin-top:0.75rem">
+          <div class="f-chip"><div class="f-chip-lbl">Hacim</div><div class="f-chip-val">V = (a²×h) ÷ 3</div></div>
+          <div class="f-chip"><div class="f-chip-lbl">Yan Yüzey</div><div class="f-chip-val">YY = 2×a×l</div></div>
+          <div class="f-chip"><div class="f-chip-lbl">Toplam Yüzey</div><div class="f-chip-val">TY = a² + 2al</div></div>
+        </div>
+        <div class="r-grid" id="piramit-sonuc" style="margin-top:0.75rem;"></div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- VERİ ANALİZİ SAYFASI -->
+<!-- VERİ ANALİZİ -->
 <section id="veri">
-  <div class="section-header fade-up">
-    <span class="section-tag">// istatistik</span>
-    <h2 class="section-title">Veri Analizi</h2>
-    <p class="section-desc">Veri okuma, grafik yorumlama ve merkezi eğilim ölçüleri</p>
-  </div>
-
-  <div style="max-width:800px; margin:0 auto;" class="fade-up">
-    <div class="geo-formulas" style="margin-bottom:1.5rem;">
-      <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:1rem;">Merkezi Eğilim Ölçüleri</div>
-      <div class="formula-grid">
-        <div class="formula-item">
-          <div class="formula-label">Aritmetik Ortalama</div>
-          <div class="formula-text">x̄ = Σxᵢ / n</div>
+  <div class="sec-head fade"><span class="sec-tag">// istatistik</span><h2 class="sec-title">Veri Analizi</h2><p class="sec-desc">Ortalama, ortanca, mod ve grafik okuma</p></div>
+  <div style="max-width:760px;margin:0 auto" class="fade">
+    <div class="chart-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--white);font-size:1rem">Örnek: Sınıf Sınav Puanları</div>
+          <div style="font-size:0.75rem;color:var(--txt3);margin-top:0.2rem">10 öğrencinin matematik sınav sonuçları</div>
         </div>
-        <div class="formula-item">
-          <div class="formula-label">Ortanca (Medyan)</div>
-          <div class="formula-text">Sıralı dizinin orta değeri</div>
-        </div>
-        <div class="formula-item">
-          <div class="formula-label">Tepe Değer (Mod)</div>
-          <div class="formula-text">En sık tekrarlanan değer</div>
-        </div>
-        <div class="formula-item">
-          <div class="formula-label">Ranj</div>
-          <div class="formula-text">Maks - Min</div>
-        </div>
+        <button class="geo-btn" onclick="yeniVeri()" style="padding:0.4rem 0.8rem">⟳ Yeni Veri</button>
       </div>
+      <div class="chart-bars" id="demoBars" style="margin-top:1rem;"></div>
+      <div class="stat-chips" id="demoStats" style="margin-top:0.75rem;"></div>
     </div>
-
-    <div class="veri-chart-container fade-up" id="demo-chart-container">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-        <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--white);">Örnek Veri Seti</div>
-        <button class="geo-ctrl-btn" onclick="randomizeChart()">⟳ Yeni Veri</button>
+    <div style="margin-top:1.5rem;background:var(--s2);border:1px solid var(--border);border-radius:18px;padding:1.5rem">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:1rem">Merkezi Eğilim Ölçüleri</div>
+      <div class="formula-chips">
+        <div class="f-chip"><div class="f-chip-lbl">Ortalama</div><div class="f-chip-val">Tüm sayıları topla ÷ kaç tane olduğuyla böl</div></div>
+        <div class="f-chip"><div class="f-chip-lbl">Ortanca (Medyan)</div><div class="f-chip-val">Sıralı dizinin tam ortasındaki sayı</div></div>
+        <div class="f-chip"><div class="f-chip-lbl">Tepe Değer (Mod)</div><div class="f-chip-val">En çok tekrarlanan sayı</div></div>
+        <div class="f-chip"><div class="f-chip-lbl">Ranj</div><div class="f-chip-val">En büyük − En küçük</div></div>
       </div>
-      <div style="font-size:0.78rem;color:var(--text3);">Bir sınıfın matematik sınavı puanları</div>
-      <div class="chart-area" id="demo-bars"></div>
-      <div class="stats-row" id="demo-stats"></div>
     </div>
   </div>
 </section>
-
-<!-- KONU MODALLARİ -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
-  <div class="modal" id="modal-content">
-    <div class="modal-header">
-      <div class="modal-title" id="modal-title">Konu</div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
-  </div>
-</div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">EHÖ</div>
-  <div class="footer-sub">(Eda Hocaya Özel)</div>
-  <p class="footer-text">8. Sınıf Matematik · MEB 2024–2025 Müfredatı<br>
-  Tüm konular, hesaplayıcılar ve 3D görselleştirmeler</p>
+  <div class="ft-logo">EHÖ</div>
+  <div class="ft-sub">(Eda Hocaya Özel)</div>
+  <div class="ft-note">8. Sınıf Matematik · MEB 2024–2025 Programı<br>Tüm konular, hesaplayıcılar ve 3D görselleştirmeler</div>
 </footer>
 
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="closeM(event)">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-tit" id="modalT"></div>
+      <button class="modal-x" onclick="closeM2()">✕</button>
+    </div>
+    <div class="modal-body" id="modalB"></div>
+  </div>
+</div>
+
 <script>
-// ============================================================
-// HERO 3D - THREE.JS
-// ============================================================
-(function() {
-  const canvas = document.getElementById('heroWebGL');
-  const container = document.getElementById('hero-canvas');
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.shadowMap.enabled = true;
+// ============================
+// HERO THREE.JS
+// ============================
+(function(){
+  const cont = document.getElementById('hero-canvas');
+  const w = cont.offsetWidth;
+  const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setSize(w,w);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  cont.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-  camera.position.set(0, 2, 8);
-  camera.lookAt(0, 0, 0);
+  const cam = new THREE.PerspectiveCamera(50,1,0.1,100);
+  cam.position.set(0,2,9);
 
-  // Lights
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-  scene.add(ambientLight);
-  const dirLight = new THREE.DirectionalLight(0x6c63ff, 1.2);
-  dirLight.position.set(5, 8, 5);
-  scene.add(dirLight);
-  const pointLight = new THREE.PointLight(0xff6b6b, 0.8, 20);
-  pointLight.position.set(-4, 2, 4);
-  scene.add(pointLight);
-  const pointLight2 = new THREE.PointLight(0x43e97b, 0.6, 15);
-  pointLight2.position.set(4, -2, 2);
-  scene.add(pointLight2);
+  scene.add(new THREE.AmbientLight(0xffffff,0.4));
+  const dl=new THREE.DirectionalLight(0x7c6ff7,1.2); dl.position.set(5,8,5); scene.add(dl);
+  scene.add(Object.assign(new THREE.PointLight(0xff6b81,0.7,20),{position:{x:-3,y:2,z:3}}));
+  scene.add(Object.assign(new THREE.PointLight(0x3ecf8e,0.5,15),{position:{x:3,y:-1,z:2}}));
 
-  // Materials
-  const matA = new THREE.MeshPhongMaterial({ color: 0x6c63ff, shininess: 80, transparent: true, opacity: 0.9 });
-  const matB = new THREE.MeshPhongMaterial({ color: 0xff6b6b, shininess: 80, transparent: true, opacity: 0.9 });
-  const matC = new THREE.MeshPhongMaterial({ color: 0x43e97b, shininess: 80, transparent: true, opacity: 0.9 });
-  const matD = new THREE.MeshPhongMaterial({ color: 0xf7971e, shininess: 80, transparent: true, opacity: 0.9 });
-  const matE = new THREE.MeshPhongMaterial({ color: 0xa78bfa, shininess: 80, transparent: true, opacity: 0.9 });
-  const matWire = new THREE.MeshBasicMaterial({ color: 0x6c63ff, wireframe: true, transparent: true, opacity: 0.15 });
+  const mkMat = c => new THREE.MeshPhongMaterial({color:c,shininess:90,transparent:true,opacity:0.88});
+  const shapes = [
+    {m:new THREE.Mesh(new THREE.BoxGeometry(1.6,1.6,1.6),mkMat(0x7c6ff7)), p:[-2.2,0.5,0],rx:0.009,ry:0.013},
+    {m:new THREE.Mesh(new THREE.SphereGeometry(1,32,32),mkMat(0xff6b81)), p:[0,0,0],rx:0.006,ry:0.011},
+    {m:new THREE.Mesh(new THREE.ConeGeometry(0.8,2,32),mkMat(0x3ecf8e)), p:[2.2,0,0],rx:0.008,ry:0.007},
+    {m:new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,1.8,32),mkMat(0xff9f43)), p:[-1,-1.8,1.5],rx:0.007,ry:0.012},
+    {m:new THREE.Mesh(new THREE.OctahedronGeometry(0.9),mkMat(0x54a0ff)), p:[1.5,-1.8,-1],rx:0.011,ry:0.009},
+  ];
+  shapes.forEach(s=>{ s.m.position.set(...s.p); scene.add(s.m); });
 
-  // Shapes
-  const shapes = [];
+  // Particles
+  const pg=new THREE.BufferGeometry();
+  const pp=new Float32Array(90*3);
+  for(let i=0;i<pp.length;i++) pp[i]=(Math.random()-0.5)*14;
+  pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
+  scene.add(new THREE.Points(pg,new THREE.PointsMaterial({color:0x7c6ff7,size:0.055,transparent:true,opacity:0.45})));
 
-  // Cube
-  const cube = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.4, 1.4), matA);
-  cube.position.set(-2, 0.8, 0);
-  scene.add(cube); shapes.push({ mesh: cube, rx: 0.008, ry: 0.012 });
-
-  // Sphere
-  const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.85, 32, 32), matB);
-  sphere.position.set(0, 0, 0);
-  scene.add(sphere); shapes.push({ mesh: sphere, rx: 0.006, ry: 0.01 });
-
-  // Cone
-  const cone = new THREE.Mesh(new THREE.ConeGeometry(0.7, 1.8, 32), matC);
-  cone.position.set(2, 0.2, 0);
-  scene.add(cone); shapes.push({ mesh: cone, rx: 0.009, ry: 0.007 });
-
-  // Cylinder
-  const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 1.5, 32), matD);
-  cyl.position.set(-1, -1.5, 1.5);
-  scene.add(cyl); shapes.push({ mesh: cyl, rx: 0.007, ry: 0.013 });
-
-  // Octahedron
-  const oct = new THREE.Mesh(new THREE.OctahedronGeometry(0.75), matE);
-  oct.position.set(1.5, -1.5, -1.5);
-  scene.add(oct); shapes.push({ mesh: oct, rx: 0.01, ry: 0.008 });
-
-  // Wireframe overlay on cube
-  const wireOverlay = new THREE.Mesh(new THREE.BoxGeometry(1.42, 1.42, 1.42), matWire);
-  wireOverlay.position.copy(cube.position);
-  scene.add(wireOverlay);
-
-  // Floating particles
-  const particleGeo = new THREE.BufferGeometry();
-  const particleCount = 80;
-  const positions = new Float32Array(particleCount * 3);
-  for (let i = 0; i < particleCount * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 12;
-  }
-  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const particleMat = new THREE.PointsMaterial({ color: 0x6c63ff, size: 0.06, transparent: true, opacity: 0.5 });
-  const particles = new THREE.Points(particleGeo, particleMat);
-  scene.add(particles);
-
-  function resize() {
-    const w = container.offsetWidth;
-    renderer.setSize(w, w);
-    camera.aspect = 1;
-    camera.updateProjectionMatrix();
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  let t = 0;
-  function animate() {
-    requestAnimationFrame(animate);
-    t += 0.01;
-    shapes.forEach(s => {
-      s.mesh.rotation.x += s.rx;
-      s.mesh.rotation.y += s.ry;
+  let t=0;
+  function anim(){
+    requestAnimationFrame(anim);
+    t+=0.01;
+    shapes.forEach((s,i)=>{
+      s.m.rotation.x+=s.rx; s.m.rotation.y+=s.ry;
+      s.m.position.y=s.p[1]+Math.sin(t+i*1.2)*0.18;
     });
-    wireOverlay.rotation.copy(cube.rotation);
-    particles.rotation.y += 0.001;
-    // Floating
-    shapes.forEach((s, i) => {
-      s.mesh.position.y += Math.sin(t + i) * 0.003;
-    });
-    renderer.render(scene, camera);
+    renderer.render(scene,cam);
   }
-  animate();
+  anim();
+
+  window.addEventListener('resize',()=>{
+    const nw=cont.offsetWidth;
+    renderer.setSize(nw,nw);
+  });
 })();
 
-// ============================================================
-// GEOMETRI 3D VIEWER
-// ============================================================
-let geoRenderer, geoScene, geoCam, geoMesh, geoAutoRotate = true, geoWireframe = false, geoAnimFrame;
-let currentCisim = 'kare-prizma';
+// ============================
+// 3D GEO VIEWER
+// ============================
+let gR,gS,gC,gM,gGrid,gAutoRot=true,gWire=false,gAF,gCisim='prizma';
 
-function initGeoViewer() {
-  const canvas = document.getElementById('geo-canvas');
-  const container = canvas.parentElement;
+function initGeo(){
+  const canvas=document.getElementById('geo-canvas');
+  const cont=canvas.parentElement;
+  const cw=cont.offsetWidth, ch=Math.max(300,cw*0.55);
+  canvas.width=cw; canvas.height=ch;
+  canvas.style.height=ch+'px';
 
-  if (geoRenderer) {
-    geoRenderer.dispose();
-  }
+  if(gR){gR.dispose();}
+  gR=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  gR.setSize(cw,ch);
+  gR.setPixelRatio(Math.min(window.devicePixelRatio,2));
 
-  geoRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  geoRenderer.setPixelRatio(window.devicePixelRatio);
+  gS=new THREE.Scene();
+  gC=new THREE.PerspectiveCamera(45,cw/ch,0.1,100);
+  gC.position.set(4,3,6);
+  gC.lookAt(0,0,0);
 
-  geoScene = new THREE.Scene();
-  geoScene.background = null;
+  gS.add(new THREE.AmbientLight(0xffffff,0.5));
+  const dl=new THREE.DirectionalLight(0xffffff,0.9); dl.position.set(5,8,5); gS.add(dl);
+  const pl=new THREE.PointLight(0x7c6ff7,0.8,20); pl.position.set(-3,2,3); gS.add(pl);
 
-  const w = container.offsetWidth;
-  const h = container.offsetHeight;
-  geoRenderer.setSize(w, h);
+  gGrid=new THREE.GridHelper(8,12,0x272b3a,0x272b3a);
+  gGrid.position.y=-2; gS.add(gGrid);
 
-  geoCam = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
-  geoCam.position.set(4, 3, 5);
-  geoCam.lookAt(0, 0, 0);
+  buildMesh();
+  if(gAF) cancelAnimationFrame(gAF);
+  geoLoop();
 
-  // Lights
-  geoScene.add(new THREE.AmbientLight(0xffffff, 0.5));
-  const dl = new THREE.DirectionalLight(0xffffff, 0.9);
-  dl.position.set(5, 8, 5);
-  geoScene.add(dl);
-  geoScene.add(new THREE.PointLight(0x6c63ff, 0.7, 20).translateX(-3).translateY(2));
-
-  buildGeoMesh();
-  if (geoAnimFrame) cancelAnimationFrame(geoAnimFrame);
-  geoAnimate();
-
-  // Mouse drag rotate
-  let dragging = false, lastX = 0, lastY = 0;
-  canvas.addEventListener('mousedown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; geoAutoRotate = false; });
-  canvas.addEventListener('touchstart', e => { dragging = true; lastX = e.touches[0].clientX; lastY = e.touches[0].clientY; geoAutoRotate = false; });
-  window.addEventListener('mouseup', () => dragging = false);
-  window.addEventListener('touchend', () => dragging = false);
-  canvas.addEventListener('mousemove', e => {
-    if (!dragging || !geoMesh) return;
-    geoMesh.rotation.y += (e.clientX - lastX) * 0.01;
-    geoMesh.rotation.x += (e.clientY - lastY) * 0.005;
-    lastX = e.clientX; lastY = e.clientY;
+  // Drag
+  let drag=false,lx=0,ly=0;
+  canvas.addEventListener('mousedown',e=>{drag=true;lx=e.clientX;ly=e.clientY;gAutoRot=false;});
+  canvas.addEventListener('touchstart',e=>{drag=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY;gAutoRot=false;},{passive:true});
+  window.addEventListener('mouseup',()=>drag=false);
+  window.addEventListener('touchend',()=>drag=false);
+  canvas.addEventListener('mousemove',e=>{
+    if(!drag||!gM)return;
+    gM.rotation.y+=(e.clientX-lx)*0.012;
+    gM.rotation.x+=(e.clientY-ly)*0.006;
+    lx=e.clientX;ly=e.clientY;
   });
-  canvas.addEventListener('touchmove', e => {
-    if (!dragging || !geoMesh) return;
-    geoMesh.rotation.y += (e.touches[0].clientX - lastX) * 0.01;
-    lastX = e.touches[0].clientX;
+  canvas.addEventListener('touchmove',e=>{
+    if(!drag||!gM)return;
+    gM.rotation.y+=(e.touches[0].clientX-lx)*0.012;
+    lx=e.touches[0].clientX;
     e.preventDefault();
-  }, { passive: false });
+  },{passive:false});
 }
 
-function buildGeoMesh() {
-  if (geoMesh) geoScene.remove(geoMesh);
-
+function buildMesh(){
+  if(gM){gS.remove(gM);gM.geometry.dispose();}
+  const mat=new THREE.MeshPhongMaterial({color:0x7c6ff7,shininess:100,specular:0x9b96ff,transparent:true,opacity:0.85,wireframe:gWire});
   let geo;
-  const mat = new THREE.MeshPhongMaterial({
-    color: 0x6c63ff,
-    shininess: 100,
-    specular: 0xa78bfa,
-    transparent: true,
-    opacity: 0.88,
-    wireframe: geoWireframe
+  if(gCisim==='prizma'){
+    const n=parseInt(document.getElementById('sl-kenar').value)||4;
+    const a=parseFloat(document.getElementById('sl-tabanK').value)||5;
+    const h=parseFloat(document.getElementById('sl-yuksek').value)||8;
+    geo=new THREE.CylinderGeometry(a*0.25,a*0.25,h*0.3,n);
+    mat.color.setHex(0x7c6ff7);
+  } else if(gCisim==='silindir'){
+    const r=parseFloat(document.getElementById('sl-silr').value)||4;
+    const h=parseFloat(document.getElementById('sl-silh').value)||7;
+    geo=new THREE.CylinderGeometry(r*0.25,r*0.25,h*0.25,32);
+    mat.color.setHex(0xff9f43);
+  } else if(gCisim==='koni'){
+    const r=parseFloat(document.getElementById('sl-konr').value)||3;
+    const h=parseFloat(document.getElementById('sl-konh').value)||6;
+    geo=new THREE.ConeGeometry(r*0.3,h*0.3,32);
+    mat.color.setHex(0x3ecf8e);
+  } else if(gCisim==='kure'){
+    const r=parseFloat(document.getElementById('sl-kurer').value)||5;
+    geo=new THREE.SphereGeometry(r*0.25,32,32);
+    mat.color.setHex(0xff6b81);
+  } else if(gCisim==='piramit'){
+    const a=parseFloat(document.getElementById('sl-pira').value)||6;
+    const h=parseFloat(document.getElementById('sl-pirh').value)||8;
+    geo=new THREE.ConeGeometry(a*0.22,h*0.28,4);
+    mat.color.setHex(0x54a0ff);
+  }
+  gM=new THREE.Mesh(geo,mat);
+  gS.add(gM);
+}
+
+function geoLoop(){
+  gAF=requestAnimationFrame(geoLoop);
+  if(gAutoRot&&gM) gM.rotation.y+=0.007;
+  gR.render(gS,gC);
+}
+
+function setCisim(tip,btn){
+  gCisim=tip;
+  document.querySelectorAll('.cisim-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  ['prizma','silindir','koni','kure','piramit'].forEach(t=>{
+    const el=document.getElementById(t+'-ctrl');
+    if(el) el.style.display=t===tip?'':'none';
   });
-  const matEdge = new THREE.LineBasicMaterial({ color: 0xa78bfa, transparent: true, opacity: 0.5 });
-
-  switch (currentCisim) {
-    case 'kare-prizma':
-      geo = new THREE.BoxGeometry(2, 2.5, 2); break;
-    case 'dikdortgen-prizma':
-      geo = new THREE.BoxGeometry(2.5, 1.5, 1.8); break;
-    case 'ucgen-prizma':
-      // Custom triangular prism using CylinderGeometry with 3 sides
-      geo = new THREE.CylinderGeometry(1.2, 1.2, 2.5, 3); break;
-    case 'silindir':
-      geo = new THREE.CylinderGeometry(1.2, 1.2, 2.5, 32); break;
-    case 'koni':
-      geo = new THREE.ConeGeometry(1.3, 2.8, 32); break;
-    case 'kure':
-      geo = new THREE.SphereGeometry(1.5, 32, 32); break;
-    case 'piramit':
-      geo = new THREE.ConeGeometry(1.3, 2.5, 4); break;
-    default:
-      geo = new THREE.BoxGeometry(2, 2, 2);
-  }
-
-  geoMesh = new THREE.Mesh(geo, mat);
-  geoScene.add(geoMesh);
-
-  // Add grid floor
-  const gridHelper = new THREE.GridHelper(6, 10, 0x252830, 0x252830);
-  gridHelper.position.y = -1.8;
-  geoScene.add(gridHelper);
+  buildMesh();
+  hesapGeo();
 }
 
-function geoAnimate() {
-  geoAnimFrame = requestAnimationFrame(geoAnimate);
-  if (geoAutoRotate && geoMesh) geoMesh.rotation.y += 0.007;
-  if (geoRenderer && geoScene && geoCam) geoRenderer.render(geoScene, geoCam);
+function geoWire(){ gWire=!gWire; if(gM) gM.material.wireframe=gWire; }
+function geoRotate(){ gAutoRot=!gAutoRot; }
+function geoReset(){ if(gM){gM.rotation.set(0,0,0);} gAutoRot=true; }
+
+// Prizma güncelleme
+function guncellePrizma(){
+  const n=parseInt(document.getElementById('sl-kenar').value)||4;
+  const a=parseFloat(document.getElementById('sl-tabanK').value)||5;
+  const h=parseFloat(document.getElementById('sl-yuksek').value)||8;
+  document.getElementById('sv-kenar').textContent=n;
+  document.getElementById('sv-tabanK').textContent=a;
+  document.getElementById('sv-yuksek').textContent=h;
+  buildMesh();
+  // İsim güncelle
+  const names={3:'Üçgen',4:'Kare',5:'Beşgen',6:'Altıgen',7:'Yedigen',8:'Sekizgen'};
+  document.getElementById('geoAd').textContent=(names[n]||n+'-gen')+' Prizma';
+  document.getElementById('geoNot').textContent='Taban: '+(names[n]||n+'-gen')+' ('+n+' köşeli)';
+  // Formüller
+  const isKare=n===4;
+  document.getElementById('prizma-formulas').innerHTML=`
+    <div class="f-chip"><div class="f-chip-lbl">Hacim</div><div class="f-chip-val">V = Taban Alanı × h</div></div>
+    <div class="f-chip"><div class="f-chip-lbl">Yan Yüzey</div><div class="f-chip-val">YY = Taban Çevresi × h</div></div>
+    <div class="f-chip"><div class="f-chip-lbl">Toplam Yüzey</div><div class="f-chip-val">TY = 2 × Taban Alanı + YY</div></div>
+  `;
+  // Hesapla
+  let tabanAlani, cevre;
+  if(n===3){ tabanAlani=Math.sqrt(3)/4*a*a; cevre=3*a; }
+  else if(n===4){ tabanAlani=a*a; cevre=4*a; }
+  else if(n===6){ tabanAlani=3*Math.sqrt(3)/2*a*a; cevre=6*a; }
+  else { tabanAlani=n*a*a/(4*Math.tan(Math.PI/n)); cevre=n*a; }
+  const V=tabanAlani*h, YY=cevre*h, TY=2*tabanAlani+YY;
+  document.getElementById('prizma-sonuc').innerHTML=`
+    <div class="r-item"><div class="r-item-lbl">Hacim</div><div class="r-item-val">${V.toFixed(1)} cm³</div></div>
+    <div class="r-item"><div class="r-item-lbl">Toplam Yüzey</div><div class="r-item-val">${TY.toFixed(1)} cm²</div></div>
+    <div class="r-item"><div class="r-item-lbl">Yan Yüzey</div><div class="r-item-val">${YY.toFixed(1)} cm²</div></div>
+    <div class="r-item"><div class="r-item-lbl">Taban Alanı</div><div class="r-item-val">${tabanAlani.toFixed(1)} cm²</div></div>
+  `;
 }
 
-function selectCisim(name) {
-  currentCisim = name;
-  document.querySelectorAll('.cisim-btn').forEach(b => b.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-  buildGeoMesh();
-  updateGeoInfo(name);
+function guncelleSilindir(){
+  const r=parseFloat(document.getElementById('sl-silr').value);
+  const h=parseFloat(document.getElementById('sl-silh').value);
+  document.getElementById('sv-silr').textContent=r;
+  document.getElementById('sv-silh').textContent=h;
+  buildMesh();
+  const pi=Math.PI;
+  const V=pi*r*r*h, YY=2*pi*r*h, TY=2*pi*r*r+YY;
+  document.getElementById('silindir-sonuc').innerHTML=`
+    <div class="r-item"><div class="r-item-lbl">Hacim</div><div class="r-item-val">${V.toFixed(1)} cm³</div></div>
+    <div class="r-item"><div class="r-item-lbl">Toplam Yüzey</div><div class="r-item-val">${TY.toFixed(1)} cm²</div></div>
+    <div class="r-item"><div class="r-item-lbl">Yan Yüzey</div><div class="r-item-val">${YY.toFixed(1)} cm²</div></div>
+    <div class="r-item"><div class="r-item-lbl">Taban Alanı</div><div class="r-item-val">${(pi*r*r).toFixed(1)} cm²</div></div>
+  `;
 }
 
-const cisimData = {
-  'kare-prizma': {
-    name: 'Kare Prizma', desc: 'Taban ve üst yüzü kare olan dik prizma',
-    formulaTitle: 'Kare Prizma Formülleri', formulaSub: 'a: taban kenarı, h: yükseklik',
-    formulas: [
-      { label: 'Hacim', text: 'V = a² × h' },
-      { label: 'Toplam Yüzey', text: 'TYA = 2a² + 4ah' },
-      { label: 'Yan Yüzey', text: 'YYA = 4ah' },
-      { label: 'Taban Alanı', text: 'A = a²' }
-    ],
-    inputs: ['a (taban kenarı)', 'h (yükseklik)'],
-    calc: (a, b) => {
-      const V = a*a*b, YYA = 4*a*b, TYA = 2*a*a + YYA;
-      return `<div class="result-label">Hacim</div><div class="result-value">${V.toFixed(2)} birim³</div>
-              <div class="result-label" style="margin-top:0.75rem;">Toplam Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent4);">${TYA.toFixed(2)} birim²</div>
-              <div class="result-label" style="margin-top:0.75rem;">Yan Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent2);">${YYA.toFixed(2)} birim²</div>`;
-    }
-  },
-  'dikdortgen-prizma': {
-    name: 'Dikdörtgen Prizma', desc: 'Tüm yüzleri dikdörtgen olan prizma',
-    formulaTitle: 'Dikdörtgen Prizma Formülleri', formulaSub: 'a, b: taban kenarları, h: yükseklik',
-    formulas: [
-      { label: 'Hacim', text: 'V = a × b × h' },
-      { label: 'Toplam Yüzey', text: 'TYA = 2(ab+ah+bh)' },
-      { label: 'Yan Yüzey', text: 'YYA = 2(a+b)×h' },
-      { label: 'Taban Alanı', text: 'A = a × b' }
-    ],
-    inputs: ['a (uzunluk)', 'b (genişlik)', 'h (yükseklik)'],
-    calc: (a, b, c) => {
-      const V = a*b*c, YYA = 2*(a+b)*c, TYA = 2*(a*b + a*c + b*c);
-      return `<div class="result-label">Hacim</div><div class="result-value">${V.toFixed(2)} birim³</div>
-              <div class="result-label" style="margin-top:0.75rem;">Toplam Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent4);">${TYA.toFixed(2)} birim²</div>
-              <div class="result-label" style="margin-top:0.75rem;">Yan Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent2);">${YYA.toFixed(2)} birim²</div>`;
-    }
-  },
-  'ucgen-prizma': {
-    name: 'Üçgen Prizma', desc: 'Taban yüzleri eşkenar üçgen olan dik prizma',
-    formulaTitle: 'Üçgen Prizma Formülleri', formulaSub: 'a: taban kenarı, h: yükseklik, yük: üçgen yüksekliği',
-    formulas: [
-      { label: 'Hacim', text: 'V = (a×yük/2) × h' },
-      { label: 'Taban Alanı', text: 'A = (a × yük) / 2' },
-      { label: 'Yan Yüzey', text: 'YYA = 3 × a × h' },
-      { label: 'Toplam Yüzey', text: 'TYA = 2A + YYA' }
-    ],
-    inputs: ['a (taban kenarı)', 'h (yükseklik)'],
-    calc: (a, h) => {
-      const yuk = a * Math.sqrt(3) / 2;
-      const taban = a * yuk / 2;
-      const V = taban * h, YYA = 3*a*h, TYA = 2*taban + YYA;
-      return `<div class="result-label">Hacim</div><div class="result-value">${V.toFixed(2)} birim³</div>
-              <div class="result-label" style="margin-top:0.75rem;">Toplam Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent4);">${TYA.toFixed(2)} birim²</div>
-              <div class="result-label" style="margin-top:0.75rem;">Yan Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent2);">${YYA.toFixed(2)} birim²</div>`;
-    }
-  },
-  'silindir': {
-    name: 'Silindir', desc: 'Taban yüzleri çember olan geometrik cisim',
-    formulaTitle: 'Silindir Formülleri', formulaSub: 'r: taban yarıçapı, h: yükseklik',
-    formulas: [
-      { label: 'Hacim', text: 'V = π × r² × h' },
-      { label: 'Yanal Yüzey', text: 'YYA = 2π × r × h' },
-      { label: 'Taban Alanı', text: 'A = π × r²' },
-      { label: 'Toplam Yüzey', text: 'TYA = 2πr² + 2πrh' }
-    ],
-    inputs: ['r (yarıçap)', 'h (yükseklik)'],
-    calc: (r, h) => {
-      const pi = Math.PI;
-      const V = pi*r*r*h, YYA = 2*pi*r*h, TYA = 2*pi*r*r + YYA;
-      return `<div class="result-label">Hacim</div><div class="result-value">${V.toFixed(2)} birim³</div>
-              <div class="result-label" style="margin-top:0.75rem;">Toplam Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent4);">${TYA.toFixed(2)} birim²</div>
-              <div class="result-label" style="margin-top:0.75rem;">Yanal Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent2);">${YYA.toFixed(2)} birim²</div>`;
-    }
-  },
-  'koni': {
-    name: 'Koni', desc: 'Taban yüzü çember olan sivri uçlu geometrik cisim',
-    formulaTitle: 'Koni Formülleri', formulaSub: 'r: taban yarıçapı, h: yükseklik, l: apo temi',
-    formulas: [
-      { label: 'Hacim', text: 'V = (π × r² × h) / 3' },
-      { label: 'Yanal Yüzey', text: 'YYA = π × r × l' },
-      { label: 'Taban Alanı', text: 'A = π × r²' },
-      { label: 'Apotemi', text: 'l = √(r²+h²)' }
-    ],
-    inputs: ['r (yarıçap)', 'h (yükseklik)'],
-    calc: (r, h) => {
-      const pi = Math.PI, l = Math.sqrt(r*r + h*h);
-      const V = pi*r*r*h/3, YYA = pi*r*l, TYA = pi*r*r + YYA;
-      return `<div class="result-label">Hacim</div><div class="result-value">${V.toFixed(2)} birim³</div>
-              <div class="result-label" style="margin-top:0.75rem;">Toplam Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent4);">${TYA.toFixed(2)} birim²</div>
-              <div class="result-label" style="margin-top:0.75rem;">Apotemi (l)</div><div class="result-value" style="font-size:1.3rem;color:var(--accent2);">${l.toFixed(2)} birim</div>`;
-    }
-  },
-  'kure': {
-    name: 'Küre', desc: 'Merkezden eşit uzaklıktaki noktalar kümesi',
-    formulaTitle: 'Küre Formülleri', formulaSub: 'r: yarıçap',
-    formulas: [
-      { label: 'Hacim', text: 'V = (4/3) × π × r³' },
-      { label: 'Yüzey Alanı', text: 'A = 4 × π × r²' },
-      { label: 'Çap', text: 'd = 2r' },
-      { label: 'Büyük Çember', text: 'C = 2πr' }
-    ],
-    inputs: ['r (yarıçap)'],
-    calc: (r) => {
-      const pi = Math.PI;
-      const V = 4/3*pi*r*r*r, A = 4*pi*r*r;
-      return `<div class="result-label">Hacim</div><div class="result-value">${V.toFixed(2)} birim³</div>
-              <div class="result-label" style="margin-top:0.75rem;">Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent4);">${A.toFixed(2)} birim²</div>`;
-    }
-  },
-  'piramit': {
-    name: 'Kare Piramit', desc: 'Taban yüzü kare olan piramit',
-    formulaTitle: 'Kare Piramit Formülleri', formulaSub: 'a: taban kenarı, h: yükseklik',
-    formulas: [
-      { label: 'Hacim', text: 'V = (a² × h) / 3' },
-      { label: 'Yanal Yüzey', text: 'YYA = 2 × a × l' },
-      { label: 'Taban Alanı', text: 'A = a²' },
-      { label: 'Apotemi', text: 'l = √(h²+(a/2)²)' }
-    ],
-    inputs: ['a (taban kenarı)', 'h (yükseklik)'],
-    calc: (a, h) => {
-      const l = Math.sqrt(h*h + (a/2)*(a/2));
-      const V = a*a*h/3, YYA = 2*a*l, TYA = a*a + YYA;
-      return `<div class="result-label">Hacim</div><div class="result-value">${V.toFixed(2)} birim³</div>
-              <div class="result-label" style="margin-top:0.75rem;">Toplam Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent4);">${TYA.toFixed(2)} birim²</div>
-              <div class="result-label" style="margin-top:0.75rem;">Yanal Yüzey Alanı</div><div class="result-value" style="font-size:1.3rem;color:var(--accent2);">${YYA.toFixed(2)} birim²</div>`;
-    }
-  }
-};
-
-function updateGeoInfo(name) {
-  const d = cisimData[name];
-  if (!d) return;
-  document.getElementById('geo-name').textContent = d.name;
-  document.getElementById('geo-desc').textContent = d.desc;
-  document.getElementById('geo-formula-title').textContent = d.formulaTitle;
-  document.getElementById('geo-formula-subtitle').textContent = d.formulaSub;
-
-  const grid = document.getElementById('formula-grid');
-  grid.innerHTML = d.formulas.map(f => `
-    <div class="formula-item">
-      <div class="formula-label">${f.label}</div>
-      <div class="formula-text">${f.text}</div>
-    </div>
-  `).join('');
-
-  // Update inputs
-  const aLabel = document.querySelector('#geo-inputs .input-group:first-child label');
-  aLabel.textContent = d.inputs[0];
-  document.getElementById('geo-a').placeholder = '';
-
-  const bWrap = document.getElementById('geo-input-b-wrap');
-  const cWrap = document.getElementById('geo-input-c-wrap');
-
-  if (d.inputs.length >= 2) {
-    bWrap.style.display = '';
-    document.getElementById('geo-label-b').textContent = d.inputs[1];
-  } else {
-    bWrap.style.display = 'none';
-  }
-
-  if (d.inputs.length >= 3) {
-    cWrap.style.display = '';
-    document.getElementById('geo-label-c').textContent = d.inputs[2];
-  } else {
-    cWrap.style.display = 'none';
-  }
-
-  document.getElementById('geo-result').classList.remove('show');
+function guncelleKoni(){
+  const r=parseFloat(document.getElementById('sl-konr').value);
+  const h=parseFloat(document.getElementById('sl-konh').value);
+  document.getElementById('sv-konr').textContent=r;
+  document.getElementById('sv-konh').textContent=h;
+  buildMesh();
+  const l=Math.sqrt(r*r+h*h);
+  const V=Math.PI*r*r*h/3, YY=Math.PI*r*l, TY=Math.PI*r*r+YY;
+  document.getElementById('koni-sonuc').innerHTML=`
+    <div class="r-item"><div class="r-item-lbl">Hacim</div><div class="r-item-val">${V.toFixed(1)} cm³</div></div>
+    <div class="r-item"><div class="r-item-lbl">Toplam Yüzey</div><div class="r-item-val">${TY.toFixed(1)} cm²</div></div>
+    <div class="r-item"><div class="r-item-lbl">Yan Kenar (l)</div><div class="r-item-val">${l.toFixed(2)} cm</div></div>
+    <div class="r-item"><div class="r-item-lbl">Yan Yüzey</div><div class="r-item-val">${YY.toFixed(1)} cm²</div></div>
+  `;
 }
 
-function toggleWireframe() {
-  geoWireframe = !geoWireframe;
-  if (geoMesh) geoMesh.material.wireframe = geoWireframe;
+function guncelleKure(){
+  const r=parseFloat(document.getElementById('sl-kurer').value);
+  document.getElementById('sv-kurer').textContent=r;
+  buildMesh();
+  const V=4/3*Math.PI*r*r*r, A=4*Math.PI*r*r;
+  document.getElementById('kure-sonuc').innerHTML=`
+    <div class="r-item"><div class="r-item-lbl">Hacim</div><div class="r-item-val">${V.toFixed(1)} cm³</div></div>
+    <div class="r-item"><div class="r-item-lbl">Yüzey Alanı</div><div class="r-item-val">${A.toFixed(1)} cm²</div></div>
+    <div class="r-item"><div class="r-item-lbl">Çap</div><div class="r-item-val">${(2*r).toFixed(1)} cm</div></div>
+  `;
 }
 
-function toggleAutoRotate() {
-  geoAutoRotate = !geoAutoRotate;
+function guncellePiramit(){
+  const a=parseFloat(document.getElementById('sl-pira').value);
+  const h=parseFloat(document.getElementById('sl-pirh').value);
+  document.getElementById('sv-pira').textContent=a;
+  document.getElementById('sv-pirh').textContent=h;
+  buildMesh();
+  const l=Math.sqrt(h*h+(a/2)*(a/2));
+  const V=a*a*h/3, YY=2*a*l, TY=a*a+YY;
+  document.getElementById('piramit-sonuc').innerHTML=`
+    <div class="r-item"><div class="r-item-lbl">Hacim</div><div class="r-item-val">${V.toFixed(1)} cm³</div></div>
+    <div class="r-item"><div class="r-item-lbl">Toplam Yüzey</div><div class="r-item-val">${TY.toFixed(1)} cm²</div></div>
+    <div class="r-item"><div class="r-item-lbl">Yan Yüzey</div><div class="r-item-val">${YY.toFixed(1)} cm²</div></div>
+    <div class="r-item"><div class="r-item-lbl">Taban Alanı</div><div class="r-item-val">${(a*a).toFixed(1)} cm²</div></div>
+  `;
 }
 
-function resetCamera() {
-  if (geoMesh) { geoMesh.rotation.set(0, 0, 0); }
-  geoAutoRotate = true;
+function hesapGeo(){
+  if(gCisim==='prizma') guncellePrizma();
+  else if(gCisim==='silindir') guncelleSilindir();
+  else if(gCisim==='koni') guncelleKoni();
+  else if(gCisim==='kure') guncelleKure();
+  else if(gCisim==='piramit') guncellePiramit();
 }
 
-function calcGeo() {
-  const d = cisimData[currentCisim];
-  if (!d) return;
-  const a = parseFloat(document.getElementById('geo-a').value);
-  const b = parseFloat(document.getElementById('geo-b').value) || 0;
-  const c = parseFloat(document.getElementById('geo-c').value) || 0;
-  if (!a || a <= 0) { alert('Geçerli bir değer girin!'); return; }
-  const result = document.getElementById('geo-result');
-  document.getElementById('geo-result-content').innerHTML = d.calc(a, b, c);
-  result.classList.add('show');
-}
-
-// ============================================================
-// TAB SWITCHING
-// ============================================================
-function switchTab(id) {
-  document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
-  event.currentTarget.classList.add('active');
-}
-
-// ============================================================
+// ============================
 // HESAPLAYICILAR
-// ============================================================
+// ============================
+function gcd(a,b){return b===0?a:gcd(b,a%b);}
+function lcm(a,b){return a*b/gcd(a,b);}
+function primeF(n){const f=[];for(let d=2;d*d<=n;d++)while(n%d===0){f.push(d);n/=d;}if(n>1)f.push(n);return f;}
 
-function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
-function lcm(a, b) { return (a * b) / gcd(a, b); }
-function primeFactors(n) {
-  const f = [];
-  for (let d = 2; d * d <= n; d++) {
-    while (n % d === 0) { f.push(d); n = Math.floor(n / d); }
+function hesapEbob(){
+  const a=parseInt(document.getElementById('ea').value);
+  const b=parseInt(document.getElementById('eb').value);
+  if(!a||!b||a<1||b<1){alert('Pozitif tam sayı gir!');return;}
+  const e=gcd(a,b),k=lcm(a,b);
+  document.getElementById('rv-ebob').textContent=e;
+  document.getElementById('rv-ekok').textContent=k;
+  const fa=primeF(a),fb=primeF(b);
+  document.getElementById('rs-ebob').innerHTML=
+    `${a} = ${fa.join(' × ')}<br>${b} = ${fb.join(' × ')}<br><br>EBOB(${a},${b}) = ${e}<br>EKOK(${a},${b}) = ${k}<br><br>Kontrol: EBOB × EKOK = ${e} × ${k} = ${e*k} ✓ (${a} × ${b} = ${a*b})`;
+  document.getElementById('r-ebob').classList.add('show');
+}
+
+function usluExtra(){
+  const op=document.getElementById('ukural').value;
+  document.getElementById('u-extra').style.display=['r1','r2','r3'].includes(op)?'block':'none';
+}
+
+function hesapUslu(){
+  const a=parseFloat(document.getElementById('ua').value);
+  const n=parseFloat(document.getElementById('un').value);
+  const m=parseFloat(document.getElementById('um').value)||0;
+  const op=document.getElementById('ukural').value;
+  if(isNaN(a)||isNaN(n)){alert('Değerleri gir!');return;}
+  let v,s;
+  if(op==='pow'){
+    const r=Math.pow(a,n);
+    v=r>1e12?r.toExponential(3):r.toString();
+    s=`${a}^${n} = ${v}`;
+  } else if(op==='b'){
+    v=(a*Math.pow(10,n)).toExponential(3);
+    s=`${a} × 10^${n} = ${v}`;
+  } else if(op==='r1'){
+    v=`${a}^(${n}+${m}) = ${a}^${n+m}`;
+    s=`${a}^${n} × ${a}^${m} = ${a}^(${n}+${m}) = ${a}^${n+m}\nHesap: ${Math.pow(a,n+m)}`;
+  } else if(op==='r2'){
+    v=`${a}^(${n}−${m}) = ${a}^${n-m}`;
+    s=`${a}^${n} ÷ ${a}^${m} = ${a}^(${n}−${m}) = ${a}^${n-m}\nHesap: ${Math.pow(a,n-m)}`;
+  } else {
+    v=`${a}^(${n}×${m}) = ${a}^${n*m}`;
+    s=`(${a}^${n})^${m} = ${a}^(${n}×${m}) = ${a}^${n*m}\nHesap: ${Math.pow(a,n*m)}`;
   }
-  if (n > 1) f.push(n);
-  return f;
+  document.getElementById('rv-uslu').textContent=v;
+  document.getElementById('rs-uslu').innerHTML=s.replace(/\n/g,'<br>');
+  document.getElementById('r-uslu').classList.add('show');
 }
 
-function calcEBOB() {
-  const a = parseInt(document.getElementById('ebob-a').value);
-  const b = parseInt(document.getElementById('ebob-b').value);
-  if (!a || !b || a < 1 || b < 1) { alert('Geçerli pozitif tam sayılar girin!'); return; }
-  const e = gcd(a, b), k = lcm(a, b);
-  const fa = primeFactors(a).join(' × ') || a.toString();
-  const fb = primeFactors(b).join(' × ') || b.toString();
-  document.getElementById('ebob-val').textContent = e;
-  document.getElementById('ekok-val').textContent = k;
-  document.getElementById('ebob-steps').innerHTML =
-    `${a} = ${fa}<br>${b} = ${fb}<br><br>EBOB(${a},${b}) = ${e}<br>EKOK(${a},${b}) = ${k}<br><br>✓ EBOB × EKOK = ${a} × ${b} → ${e}×${k} = ${e*k} ✓`;
-  document.getElementById('ebob-result').classList.add('show');
+function kkExtra(){
+  const op=document.getElementById('kkop').value;
+  document.getElementById('kk-extra').style.display=['carp','bol'].includes(op)?'block':'none';
 }
 
-function calcUslu() {
-  const a = parseFloat(document.getElementById('uslu-a').value);
-  const n = parseFloat(document.getElementById('uslu-n').value);
-  const op = document.getElementById('uslu-op').value;
-  const m = parseFloat(document.getElementById('uslu-m').value) || 0;
-  if (isNaN(a) || isNaN(n)) { alert('Değerleri girin!'); return; }
-  let val, steps;
-  switch (op) {
-    case 'pow':
-      val = Math.pow(a, n).toExponential(4);
-      const exact = Math.pow(a, n);
-      val = exact > 1e12 ? exact.toExponential(3) : exact;
-      steps = `${a}^${n} = ${val}`;
-      break;
-    case 'bilimsel':
-      const num = parseFloat(`${a}e${n}`);
-      val = num.toExponential(2);
-      steps = `${a} × 10^${n} = ${val}`;
-      break;
-    case 'kural1':
-      val = `${a}^${n + m}`;
-      steps = `a^m × a^n = a^(m+n)\n${a}^${n} × ${a}^${m} = ${a}^(${n}+${m}) = ${a}^${n+m} = ${Math.pow(a, n+m)}`;
-      break;
-    case 'kural2':
-      val = `${a}^${n - m}`;
-      steps = `a^m ÷ a^n = a^(m-n)\n${a}^${n} ÷ ${a}^${m} = ${a}^(${n}-${m}) = ${a}^${n-m} = ${Math.pow(a, n-m)}`;
-      break;
-    case 'kural3':
-      val = `${a}^${n * m}`;
-      steps = `(a^m)^n = a^(m×n)\n(${a}^${n})^${m} = ${a}^(${n}×${m}) = ${a}^${n*m} = ${Math.pow(a, n*m)}`;
-      break;
+function simpSqrt(n){let o=1,i=n;for(let k=Math.floor(Math.sqrt(n));k>=2;k--){if(i%(k*k)===0){o*=k;i/=(k*k);break;}}return{o,i};}
+
+function hesapKk(){
+  const a=parseFloat(document.getElementById('kka').value);
+  const b=parseFloat(document.getElementById('kkb').value)||0;
+  const op=document.getElementById('kkop').value;
+  if(isNaN(a)||a<0){alert('0 veya daha büyük bir sayı gir!');return;}
+  let v,s;
+  if(op==='sadele'){
+    const r=simpSqrt(Math.round(a));
+    v=r.o===1?`√${r.i}`:r.i===1?`${r.o}`:`${r.o}√${r.i}`;
+    s=`√${a} → ${a}=${r.o*r.o}×${r.i} → √(${r.o*r.o}×${r.i}) = ${r.o}×√${r.i} = ${v}`;
+  } else if(op==='hesap'){
+    v=`≈ ${Math.sqrt(a).toFixed(4)}`;
+    s=`√${a} ≈ ${Math.sqrt(a).toFixed(6)}`;
+  } else if(op==='aralik'){
+    const low=Math.floor(Math.sqrt(a)),hi=Math.ceil(Math.sqrt(a));
+    v=`${low} < √${a} < ${hi}`;
+    s=`${low}² = ${low*low}  ve  ${hi}² = ${hi*hi}\n${low*low} < ${a} < ${hi*hi}\nDolayısıyla ${low} < √${a} < ${hi}`;
+  } else if(op==='carp'){
+    const prod=a*b;
+    const r=simpSqrt(Math.round(prod));
+    v=r.o===1?`√${r.i}`:r.i===1?`${r.o}`:`${r.o}√${r.i}`;
+    s=`√${a} × √${b} = √(${a}×${b}) = √${prod} = ${v}`;
+  } else {
+    if(!b){alert('2. sayıyı gir!');return;}
+    const q=a/b;
+    v=`√(${a}/${b}) = √${q.toFixed(2)} ≈ ${Math.sqrt(q).toFixed(4)}`;
+    s=`√${a} ÷ √${b} = √(${a}÷${b}) = √${q.toFixed(2)} ≈ ${Math.sqrt(q).toFixed(4)}`;
   }
-  document.getElementById('uslu-val').textContent = val;
-  document.getElementById('uslu-steps').innerHTML = steps.replace(/\n/g, '<br>');
-  document.getElementById('uslu-result').classList.add('show');
+  document.getElementById('rv-kk').textContent=v;
+  document.getElementById('rs-kk').innerHTML=s.replace(/\n/g,'<br>');
+  document.getElementById('r-kk').classList.add('show');
 }
 
-document.getElementById('uslu-op').addEventListener('change', function() {
-  const extra = document.getElementById('uslu-extra');
-  extra.style.display = ['kural1','kural2','kural3'].includes(this.value) ? 'grid' : 'none';
+// Denklem önizleme
+['da','db','dc'].forEach(id=>{
+  document.getElementById(id)?.addEventListener('input',()=>{
+    const a=document.getElementById('da').value||'a';
+    const b=document.getElementById('db').value;
+    const c=document.getElementById('dc').value||'c';
+    const bStr=b===''?'+b':parseFloat(b)>=0?` + ${b}`:` − ${Math.abs(b)}`;
+    document.getElementById('denk-preview').textContent=`${a}x${bStr} = ${c}`;
+  });
 });
 
-document.getElementById('kk-op').addEventListener('change', function() {
-  const extra = document.getElementById('kk-extra');
-  extra.style.display = ['carpim','bolum'].includes(this.value) ? 'grid' : 'none';
-});
-
-function simplifySquareRoot(n) {
-  let outside = 1, inside = n;
-  for (let i = Math.floor(Math.sqrt(n)); i >= 2; i--) {
-    if (inside % (i*i) === 0) { outside *= i; inside /= (i*i); break; }
-  }
-  return { outside, inside };
+function hesapDenk(){
+  const a=parseFloat(document.getElementById('da').value);
+  const b=parseFloat(document.getElementById('db').value)||0;
+  const c=parseFloat(document.getElementById('dc').value);
+  if(isNaN(a)||isNaN(c)){alert('a ve c değerlerini gir!');return;}
+  if(a===0){alert('a sıfır olamaz!');return;}
+  const x=(c-b)/a;
+  document.getElementById('rv-denk').textContent=`x = ${Number.isInteger(x)?x:x.toFixed(4)}`;
+  const steps=`${a}x + ${b} = ${c}\n${a}x = ${c} − ${b}\n${a}x = ${c-b}\nx = ${c-b} ÷ ${a}\nx = ${x}`;
+  document.getElementById('rs-denk').innerHTML=steps.replace(/\n/g,'<br>');
+  document.getElementById('r-denk').classList.add('show');
 }
 
-function calcKarekök() {
-  const n = parseFloat(document.getElementById('kk-sayi').value);
-  const op = document.getElementById('kk-op').value;
-  const n2 = parseFloat(document.getElementById('kk-sayi2').value) || 0;
-  if (isNaN(n) || n < 0) { alert('Geçerli bir sayı girin!'); return; }
-  let val, steps;
-  switch (op) {
-    case 'sadele':
-      const { outside, inside } = simplifySquareRoot(n);
-      val = outside === 1 ? `√${inside}` : inside === 1 ? outside.toString() : `${outside}√${inside}`;
-      steps = `√${n} = √(${outside*outside} × ${inside}) = ${outside}√${inside}`;
-      break;
-    case 'karekok':
-      val = Math.sqrt(n).toFixed(4);
-      steps = `√${n} ≈ ${val}`;
-      break;
-    case 'carpim':
-      val = `√${n * n2}`;
-      const s = simplifySquareRoot(n * n2);
-      val = s.outside === 1 ? `√${s.inside}` : s.inside === 1 ? s.outside.toString() : `${s.outside}√${s.inside}`;
-      steps = `√${n} × √${n2} = √(${n}×${n2}) = √${n*n2} = ${val}`;
-      break;
-    case 'bolum':
-      if (n2 === 0) { alert('Bölen sıfır olamaz!'); return; }
-      const r = n / n2;
-      const sr = simplifySquareRoot(n); const sr2 = simplifySquareRoot(n2);
-      val = `√${r}`;
-      steps = `√${n} ÷ √${n2} = √(${n}/${n2}) = √${r} ≈ ${Math.sqrt(r).toFixed(4)}`;
-      break;
-    case 'hangi':
-      const low = Math.floor(Math.sqrt(n));
-      const high = Math.ceil(Math.sqrt(n));
-      val = `${low} < √${n} < ${high}`;
-      steps = `${low}² = ${low*low} < ${n} < ${high*high} = ${high}²\nDolayısıyla ${low} < √${n} < ${high}`;
-      break;
-  }
-  document.getElementById('kk-val').textContent = val;
-  document.getElementById('kk-steps').innerHTML = steps.replace(/\n/g, '<br>');
-  document.getElementById('kk-result').classList.add('show');
+function hesapEsits(){
+  const a=parseFloat(document.getElementById('esa').value);
+  const b=parseFloat(document.getElementById('esb').value)||0;
+  const c=parseFloat(document.getElementById('esc').value);
+  const op=document.getElementById('esop').value;
+  if(isNaN(a)||isNaN(c)){alert('Değerleri gir!');return;}
+  if(a===0){alert('a sıfır olamaz!');return;}
+  const opMap={lt:'<',gt:'>',le:'≤',ge:'≥'};
+  let sign=opMap[op];
+  let x=(c-b)/a;
+  // a negatifse işaret döner
+  if(a<0){const flip={lt:'>',gt:'<',le:'≥',ge:'≤'};sign=flip[op];}
+  const steps=`${a}x + ${b} ${opMap[op]} ${c}\n${a}x ${opMap[op]} ${c-b}\nx ${sign} ${x.toFixed(4)}${a<0?' (a negatif olduğu için işaret döndü!)':''}`;
+  const xStr=Number.isInteger(x)?x:x.toFixed(3);
+  document.getElementById('rv-esits').textContent=`x ${sign} ${xStr}`;
+  document.getElementById('rs-esits').innerHTML=steps.replace(/\n/g,'<br>');
+  document.getElementById('r-esits').classList.add('show');
+  drawSayiDogru(x,sign);
 }
 
-function calcDenklem() {
-  const a = parseFloat(document.getElementById('denk-a').value);
-  const b = parseFloat(document.getElementById('denk-b').value);
-  const c = parseFloat(document.getElementById('denk-c').value);
-  const tip = document.getElementById('denk-tip').value;
-  if (isNaN(a) || isNaN(b) || isNaN(c)) { alert('Tüm değerleri girin!'); return; }
-  if (a === 0) { alert('x katsayısı sıfır olamaz!'); return; }
-
-  const opMap = { esit: '=', buyuk: '>', kucuk: '<', buyukeş: '≥', kucukesit: '≤' };
-  const op = opMap[tip];
-  document.getElementById('denk-ifade').textContent = `${a}x + ${b} ${op} ${c}`;
-
-  // x çözümü: ax + b op c → ax op c-b → x op (c-b)/a
-  const rhs = (c - b) / a;
-  let solOp = op;
-  // if a < 0, flip inequality
-  if (a < 0 && tip !== 'esit') {
-    const flips = { '>': '<', '<': '>', '≥': '≤', '≤': '≥' };
-    solOp = flips[op] || op;
+function drawSayiDogru(x,sign){
+  const cv=document.getElementById('sayiDogru');
+  const ctx=cv.getContext('2d');
+  const W=cv.offsetWidth||cv.width, H=70;
+  cv.width=W; cv.height=H;
+  ctx.clearRect(0,0,W,H);
+  const mid=W/2, y=H/2;
+  const range=Math.max(8,Math.abs(x)*2+4);
+  const toX=v=>mid+(v/range)*(W/2-20);
+  // Eksen
+  ctx.strokeStyle='#272b3a'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(20,y); ctx.lineTo(W-20,y); ctx.stroke();
+  // Ok
+  ctx.fillStyle='#272b3a';
+  ctx.beginPath(); ctx.moveTo(W-16,y-5); ctx.lineTo(W-8,y); ctx.lineTo(W-16,y+5); ctx.fill();
+  // Sayılar
+  const step=Math.ceil(range/4);
+  for(let v=-Math.ceil(range);v<=Math.ceil(range);v+=step){
+    const px=toX(v);
+    if(px<20||px>W-20)continue;
+    ctx.fillStyle='#4a5070'; ctx.font='10px Nunito,sans-serif';
+    ctx.fillText(v,px-5,y+18);
+    ctx.strokeStyle='#272b3a'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(px,y-3); ctx.lineTo(px,y+3); ctx.stroke();
   }
-
-  let val;
-  if (tip === 'esit') {
-    val = `x = ${rhs % 1 === 0 ? rhs : rhs.toFixed(4)}`;
-  } else {
-    val = `x ${solOp} ${rhs % 1 === 0 ? rhs : rhs.toFixed(4)}`;
-  }
-
-  const steps = `${a}x + ${b} ${op} ${c}\n${a}x ${op} ${c} - ${b}\n${a}x ${op} ${c - b}\nx ${solOp} ${c - b} / ${a}\n→ ${val}`;
-  document.getElementById('denk-val').textContent = val;
-  document.getElementById('denk-steps').innerHTML = steps.replace(/\n/g, '<br>');
-  document.getElementById('denk-result').classList.add('show');
+  // Çözüm bölgesi
+  const px=toX(x);
+  const shade=sign==='<'||sign==='≤';
+  ctx.fillStyle='rgba(124,111,247,0.18)';
+  if(shade) ctx.fillRect(20,y-8,Math.max(0,px-20),16);
+  else ctx.fillRect(px,y-8,Math.max(0,W-20-px),16);
+  // Nokta
+  ctx.beginPath(); ctx.arc(px,y,7,0,Math.PI*2);
+  const filled=sign==='≤'||sign==='≥';
+  ctx.fillStyle=filled?'#7c6ff7':'#0d0e14';
+  ctx.fill();
+  ctx.strokeStyle='#7c6ff7'; ctx.lineWidth=2;
+  ctx.stroke();
+  // x etiketi
+  ctx.fillStyle='#9b96ff'; ctx.font='bold 11px JetBrains Mono,monospace';
+  ctx.fillText(`x${sign}${x.toFixed(1)}`,px-15,y-14);
 }
 
-function calcPisagor() {
-  const aVal = document.getElementById('pis-a').value;
-  const bVal = document.getElementById('pis-b').value;
-  const cVal = document.getElementById('pis-c').value;
-  const a = parseFloat(aVal), b = parseFloat(bVal), c = parseFloat(cVal);
+function hesapPis(){
+  const aV=document.getElementById('pa').value;
+  const bV=document.getElementById('pb').value;
+  const cV=document.getElementById('pc').value;
+  const emp=[!aV,!bV,!cV];
+  if(emp.filter(Boolean).length!==1){alert('Tam olarak bir kenarı boş bırak!');return;}
+  let a=parseFloat(aV),b=parseFloat(bV),c=parseFloat(cV),found,label;
+  if(!aV){found=Math.sqrt(c*c-b*b);label='a';a=found;}
+  else if(!bV){found=Math.sqrt(c*c-a*a);label='b';b=found;}
+  else{found=Math.sqrt(a*a+b*b);label='c';c=found;}
+  if(isNaN(found)||found<0){alert('Bu değerler geçersiz (negatif karekök)!');return;}
+  document.getElementById('rv-pis').textContent=`${label} = ${found.toFixed(4)}`;
+  const s=`a² + b² = c²\n${a.toFixed(2)}² + ${b.toFixed(2)}² = ${c.toFixed(2)}²\n${(a*a).toFixed(2)} + ${(b*b).toFixed(2)} = ${(c*c).toFixed(2)} ✓`;
+  document.getElementById('rs-pis').innerHTML=s.replace(/\n/g,'<br>');
+  document.getElementById('r-pis').classList.add('show');
+  drawPisTriangle(a,b,c);
+}
 
-  let val, steps;
-  const empties = [!aVal, !bVal, !cVal].filter(Boolean).length;
-  if (empties !== 1) { alert('Tam olarak bir kenarı boş bırakın!'); return; }
+function drawPisTriangle(a,b,c){
+  const cv=document.getElementById('pisCanvas');
+  const ctx=cv.getContext('2d');
+  const W=300,H=220; cv.width=W; cv.height=H;
+  ctx.clearRect(0,0,W,H);
+  const sc=Math.min((W-60)/(Math.max(a,b)*1.1),(H-60)/(Math.max(a,b)*1.1),20);
+  const ox=30, oy=H-30;
+  const x1=ox,y1=oy;
+  const x2=ox+b*sc,y2=oy;
+  const x3=ox,y3=oy-a*sc;
+  ctx.strokeStyle='#7c6ff7'; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.lineTo(x3,y3); ctx.closePath(); ctx.stroke();
+  ctx.fillStyle='rgba(124,111,247,0.1)';
+  ctx.fill();
+  // Dik açı
+  ctx.strokeStyle='#3ecf8e'; ctx.lineWidth=1.5;
+  const sq=12;
+  ctx.strokeRect(x1,y1-sq,sq,sq);
+  // Etiketler
+  ctx.fillStyle='#9b96ff'; ctx.font='bold 13px Nunito,sans-serif';
+  ctx.fillText(`a=${a.toFixed(1)}`,(x1+x3)/2-30,(y1+y3)/2);
+  ctx.fillText(`b=${b.toFixed(1)}`,(x1+x2)/2-10,y2+18);
+  ctx.fillStyle='#ff6b81';
+  ctx.fillText(`c=${c.toFixed(1)}`,(x2+x3)/2+5,(y2+y3)/2-5);
+}
 
-  if (!aVal) {
-    const aCalc = Math.sqrt(c*c - b*b);
-    val = `a = √(${c}²-${b}²) = √${c*c-b*b} ≈ ${aCalc.toFixed(4)}`;
-    steps = `a² + b² = c²\na² = c² - b² = ${c*c} - ${b*b} = ${c*c-b*b}\na = √${c*c-b*b} ≈ ${aCalc.toFixed(4)}`;
-  } else if (!bVal) {
-    const bCalc = Math.sqrt(c*c - a*a);
-    val = `b = √(${c}²-${a}²) = √${c*c-a*a} ≈ ${bCalc.toFixed(4)}`;
-    steps = `a² + b² = c²\nb² = c² - a² = ${c*c} - ${a*a} = ${c*c-a*a}\nb = √${c*c-a*a} ≈ ${bCalc.toFixed(4)}`;
-  } else {
-    const cCalc = Math.sqrt(a*a + b*b);
-    val = `c = √(${a}²+${b}²) = √${a*a+b*b} ≈ ${cCalc.toFixed(4)}`;
-    steps = `a² + b² = c²\nc² = a² + b² = ${a*a} + ${b*b} = ${a*a+b*b}\nc = √${a*a+b*b} ≈ ${cCalc.toFixed(4)}`;
+function olasScen(){
+  const s=document.getElementById('oScn').value;
+  const map={para:[1,2],zar1:[3,6],zar2:[2,6],zar3:[3,6],top:[3,10]};
+  if(map[s]){
+    document.getElementById('oa').value=map[s][0];
+    document.getElementById('ob').value=map[s][1];
   }
-
-  document.getElementById('pis-val').textContent = val;
-  document.getElementById('pis-steps').innerHTML = steps.replace(/\n/g, '<br>');
-  document.getElementById('pis-result').classList.add('show');
 }
 
-function calcOlasilik() {
-  let olumlu = parseInt(document.getElementById('olas-olumlu').value);
-  let toplam = parseInt(document.getElementById('olas-toplam').value);
-  const senaryo = document.getElementById('olas-senaryo').value;
-  const senaryoMap = {
-    'para': { olumlu: 1, toplam: 2, aciklama: 'Para atma: Yazı ve Tura olmak üzere 2 sonuç var. Yazı gelme olasılığı: 1/2' },
-    'zar1': { olumlu: 3, toplam: 6, aciklama: 'Zar: {1,2,3,4,5,6} → Tek sayılar: {1,3,5} → 3 olumlu sonuç' },
-    'zar2': { olumlu: 2, toplam: 6, aciklama: 'Zar: {1,2,3,4,5,6} → 4\'ten büyük: {5,6} → 2 olumlu sonuç' },
-    'top': { olumlu: 3, toplam: 10, aciklama: 'Torba: 3K + 4M + 3Y = 10 top. Kırmızı top çekme: 3/10' }
-  };
-  if (senaryo && senaryoMap[senaryo]) {
-    olumlu = senaryoMap[senaryo].olumlu;
-    toplam = senaryoMap[senaryo].toplam;
-    document.getElementById('olas-olumlu').value = olumlu;
-    document.getElementById('olas-toplam').value = toplam;
-  }
-  if (isNaN(olumlu) || isNaN(toplam) || toplam <= 0) { alert('Geçerli değerler girin!'); return; }
-  if (olumlu > toplam) { alert('Olumlu sonuç sayısı toplam sonuç sayısından büyük olamaz!'); return; }
-
-  const g = gcd(olumlu, toplam);
-  const p = olumlu / toplam;
-  const pYuzde = (p * 100).toFixed(2);
-  const frac = `${olumlu/g}/${toplam/g}`;
-  document.getElementById('olas-val').textContent = `${frac} ≈ ${pYuzde}%`;
-  const steps = `P(A) = Olumlu Sonuç / Toplam Sonuç\nP(A) = ${olumlu} / ${toplam} = ${frac}\nP(A) ≈ ${pYuzde}%\n\nNot: P(A′) = 1 - P(A) = 1 - ${frac} = ${(toplam-olumlu)/g}/${toplam/g} (Tamamlayıcı olasılık)`;
-  document.getElementById('olas-steps').innerHTML = steps.replace(/\n/g, '<br>');
-  document.getElementById('olas-result').classList.add('show');
+function hesapOlas(){
+  const a=parseInt(document.getElementById('oa').value);
+  const b=parseInt(document.getElementById('ob').value);
+  if(isNaN(a)||isNaN(b)||b<=0){alert('Geçerli değer gir!');return;}
+  if(a>b){alert('İstenen sonuç sayısı toplam sonuçtan büyük olamaz!');return;}
+  const g=gcd(a,b);
+  const p=a/b;
+  document.getElementById('rv-olas').textContent=`${a/g}/${b/g} ≈ %${(p*100).toFixed(1)}`;
+  const comp_g=gcd(b-a,b);
+  const s=`P(A) = ${a} ÷ ${b} = ${a/g}/${b/g}\nYüzde: %${(p*100).toFixed(2)}\nOndalık: ${p.toFixed(4)}\n\nTamamlayıcı: P(olmaz) = 1 − ${a/g}/${b/g} = ${(b-a)/comp_g}/${b/comp_g}`;
+  document.getElementById('rs-olas').innerHTML=s.replace(/\n/g,'<br>');
+  document.getElementById('r-olas').classList.add('show');
 }
 
-function calcBenzerlik() {
-  const a1 = parseFloat(document.getElementById('ben-a1').value);
-  const a2 = parseFloat(document.getElementById('ben-a2').value);
-  const b1 = parseFloat(document.getElementById('ben-b1').value);
-  const alanVal = document.getElementById('ben-alan').value;
-  if (!a1 || !a2) { alert('Karşılıklı kenar uzunluklarını girin!'); return; }
-  const g = gcd(Math.round(a1), Math.round(a2));
-  const oran = `${Math.round(a1/g)}:${Math.round(a2/g)}`;
-  const ratio = a2 / a1;
-  const b2 = b1 ? b1 * ratio : null;
-  const alan2 = alanVal ? parseFloat(alanVal) * ratio * ratio : null;
-  let steps = `Benzerlik Oranı: ${oran} (k = ${ratio.toFixed(4)})\n`;
-  if (b2) steps += `b₁ = ${b1} ise b₂ = ${b1} × ${ratio.toFixed(2)} = ${b2.toFixed(2)}\n`;
-  if (alan2) steps += `Alan Oranı: k² = ${(ratio*ratio).toFixed(4)}\nBüyük şeklin alanı: ${parseFloat(alanVal).toFixed(2)} × ${(ratio*ratio).toFixed(4)} = ${alan2.toFixed(2)}`;
-  document.getElementById('ben-oran').textContent = oran;
-  document.getElementById('ben-steps').innerHTML = steps.replace(/\n/g, '<br>');
-  document.getElementById('ben-result').classList.add('show');
+function hesapBen(){
+  const a1=parseFloat(document.getElementById('bena').value);
+  const a2=parseFloat(document.getElementById('benb').value);
+  const b1=parseFloat(document.getElementById('benc').value);
+  const alan=parseFloat(document.getElementById('bend').value);
+  if(!a1||!a2){alert('Karşılıklı iki kenarı gir!');return;}
+  const g=gcd(Math.round(a1),Math.round(a2));
+  const oran=`${Math.round(a1/g)} : ${Math.round(a2/g)}`;
+  const k=a2/a1;
+  document.getElementById('rv-ben').textContent=oran;
+  let s=`Benzerlik Oranı: k = ${a1} / ${a2} = ${oran}\n`;
+  if(b1) s+=`Karşılıklı kenar: ${b1} × ${k.toFixed(3)} = ${(b1*k).toFixed(2)}\n`;
+  if(alan) s+=`Alan oranı: k² = ${(k*k).toFixed(3)}\nBüyük şeklin alanı: ${alan} × ${(k*k).toFixed(3)} = ${(alan*k*k).toFixed(2)}`;
+  document.getElementById('rs-ben').innerHTML=s.replace(/\n/g,'<br>');
+  document.getElementById('r-ben').classList.add('show');
 }
 
-function calcVeri() {
-  const input = document.getElementById('veri-input').value;
-  const data = input.split(',').map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
-  if (data.length < 2) { alert('En az 2 sayı girin!'); return; }
-  const sorted = [...data].sort((a,b) => a-b);
-  const n = data.length;
-  const ort = data.reduce((a,b) => a+b, 0) / n;
-  const med = n % 2 === 0 ? (sorted[n/2-1]+sorted[n/2])/2 : sorted[Math.floor(n/2)];
-  const freqMap = {};
-  data.forEach(x => freqMap[x] = (freqMap[x]||0)+1);
-  const maxFreq = Math.max(...Object.values(freqMap));
-  const modes = Object.entries(freqMap).filter(([k,v]) => v===maxFreq).map(([k]) => k);
-  const ranj = sorted[n-1] - sorted[0];
-  const statsEl = document.getElementById('veri-stats');
-  statsEl.innerHTML = [
-    { val: ort.toFixed(2), label: 'Ortalama' },
-    { val: med, label: 'Ortanca' },
-    { val: modes.join(', '), label: 'Tepe Değer' },
-    { val: ranj, label: 'Ranj' },
-    { val: n, label: 'Veri Sayısı' },
-    { val: sorted[0], label: 'Minimum' },
-    { val: sorted[n-1], label: 'Maksimum' },
-  ].map(s => `<div class="stat-chip"><div class="stat-chip-val">${s.val}</div><div class="stat-chip-label">${s.label}</div></div>`).join('');
+function hesapVeri(){
+  const raw=document.getElementById('veriGir').value;
+  const data=raw.split(/[,\s]+/).map(Number).filter(n=>!isNaN(n)&&n!==null);
+  if(data.length<2){alert('En az 2 sayı gir!');return;}
+  renderChart(data,'veriBars');
+  renderStats(data,'veriStats');
+  document.getElementById('r-veri').classList.add('show');
+}
 
-  const barsEl = document.getElementById('veri-bars');
-  const maxVal = sorted[n-1];
-  barsEl.innerHTML = data.map((v, i) => `
-    <div class="chart-bar-wrap">
-      <div class="chart-val">${v}</div>
-      <div class="chart-bar" style="height:${(v/maxVal)*150}px;" title="${v}"></div>
-      <div class="chart-label">${i+1}</div>
+function renderChart(data,barId){
+  const el=document.getElementById(barId);
+  const mx=Math.max(...data);
+  const colors=['#7c6ff7','#3ecf8e','#ff9f43','#ff6b81','#54a0ff','#c084fc','#fd79a8','#00cec9'];
+  el.innerHTML=data.map((v,i)=>`
+    <div class="c-bar-wrap">
+      <div class="c-bar-v">${v}</div>
+      <div class="c-bar" style="height:${(v/mx)*150}px;background:${colors[i%colors.length]}"></div>
+      <div class="c-bar-l">${i+1}</div>
     </div>
   `).join('');
-  document.getElementById('veri-result').classList.add('show');
 }
 
-// ============================================================
-// DEMO CHART
-// ============================================================
-let demoData = [65, 72, 58, 89, 73, 94, 61, 78, 83, 70];
-
-function renderDemoChart() {
-  const bars = document.getElementById('demo-bars');
-  const stats = document.getElementById('demo-stats');
-  const maxV = Math.max(...demoData);
-  const ort = (demoData.reduce((a,b)=>a+b,0)/demoData.length).toFixed(1);
-  const sorted = [...demoData].sort((a,b)=>a-b);
-  const n = demoData.length;
-  const med = n%2===0?(sorted[n/2-1]+sorted[n/2])/2:sorted[Math.floor(n/2)];
-
-  bars.innerHTML = demoData.map((v,i) => `
-    <div class="chart-bar-wrap">
-      <div class="chart-val">${v}</div>
-      <div class="chart-bar" style="height:${(v/maxV)*160}px;"></div>
-      <div class="chart-label">Ö${i+1}</div>
-    </div>
-  `).join('');
-
-  stats.innerHTML = [
-    { val: ort, label: 'Ortalama' },
-    { val: med, label: 'Ortanca' },
-    { val: sorted[0], label: 'Min' },
-    { val: sorted[n-1], label: 'Max' },
-    { val: sorted[n-1]-sorted[0], label: 'Ranj' },
-  ].map(s => `<div class="stat-chip"><div class="stat-chip-val">${s.val}</div><div class="stat-chip-label">${s.label}</div></div>`).join('');
+function renderStats(data,statsId){
+  const el=document.getElementById(statsId);
+  const n=data.length;
+  const ort=(data.reduce((a,b)=>a+b,0)/n).toFixed(2);
+  const s=[...data].sort((a,b)=>a-b);
+  const med=n%2===0?((s[n/2-1]+s[n/2])/2):s[Math.floor(n/2)];
+  const freq={};data.forEach(x=>freq[x]=(freq[x]||0)+1);
+  const mf=Math.max(...Object.values(freq));
+  const mod=Object.entries(freq).filter(([k,v])=>v===mf).map(([k])=>k).join(', ');
+  const ranj=s[n-1]-s[0];
+  el.innerHTML=[
+    {v:ort,l:'Ortalama'},{v:med,l:'Ortanca'},{v:mod,l:'Tepe Değer'},{v:ranj,l:'Ranj'},{v:n,l:'Veri Sayısı'},{v:s[0],l:'En Küçük'},{v:s[n-1],l:'En Büyük'}
+  ].map(x=>`<div class="stat-chip"><div class="sc-v">${x.v}</div><div class="sc-l">${x.l}</div></div>`).join('');
 }
 
-function randomizeChart() {
-  demoData = Array.from({length:10}, () => Math.floor(Math.random()*45)+50);
-  renderDemoChart();
+// ============================
+// DEMO VERİ
+// ============================
+let demoData=[72,85,61,90,78,55,88,73,95,67];
+function yeniVeri(){
+  demoData=Array.from({length:10},()=>Math.floor(Math.random()*46)+50);
+  renderChart(demoData,'demoBars');
+  renderStats(demoData,'demoStats');
 }
 
-// ============================================================
-// MODALS - KONU ANLATIMI
-// ============================================================
-const modalContent = {
-  carpanlar: {
-    title: '🔢 Çarpanlar ve Katlar',
-    body: `
-      <p>Bu konuda doğal sayıların çarpanlarını, asal çarpanlara ayrılmasını, EBOB ve EKOK kavramlarını öğreniyoruz.</p>
-      <h3>Asal Çarpanlara Ayırma</h3>
-      <p>Bir sayıyı asal sayıların çarpımı şeklinde yazmaktır.</p>
-      <div class="formula-box">120 = 2³ × 3 × 5</div>
-      <h3>EBOB (En Büyük Ortak Bölen)</h3>
-      <p>İki ya da daha fazla sayının ortak bölenlerinin en büyüğüdür.</p>
-      <div class="formula-box">EBOB(12, 18) = 6</div>
-      <h3>EKOK (En Küçük Ortak Kat)</h3>
-      <p>İki ya da daha fazla sayının ortak katlarının en küçüğüdür.</p>
-      <div class="formula-box">EKOK(4, 6) = 12</div>
-      <h3>Önemli İlişki</h3>
-      <div class="formula-box">EBOB(a,b) × EKOK(a,b) = a × b</div>
-      <h3>Aralarında Asal Sayılar</h3>
-      <p>EBOB'u 1 olan iki sayıya aralarında asal sayılar denir.</p>
-      <div class="formula-box">EBOB(8, 9) = 1 → 8 ve 9 aralarında asaldır</div>
-    `
-  },
-  uslu: {
-    title: '⚡ Üslü İfadeler',
-    body: `
-      <p>Bir sayının kendisiyle tekrarlanan çarpımını kısaltmak için üslü gösterim kullanılır.</p>
-      <h3>Temel Tanım</h3>
-      <div class="formula-box">aⁿ = a × a × a × ... × a (n tane)</div>
-      <h3>Üslü İfade Kuralları</h3>
-      <div class="formula-box">aᵐ × aⁿ = aᵐ⁺ⁿ</div>
-      <div class="formula-box">aᵐ ÷ aⁿ = aᵐ⁻ⁿ (a≠0)</div>
-      <div class="formula-box">(aᵐ)ⁿ = aᵐˣⁿ</div>
-      <div class="formula-box">(a×b)ⁿ = aⁿ × bⁿ</div>
-      <div class="formula-box">a⁰ = 1 (a≠0)</div>
-      <div class="formula-box">a⁻ⁿ = 1/aⁿ</div>
-      <h3>Bilimsel Gösterim</h3>
-      <p>Çok büyük veya çok küçük sayıları a × 10ⁿ biçiminde yazmaktır (1 ≤ a < 10).</p>
-      <div class="formula-box">5.430.000 = 5,43 × 10⁶</div>
-      <div class="formula-box">0,0000043 = 4,3 × 10⁻⁶</div>
-    `
-  },
-  karekok: {
-    title: '√ Kareköklü İfadeler',
-    body: `
-      <p>Bir sayının karekökü, o sayıyı veren iki eşit sayının çarpımı demektir.</p>
-      <h3>Karekök Tanımı</h3>
-      <div class="formula-box">√a = b ⟺ b² = a (a≥0, b≥0)</div>
-      <h3>a√b Biçimine Yazma</h3>
-      <p>Tam kare çarpanı varsa kök dışına çıkarılır.</p>
-      <div class="formula-box">√72 = √(36×2) = 6√2</div>
-      <h3>İşlem Kuralları</h3>
-      <div class="formula-box">√a × √b = √(ab)</div>
-      <div class="formula-box">√a ÷ √b = √(a/b)</div>
-      <div class="formula-box">a√c + b√c = (a+b)√c</div>
-      <h3>Gerçek Sayılar</h3>
-      <ul>
-        <li>Rasyonel sayılar: kesir şeklinde yazılabilenler (1/2, 3, 0.75...)</li>
-        <li>İrrasyonel sayılar: kesir şeklinde yazılamayanlar (√2, π, √3...)</li>
-        <li>Gerçek sayılar = Rasyonel ∪ İrrasyonel</li>
-      </ul>
-    `
-  },
-  veri: {
-    title: '📊 Veri Analizi',
-    body: `
-      <p>Veri analizi, toplanan verileri anlayabilmek için çeşitli istatistiksel araçlar kullanmayı içerir.</p>
-      <h3>Merkezi Eğilim Ölçüleri</h3>
-      <div class="formula-box">Ortalama (x̄) = Σxᵢ / n</div>
-      <div class="formula-box">Ortanca = Sıralı dizinin orta terimi</div>
-      <div class="formula-box">Tepe Değer (Mod) = En sık tekrar eden değer</div>
-      <div class="formula-box">Ranj = Maksimum - Minimum</div>
-      <h3>Grafik Türleri</h3>
-      <ul>
-        <li><strong>Sütun Grafiği:</strong> Kategorik verileri karşılaştırmak için</li>
-        <li><strong>Çizgi Grafiği:</strong> Zaman içindeki değişimi göstermek için</li>
-        <li><strong>Daire Grafiği:</strong> Parça-bütün ilişkisini göstermek için</li>
-      </ul>
-      <h3>Örnek</h3>
-      <p>Veri: 3, 7, 5, 12, 8, 5, 9</p>
-      <div class="formula-box">Ortalama = (3+7+5+12+8+5+9)/7 = 49/7 = 7
-Ortanca = 3,5,5,7,8,9,12 → 7
-Mod = 5 (2 kez tekrar eder)
-Ranj = 12 - 3 = 9</div>
-    `
-  },
-  olasilik: {
-    title: '🎲 Basit Olayların Olasılığı',
-    body: `
-      <p>Olasılık, bir olayın gerçekleşme ihtimalini sayısal olarak ifade etmenin yoludur.</p>
-      <h3>Temel Kavramlar</h3>
-      <ul>
-        <li><strong>Deney:</strong> Sonucu önceden bilinmeyen işlem</li>
-        <li><strong>Sonuç:</strong> Deneyin her bir çıktısı</li>
-        <li><strong>Örnek Uzay (S):</strong> Tüm mümkün sonuçlar</li>
-        <li><strong>Olay:</strong> Örnek uzayın alt kümesi</li>
-      </ul>
-      <h3>Olasılık Formülü</h3>
-      <div class="formula-box">P(A) = n(A) / n(S)</div>
-      <p>n(A): Olumlu sonuç sayısı, n(S): Toplam sonuç sayısı</p>
-      <h3>Olasılık Aralığı</h3>
-      <div class="formula-box">0 ≤ P(A) ≤ 1</div>
-      <div class="formula-box">P(imkansız olay) = 0</div>
-      <div class="formula-box">P(kesin olay) = 1</div>
-      <h3>Tamamlayıcı Olasılık</h3>
-      <div class="formula-box">P(A′) = 1 - P(A)</div>
-      <h3>Örnek</h3>
-      <p>Bir zarın atılmasında çift sayı gelme olasılığı:</p>
-      <div class="formula-box">S = {1,2,3,4,5,6} → n(S)=6
-A = {2,4,6} → n(A)=3
-P(A) = 3/6 = 1/2</div>
-    `
-  },
-  cebir: {
-    title: '📐 Cebirsel İfadeler & Özdeşlikler',
-    body: `
-      <p>Cebirsel ifadeler, sayılar ve harflerin işlemlerle bir araya gelmesiyle oluşur.</p>
-      <h3>Çarpanlara Ayırma Yöntemleri</h3>
-      <ul>
-        <li>Ortak çarpan paranteze alma</li>
-        <li>Gruplandırma yöntemi</li>
-        <li>Özdeşliklerden yararlanma</li>
-      </ul>
-      <h3>Temel Özdeşlikler</h3>
-      <div class="formula-box">(a+b)² = a² + 2ab + b²</div>
-      <div class="formula-box">(a-b)² = a² - 2ab + b²</div>
-      <div class="formula-box">(a+b)(a-b) = a² - b²</div>
-      <div class="formula-box">(a+b)³ = a³ + 3a²b + 3ab² + b³</div>
-      <h3>Örnekler</h3>
-      <div class="formula-box">x² + 5x + 6 = (x+2)(x+3)</div>
-      <div class="formula-box">4x² - 9 = (2x+3)(2x-3)</div>
-      <div class="formula-box">3x² + 6x = 3x(x+2)</div>
-    `
-  },
-  denklem: {
-    title: '⚖️ Doğrusal Denklemler',
-    body: `
-      <p>1. dereceden 1 bilinmeyenli denklemler, ax + b = 0 biçimindeki denklemlerdir.</p>
-      <h3>Çözüm Yöntemi</h3>
-      <div class="formula-box">ax + b = c
-ax = c - b
-x = (c - b) / a</div>
-      <h3>Denklem Çözüm Özellikleri</h3>
-      <ul>
-        <li>Her iki tarafa aynı sayı eklenebilir veya çıkarılabilir</li>
-        <li>Her iki taraf sıfırdan farklı aynı sayıyla çarpılabilir veya bölünebilir</li>
-      </ul>
-      <h3>Örnek</h3>
-      <div class="formula-box">3x + 7 = 22
-3x = 22 - 7
-3x = 15
-x = 5</div>
-      <h3>Problem Çözme Adımları</h3>
-      <ul>
-        <li>1. Bilinmeyeni belirle (x)</li>
-        <li>2. Denklem kur</li>
-        <li>3. Denklemi çöz</li>
-        <li>4. Cevabı kontrol et</li>
-      </ul>
-    `
-  },
-  esitsizlik: {
-    title: '↔️ Eşitsizlikler',
-    body: `
-      <p>Eşitsizlikler, iki ifade arasındaki büyüklük-küçüklük ilişkisini gösterir.</p>
-      <h3>Eşitsizlik Sembolleri</h3>
-      <ul>
-        <li>> büyüktür</li>
-        <li>< küçüktür</li>
-        <li>≥ büyük eşittir</li>
-        <li>≤ küçük eşittir</li>
-      </ul>
-      <h3>Çözüm Kuralları</h3>
-      <div class="formula-box">Negatif sayıyla çarpma/bölme → Eşitsizlik işareti tersine döner!</div>
-      <h3>Örnek</h3>
-      <div class="formula-box">2x - 3 > 7
-2x > 10
-x > 5 → Çözüm kümesi: {x | x > 5}</div>
-      <h3>Sayı Doğrusunda Gösterim</h3>
-      <p>x > 5 → 5'in sağı, açık nokta (5 dahil değil)</p>
-      <p>x ≥ 5 → 5'in sağı, kapalı nokta (5 dahil)</p>
-    `
-  },
-  ucgenler: {
-    title: '🔺 Üçgenler',
-    body: `
-      <p>Bu ünite üçgenin özel elemanlarını ve Pisagor bağıntısını kapsar.</p>
-      <h3>Üçgenin Yardımcı Elemanları</h3>
-      <ul>
-        <li><strong>Kenarortay:</strong> Bir kenarın orta noktasını karşı köşeye birleştiren doğru parçası</li>
-        <li><strong>Açıortay:</strong> Bir açıyı iki eşit parçaya bölen doğru parçası</li>
-        <li><strong>Yükseklik:</strong> Bir köşeden karşı kenara dik olan doğru parçası</li>
-      </ul>
-      <h3>Üçgen Eşitsizliği</h3>
-      <div class="formula-box">Her kenar, diğer iki kenarın toplamından küçük olmalıdır.
-|a-b| < c < a+b</div>
-      <h3>Pisagor Bağıntısı</h3>
-      <div class="formula-box">a² + b² = c²
-(a, b: dik kenarlar; c: hipotenüs)</div>
-      <h3>Pisagor Üçlüleri</h3>
-      <div class="formula-box">3-4-5, 5-12-13, 8-15-17, 7-24-25</div>
-      <h3>Üçgen Alan Formülü</h3>
-      <div class="formula-box">A = (taban × yükseklik) / 2</div>
-    `
-  },
-  eslik: {
-    title: '🔁 Eşlik ve Benzerlik',
-    body: `
-      <p>Eş şekiller birebir örtüşen, benzer şekiller ise aynı biçimde fakat farklı boyuttaki şekillerdir.</p>
-      <h3>Eşlik</h3>
-      <p>Karşılıklı tüm kenarlar eşit ve karşılıklı tüm açılar eşit ise şekiller eştir.</p>
-      <div class="formula-box">△ABC ≅ △DEF ⟺ Tüm kenarlar ve açılar eşit</div>
-      <h3>Benzerlik</h3>
-      <p>Karşılıklı açılar eşit ve karşılıklı kenarlar orantılı ise şekiller benzerdir.</p>
-      <div class="formula-box">△ABC ~ △DEF ⟺ Açılar eşit ve kenarlar orantılı</div>
-      <h3>Benzerlik Oranı (k)</h3>
-      <div class="formula-box">k = a₁/a₂ = b₁/b₂ = c₁/c₂</div>
-      <h3>Alan İlişkisi</h3>
-      <div class="formula-box">Alan Oranı = k²</div>
-      <h3>Benzer Üçgen Özellikleri</h3>
-      <ul>
-        <li>AA (İki açı) benzerlik kriteri</li>
-        <li>SSS (Üç kenar orantılı) benzerlik kriteri</li>
-        <li>SAS (İki kenar orantılı ve aralarındaki açı eşit) kriteri</li>
-      </ul>
-    `
-  },
-  donusum: {
-    title: '🔄 Dönüşüm Geometrisi',
-    body: `
-      <p>Geometrik dönüşümler, şekillerin düzlemde hareket ettirilmesiyle elde edilen görüntülerdir.</p>
-      <h3>Öteleme (Kaydırma)</h3>
-      <p>Şekil aynı yönde sabit bir miktar kaydırılır. Boyut ve şekil değişmez.</p>
-      <div class="formula-box">T(a,b): P(x,y) → P'(x+a, y+b)</div>
-      <h3>Yansıma (Simetri)</h3>
-      <p>Şekil bir doğruya göre ayna görüntüsü alınır.</p>
-      <div class="formula-box">x-eksenine: P(x,y) → P'(x,-y)
-y-eksenine: P(x,y) → P'(-x,y)
-y=x doğrusuna: P(x,y) → P'(y,x)</div>
-      <h3>Döndürme (Rotasyon)</h3>
-      <p>Şekil bir merkez etrafında belirli bir açıyla döndürülür.</p>
-      <div class="formula-box">Orijin etrafında 90° döndürme:
-P(x,y) → P'(-y,x)</div>
-      <h3>Dönüşümlerin Özellikleri</h3>
-      <ul>
-        <li>Tüm dönüşümlerde şeklin büyüklüğü ve biçimi korunur</li>
-        <li>Öteleme: Doğrultu değişmez</li>
-        <li>Yansıma: Oryantasyon değişir</li>
-        <li>Döndürme: Merkez noktası sabit kalır</li>
-      </ul>
-    `
-  },
-  cismler: {
-    title: '🧊 Geometrik Cisimler',
-    body: `
-      <p>Bu konuda 3 boyutlu geometrik cisimlerin özellikleri, alan ve hacim hesapları incelenir.</p>
-      <h3>Prizmalar</h3>
-      <div class="formula-box">Hacim = Taban Alanı × Yükseklik
-Yan Yüzey Alanı = Taban Çevresi × Yükseklik
-Toplam Yüzey = 2 × Taban Alanı + Yan Yüzey</div>
-      <h3>Silindir</h3>
-      <div class="formula-box">V = π × r² × h
-YYA = 2π × r × h
-TYA = 2πr² + 2πrh</div>
-      <h3>Koni</h3>
-      <div class="formula-box">V = (π × r² × h) / 3
-Apotemi: l = √(r²+h²)
-YYA = π × r × l
-TYA = πr² + πrl</div>
-      <h3>Küre</h3>
-      <div class="formula-box">V = (4/3) × π × r³
-Yüzey Alanı = 4 × π × r²</div>
-      <h3>Kare Piramit</h3>
-      <div class="formula-box">V = (a² × h) / 3
-l = √(h²+(a/2)²)
-YYA = 2al
-TYA = a² + 2al</div>
-    `
-  }
+// ============================
+// MODALLER
+// ============================
+const modals={
+  carpanlar:{t:'🔢 Çarpanlar ve Katlar',b:`
+    <p>Bu konuda bir sayıyı çarpanlara ayırmayı, EBOB ve EKOK hesaplamayı öğreniyoruz.</p>
+    <h3>Asal Çarpanlar</h3>
+    <p>Bir sayıyı sadece asal sayıların çarpımı olarak yazmaktır.</p>
+    <div class="fbox">120 = 2 × 2 × 2 × 3 × 5 = 2³ × 3 × 5</div>
+    <h3>EBOB — En Büyük Ortak Bölen</h3>
+    <p>İki sayıyı da bölen sayıların en büyüğüdür.</p>
+    <div class="fbox">EBOB(12, 18) = 6<br>Çünkü 12 = 2²×3 ve 18 = 2×3²<br>Ortak: 2¹ × 3¹ = 6</div>
+    <h3>EKOK — En Küçük Ortak Kat</h3>
+    <p>İkisinin de katı olan sayıların en küçüğüdür.</p>
+    <div class="fbox">EKOK(4, 6) = 12<br>Çünkü 4=2², 6=2×3<br>En büyük üsler: 2² × 3 = 12</div>
+    <h3>Kolay Hatırlatma</h3>
+    <div class="fbox">EBOB × EKOK = Sayı1 × Sayı2</div>
+    <h3>Aralarında Asal</h3>
+    <p>EBOB'u 1 olan iki sayı birbirine göre asal sayılır.</p>
+    <div class="fbox">EBOB(8, 9) = 1 → Birbirlerine göre asaldır</div>
+  `},
+  uslu:{t:'⚡ Üslü İfadeler',b:`
+    <p>Aynı sayıyı tekrar tekrar çarpmak yerine üslü gösterim kullanırız.</p>
+    <h3>Nedir?</h3>
+    <div class="fbox">2⁵ = 2×2×2×2×2 = 32<br>(2, 5 kez çarpıldı)</div>
+    <h3>Temel Kurallar</h3>
+    <div class="fbox">Çarpma: a³ × a² = a⁵  (üsler toplanır)</div>
+    <div class="fbox">Bölme: a⁵ ÷ a² = a³  (üsler çıkarılır)</div>
+    <div class="fbox">Üs alma: (a²)³ = a⁶  (üsler çarpılır)</div>
+    <div class="fbox">Sıfır üs: a⁰ = 1  (sıfır üssü her zaman 1)</div>
+    <div class="fbox">Negatif üs: a⁻² = 1/a²</div>
+    <h3>Büyük Sayıları Kısa Yazma</h3>
+    <p>Çok büyük sayıları daha kısa yazmak için kullanılır.</p>
+    <div class="fbox">5.430.000 = 5,43 × 10⁶</div>
+  `},
+  karekok:{t:'√ Kareköklü İfadeler',b:`
+    <p>Karekök, bir sayının karesini alan işlemin tersidir.</p>
+    <h3>Karekök Nedir?</h3>
+    <div class="fbox">√25 = 5  çünkü  5² = 25<br>√9 = 3   çünkü  3² = 9</div>
+    <h3>Sadeleştirme (a√b Yazma)</h3>
+    <p>Tam kare çarpanını dışarı çıkarırız.</p>
+    <div class="fbox">√72 = √(36 × 2) = 6√2<br>(36, tam kare olduğu için dışarı çıktı)</div>
+    <h3>İşlemler</h3>
+    <div class="fbox">√a × √b = √(a×b)</div>
+    <div class="fbox">√a ÷ √b = √(a÷b)</div>
+    <div class="fbox">3√2 + 5√2 = 8√2  (aynı köklüler toplanır)</div>
+    <h3>Rasyonel ve İrrasyonel Sayılar</h3>
+    <ul>
+      <li>Kesir yazılabilen: 1/2, 3, 0,75 → Rasyonel</li>
+      <li>Kesir yazılamayan: √2, √3, π → İrrasyonel</li>
+    </ul>
+  `},
+  veriK:{t:'📊 Veri Analizi',b:`
+    <p>Topladığımız verileri anlamak için bazı değerleri hesaplarız.</p>
+    <h3>Ortalama</h3>
+    <p>Tüm sayıları topla, kaç tane olduğuna böl.</p>
+    <div class="fbox">Veri: 3, 7, 5, 12, 8<br>Toplam = 35,  Sayı adedi = 5<br>Ortalama = 35 ÷ 5 = 7</div>
+    <h3>Ortanca (Medyan)</h3>
+    <p>Sayıları küçükten büyüğe sırala, ortadakini al.</p>
+    <div class="fbox">3, 5, 7, 8, 12  →  Ortanca = 7</div>
+    <h3>Tepe Değer (Mod)</h3>
+    <p>En çok tekrar eden sayıdır.</p>
+    <div class="fbox">3, 5, 5, 7, 8  →  Tepe değer = 5</div>
+    <h3>Ranj</h3>
+    <div class="fbox">Ranj = En büyük − En küçük<br>Örnek: 12 − 3 = 9</div>
+  `},
+  olasilik:{t:'🎲 Olasılık',b:`
+    <p>Bir olayın gerçekleşme ihtimalini 0 ile 1 arasında bir sayıyla gösteririz.</p>
+    <h3>Temel Kavramlar</h3>
+    <ul>
+      <li><b>Deney:</b> Sonucu önceden bilinmeyen işlem (zar atmak gibi)</li>
+      <li><b>Örnek uzay:</b> Olabilecek tüm sonuçlar (zarın yüzleri: {1,2,3,4,5,6})</li>
+      <li><b>Olay:</b> Belirli bir sonuç grubu (çift sayı: {2,4,6})</li>
+    </ul>
+    <h3>Formül</h3>
+    <div class="fbox">P(A) = İstenen sonuç sayısı ÷ Toplam sonuç sayısı</div>
+    <h3>Örnek</h3>
+    <div class="fbox">Zarın çift gelmesi:<br>İstenen: {2,4,6} → 3 tane<br>Toplam: {1,2,3,4,5,6} → 6 tane<br>P = 3/6 = 1/2</div>
+    <h3>Sınırlar</h3>
+    <div class="fbox">0 ≤ P(A) ≤ 1<br>P = 0 → Hiç olmaz<br>P = 1 → Kesinlikle olur</div>
+    <h3>Tamamlayıcı</h3>
+    <div class="fbox">P(olmaz) = 1 − P(olur)</div>
+  `},
+  cebir:{t:'🔣 Cebirsel İfadeler',b:`
+    <p>Sayılar ve harflerin bir arada kullanıldığı ifadelerdir.</p>
+    <h3>Çarpanlara Ayırma</h3>
+    <p>Ortak çarpanı paranteze alırız.</p>
+    <div class="fbox">3x² + 6x = 3x(x + 2)</div>
+    <h3>Özdeşlikler (Ezberlenmesi Gerekiyor!)</h3>
+    <div class="fbox">(a+b)² = a² + 2ab + b²</div>
+    <div class="fbox">(a−b)² = a² − 2ab + b²</div>
+    <div class="fbox">(a+b)(a−b) = a² − b²</div>
+    <h3>Örnekler</h3>
+    <div class="fbox">x² + 6x + 9 = (x+3)²<br>(a=x, b=3 olarak kullanıldı)</div>
+    <div class="fbox">4x² − 9 = (2x+3)(2x−3)<br>(a=2x, b=3 olarak kullanıldı)</div>
+  `},
+  denklem:{t:'⚖️ Doğrusal Denklemler',b:`
+    <p>x'i bulmamızı isteyen matematiksel cümlelerdir.</p>
+    <h3>Çözüm Yöntemi</h3>
+    <p>Her iki tarafa aynı işlemi yapabiliriz.</p>
+    <div class="fbox">3x + 7 = 22<br>3x = 22 − 7   (7'yi sağa attık)<br>3x = 15<br>x = 15 ÷ 3 = 5</div>
+    <h3>Kontrol Etme</h3>
+    <div class="fbox">x=5 ise: 3×5 + 7 = 15 + 7 = 22 ✓</div>
+    <h3>Problem Çözme Adımları</h3>
+    <ul>
+      <li>1. Bilinmeyeni x ile göster</li>
+      <li>2. Denklem kur</li>
+      <li>3. Denklemi çöz</li>
+      <li>4. Cevabı denklemde yerine koy, kontrol et</li>
+    </ul>
+  `},
+  esitsizlik:{t:'↔️ Eşitsizlikler',b:`
+    <p>İki şey arasındaki büyüklük-küçüklük ilişkisini gösterir.</p>
+    <h3>Semboller</h3>
+    <ul>
+      <li>a > b : a, b'den büyüktür</li>
+      <li>a < b : a, b'den küçüktür</li>
+      <li>a ≥ b : a, b'den büyük ya da eşittir</li>
+      <li>a ≤ b : a, b'den küçük ya da eşittir</li>
+    </ul>
+    <h3>Çözüm</h3>
+    <div class="fbox">2x − 3 > 7<br>2x > 10<br>x > 5</div>
+    <h3>⚠️ Önemli Kural</h3>
+    <div class="fbox">Negatif sayıyla çarpınca veya bölünce<br>eşitsizlik işareti TERSINE DÖNER!<br>Örnek: −x > 5 → x < −5</div>
+    <h3>Sayı Doğrusunda Gösterim</h3>
+    <ul>
+      <li>x > 5 → 5'in SAĞı, boş daire (5 dahil DEĞİL)</li>
+      <li>x ≥ 5 → 5'in SAĞı, dolu daire (5 DAHİL)</li>
+    </ul>
+  `},
+  ucgenler:{t:'🔺 Üçgenler',b:`
+    <p>Bu ünite üçgenin özel çizgilerini ve Pisagor teoremini kapsar.</p>
+    <h3>Üçgenin Özel Çizgileri</h3>
+    <ul>
+      <li><b>Kenarortay:</b> Bir kenarın tam ortasına çekilen çizgi</li>
+      <li><b>Açıortay:</b> Bir açıyı tam ikiye bölen çizgi</li>
+      <li><b>Yükseklik:</b> Bir köşeden karşı kenara dik çekilen çizgi</li>
+    </ul>
+    <h3>Pisagor Bağıntısı</h3>
+    <p>Sadece dik açılı üçgenlerde geçerlidir!</p>
+    <div class="fbox">a² + b² = c²<br>a, b = dik kenarlar<br>c = en uzun kenar (hipotenüs)</div>
+    <h3>Bilinen Pisagor Üçlüleri</h3>
+    <div class="fbox">3−4−5 ✓  (9+16=25)<br>5−12−13 ✓  (25+144=169)<br>8−15−17 ✓</div>
+    <h3>Üçgen Eşitsizliği</h3>
+    <div class="fbox">Herhangi iki kenarın toplamı üçüncü kenardan büyük olmalı:<br>3, 4, 10 → 3+4=7 < 10 → Üçgen OLMAZ</div>
+  `},
+  eslik:{t:'🔁 Eşlik ve Benzerlik',b:`
+    <p>İki şeklin birbirine ne kadar benzediğini inceleriz.</p>
+    <h3>Eşlik (Birebir Aynı)</h3>
+    <p>Tüm kenarlar eşit VE tüm açılar eşit ise iki şekil eştir. Üst üste tam örtüşürler.</p>
+    <div class="fbox">Eş şekillerin alanları da eşittir.</div>
+    <h3>Benzerlik (Aynı Biçim, Farklı Boyut)</h3>
+    <p>Tüm açılar eşit, kenarlar ise aynı oranda büyük veya küçük ise benzerdir.</p>
+    <div class="fbox">k = Büyük şeklin kenarı ÷ Küçük şeklin kenarı<br>(k: benzerlik oranı)</div>
+    <h3>Alan İlişkisi</h3>
+    <div class="fbox">Alan oranı = k²<br>Örnek: k=3 ise alan 9 kat büyür</div>
+    <h3>Örnek</h3>
+    <div class="fbox">Küçük üçgen: 3−4−5<br>Büyük üçgen: 6−8−10<br>k = 6÷3 = 2 (2 kat büyük)</div>
+  `},
+  donusum:{t:'🔄 Dönüşüm Geometrisi',b:`
+    <p>Bir şekli hareket ettirerek yeni şekiller elde etmektir.</p>
+    <h3>Öteleme (Kaydırma)</h3>
+    <p>Şekli sağa-sola veya yukarı-aşağı kaydırırız. Boyut değişmez, yön değişmez.</p>
+    <div class="fbox">A(2,3) noktası 4 sağ, 2 yukarı ötelenir:<br>A'(2+4, 3+2) = A'(6, 5)</div>
+    <h3>Yansıma (Simetri)</h3>
+    <p>Bir doğruya göre ayna görüntüsü alırız.</p>
+    <div class="fbox">x eksenine göre: A(3,4) → A'(3,−4)<br>y eksenine göre: A(3,4) → A'(−3,4)</div>
+    <h3>Döndürme</h3>
+    <p>Bir merkez etrafında belirli açıyla döndürürüz.</p>
+    <div class="fbox">Orijin etrafında 90° döndürme:<br>A(x,y) → A'(−y,x)</div>
+    <h3>Genel Kural</h3>
+    <p>Tüm dönüşümlerde şeklin büyüklüğü ve biçimi korunur!</p>
+  `},
+  cismler:{t:'🧊 Geometrik Cisimler',b:`
+    <p>3 boyutlu şekillerin alan ve hacimlerini hesaplarız.</p>
+    <h3>Prizma</h3>
+    <div class="fbox">Hacim = Taban Alanı × Yükseklik<br>Yan Yüzey = Taban Çevresi × Yükseklik<br>Toplam Yüzey = 2×Taban Alanı + Yan Yüzey</div>
+    <h3>Silindir</h3>
+    <div class="fbox">Hacim = π × r² × yükseklik<br>Yan Yüzey = 2π × r × yükseklik<br>Toplam Yüzey = 2πr² + 2πrh</div>
+    <h3>Koni</h3>
+    <div class="fbox">Hacim = (π × r² × h) ÷ 3<br>Yan Kenar (l) = √(r² + h²)<br>Yan Yüzey = π × r × l</div>
+    <h3>Küre</h3>
+    <div class="fbox">Hacim = (4÷3) × π × r³<br>Yüzey Alanı = 4 × π × r²</div>
+    <h3>Kare Piramit</h3>
+    <div class="fbox">Hacim = (a² × h) ÷ 3<br>Yan Yüzey = 2 × a × l<br>Toplam Yüzey = a² + 2al</div>
+  `}
 };
 
-function openModal(key) {
-  const d = modalContent[key];
-  if (!d) return;
-  document.getElementById('modal-title').textContent = d.title;
-  document.getElementById('modal-body').innerHTML = d.body;
-  document.getElementById('modal-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+function openM(k){
+  const d=modals[k];if(!d)return;
+  document.getElementById('modalT').textContent=d.t;
+  document.getElementById('modalB').innerHTML=d.b;
+  document.getElementById('modalBg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeM(e){if(e.target===document.getElementById('modalBg'))closeM2();}
+function closeM2(){document.getElementById('modalBg').classList.remove('open');document.body.style.overflow='';}
+
+// ============================
+// TAB SWITCH
+// ============================
+function setTab(id){
+  document.querySelectorAll('.calc-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab-b').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  event.currentTarget.classList.add('on');
 }
 
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
+// ============================
+// FADE OBSERVER
+// ============================
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});
+},{threshold:0.08});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
 
-function closeModalOutside(e) {
-  if (e.target === document.getElementById('modal-overlay')) closeModal();
-}
-
-// ============================================================
-// FADE UP OBSERVER
-// ============================================================
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// ============================================================
+// ============================
 // INIT
-// ============================================================
-window.addEventListener('load', () => {
-  setTimeout(initGeoViewer, 100);
-  renderDemoChart();
-  updateGeoInfo('kare-prizma');
+// ============================
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    initGeo();
+    guncellePrizma();
+  },150);
+  renderChart(demoData,'demoBars');
+  renderStats(demoData,'demoStats');
 });
 
-window.addEventListener('resize', () => {
-  if (geoRenderer && geoCam) {
-    const c = document.getElementById('geo-canvas');
-    const container = c.parentElement;
-    const w = container.offsetWidth;
-    const h = container.offsetHeight;
-    geoRenderer.setSize(w, h);
-    geoCam.aspect = w/h;
-    geoCam.updateProjectionMatrix();
+window.addEventListener('resize',()=>{
+  if(gR&&gC){
+    const cv=document.getElementById('geo-canvas');
+    const cont=cv.parentElement;
+    const cw=cont.offsetWidth,ch=Math.max(300,cw*0.55);
+    gR.setSize(cw,ch);
+    gC.aspect=cw/ch; gC.updateProjectionMatrix();
   }
 });
 </script>
