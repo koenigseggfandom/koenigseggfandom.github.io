@@ -803,8 +803,8 @@ footer { border-top:1px solid var(--border); padding:2.5rem 5vw; text-align:cent
 
   scene.add(new THREE.AmbientLight(0xffffff,0.4));
   const dl=new THREE.DirectionalLight(0x7c6ff7,1.2); dl.position.set(5,8,5); scene.add(dl);
-  scene.add(Object.assign(new THREE.PointLight(0xff6b81,0.7,20),{position:{x:-3,y:2,z:3}}));
-  scene.add(Object.assign(new THREE.PointLight(0x3ecf8e,0.5,15),{position:{x:3,y:-1,z:2}}));
+  const pl1=new THREE.PointLight(0xff6b81,0.7,20); pl1.position.set(-3,2,3); scene.add(pl1);
+const pl2=new THREE.PointLight(0x3ecf8e,0.5,15); pl2.position.set(3,-1,2);  scene.add(pl2);
 
   const mkMat = c => new THREE.MeshPhongMaterial({color:c,shininess:90,transparent:true,opacity:0.88});
   const shapes = [
