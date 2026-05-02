@@ -5213,342 +5213,643 @@
 </div>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"8aff8cb046e04e9caa2ab9e00bbbf7b6","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 
-<!-- ============================================================ -->
-<!-- DISCORD BOT YENİ BÖLÜMLER -->
-<!-- ============================================================ -->
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+(function() {
+  const CAT_COLORS = { VOD:'#6366f1', GAMESENSE:'#ec4899', MOVEMENT:'#22c55e', AIM:'#f59e0b' };
+
+  // ── Section HTML tanımları ─────────────────────────────────────────────────
+
+  const DISCORD_OVERVIEW_HTML = `
+    <div class="page-header">
+      <h1 class="page-title">Discord Bot Genel Bakis</h1>
+      <p class="page-subtitle">AURA Coaching Discord botunun durumu ve istatistikleri</p>
+    </div>
+    <div id="botStatusCard" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px 28px;margin-bottom:28px;display:flex;align-items:center;gap:18px;">
+      <div id="botStatusDot" style="width:14px;height:14px;border-radius:50%;background:#94a3b8;flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <div id="botStatusText" style="font-size:17px;font-weight:600;color:#fff;">Bot Durumu Kontrol Ediliyor</div>
+        <div id="botStatusSub" style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:2px;">Yukleniyor</div>
+      </div>
+      <button onclick="loadDiscordOverview()" style="padding:8px 18px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.35);color:#a5b4fc;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">Yenile</button>
+    </div>
+
+    <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:28px;">
+      <div class="stat-card"><div class="stat-value" id="dc_totalStudents">-</div><div class="stat-label">Kayitli Ogrenci</div></div>
+      <div class="stat-card"><div class="stat-value" id="dc_monthLessons">-</div><div class="stat-label">Bu Ay Ders</div></div>
+      <div class="stat-card"><div class="stat-value" id="dc_activeSessions">-</div><div class="stat-label">Aktif Ses Oturumu</div></div>
+      <div class="stat-card"><div class="stat-value" id="dc_lowLessons" style="-webkit-text-fill-color:#f87171;color:#f87171;">-</div><div class="stat-label">Dersi Bitmek Uzere</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+        <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:20px;letter-spacing:.5px;text-transform:uppercase;">Kategori Dagılımı (Bu Ay)</div>
+        <canvas id="dc_catChart" height="200"></canvas>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+        <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:20px;letter-spacing:.5px;text-transform:uppercase;">Koc Performansı (Bu Ay)</div>
+        <canvas id="dc_coachChart" height="200"></canvas>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+        <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:16px;letter-spacing:.5px;text-transform:uppercase;">Dersi Bitmek Uzere</div>
+        <div id="dc_lowList"><div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px;">Yukleniyor</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+        <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:16px;letter-spacing:.5px;text-transform:uppercase;">Kategori Detayı</div>
+        <div id="dc_catBars"><div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px;">Yukleniyor</div></div>
+      </div>
+    </div>
+
+    <div class="data-table">
+      <div class="table-header">
+        <h3 class="table-title">Son 10 Ders</h3>
+      </div>
+      <table>
+        <thead><tr>
+          <th>#</th><th>Ogrenci</th><th>Koc</th><th>Kategori</th><th>Sure</th><th>Tarih</th><th>Tip</th>
+        </tr></thead>
+        <tbody id="dc_recentLessons"><tr><td colspan="7" class="empty-state">Yukleniyor</td></tr></tbody>
+      </table>
+    </div>
+  `;
+
+  const BOT_STUDENTS_HTML = `
+    <div class="page-header">
+      <h1 class="page-title">Bot Ogrencileri</h1>
+      <p class="page-subtitle">Discord botuna kayitli ogrenciler — <span id="botStudentCount">-</span> ogrenci</p>
+    </div>
+    <div class="data-table">
+      <div class="table-header">
+        <h3 class="table-title">Ogrenci Listesi</h3>
+        <div style="display:flex;gap:10px;">
+          <select id="dcStudentFilter" class="search-box" style="width:170px;" onchange="loadBotStudents()">
+            <option value="">Tumu</option>
+            <option value="aktif">Aktif</option>
+            <option value="pasif">Pasif</option>
+            <option value="bitmek_uzere">Dersi Bitmek Uzere</option>
+          </select>
+          <input type="text" class="search-box" placeholder="Ogrenci ara..." id="botStudentSearch" style="width:220px;" oninput="loadBotStudents()">
+        </div>
+      </div>
+      <table>
+        <thead><tr>
+          <th>#</th><th>Ad Soyad</th><th>Discord</th><th>Rank</th><th>Hedef</th><th>Paket</th><th>Tamamlanan</th><th>Kalan</th><th>Durum</th><th>Islemler</th>
+        </tr></thead>
+        <tbody id="botStudentsTableBody"><tr><td colspan="10" class="empty-state">Yukleniyor</td></tr></tbody>
+      </table>
+      <div id="botStudentsPagination" style="padding:16px;text-align:center;display:flex;justify-content:center;gap:8px;"></div>
+    </div>
+  `;
+
+  const BOT_LESSONS_HTML = `
+    <div class="page-header">
+      <h1 class="page-title">Bot Dersleri</h1>
+      <p class="page-subtitle">Toplam <span id="botLessonCount">-</span> ders kaydi</p>
+    </div>
+
+    <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px;">
+      <div class="stat-card"><div class="stat-value" id="bl_total">-</div><div class="stat-label">Bu Ay Ders</div></div>
+      <div class="stat-card"><div class="stat-value" id="bl_hours">-</div><div class="stat-label">Toplam Saat</div></div>
+      <div class="stat-card"><div class="stat-value" id="bl_topCat" style="font-size:18px;">-</div><div class="stat-label">En Aktif Kategori</div></div>
+      <div class="stat-card"><div class="stat-value" id="bl_topCoach" style="font-size:16px;">-</div><div class="stat-label">En Aktif Koc</div></div>
+    </div>
+
+    <div class="data-table">
+      <div class="table-header">
+        <h3 class="table-title">Ders Gecmisi</h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <select id="blCatFilter" class="search-box" style="width:150px;" onchange="loadBotLessons(1)">
+            <option value="">Tum Kategoriler</option>
+            <option value="VOD">VOD</option>
+            <option value="GAMESENSE">Gamesense</option>
+            <option value="MOVEMENT">Movement</option>
+            <option value="AIM">Aim</option>
+          </select>
+          <select id="blAutoFilter" class="search-box" style="width:140px;" onchange="loadBotLessons(1)">
+            <option value="">Tum Tipler</option>
+            <option value="true">Otomatik</option>
+            <option value="false">Manuel</option>
+          </select>
+          <input type="text" class="search-box" placeholder="Ogrenci ara..." id="blSearch" style="width:180px;" oninput="loadBotLessons(1)">
+          <button onclick="exportLessonsCSV()" style="padding:8px 16px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#86efac;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">CSV Indir</button>
+        </div>
+      </div>
+      <table>
+        <thead><tr>
+          <th>#</th><th>Ders No</th><th>Ogrenci</th><th>Koc</th><th>Kategori</th><th>Sure</th><th>Tarih</th><th>Tip</th><th>Islemler</th>
+        </tr></thead>
+        <tbody id="botLessonsTableBody"><tr><td colspan="9" class="empty-state">Yukleniyor</td></tr></tbody>
+      </table>
+      <div id="botLessonsPagination" style="padding:16px;text-align:center;display:flex;justify-content:center;gap:8px;"></div>
+    </div>
+  `;
+
+  const DISCORD_QUEUE_HTML = `
+    <div class="page-header">
+      <h1 class="page-title">Otomatik Kayit Kuyrugu</h1>
+      <p class="page-subtitle">Admin panelinden eklenen ogrenciler — bot 60 saniyede bir kontrol eder</p>
+    </div>
+    <div class="data-table" style="padding:25px;margin-bottom:24px;">
+      <h3 style="color:#22c55e;margin-bottom:18px;font-size:16px;font-weight:700;">Kuyruga Ogrenci Ekle</h3>
+      <p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:18px;">Buraya eklediginde bot, Discord sunucusunda bu kisiye ait hesabi arayip otomatik kayit yapacak.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="form-group"><label>Ad *</label><input type="text" id="qAd" placeholder="Ahmet"></div>
+        <div class="form-group"><label>Soyad *</label><input type="text" id="qSoyad" placeholder="Yilmaz"></div>
+        <div class="form-group"><label>Discord Username</label><input type="text" id="qDiscordTag" placeholder="ahmetyilmaz veya ahmet#1234"></div>
+        <div class="form-group"><label>Discord ID (daha guvenilir)</label><input type="text" id="qDiscordId" placeholder="123456789012345678"></div>
+        <div class="form-group"><label>Mevcut Rank</label>
+          <select id="qRank"><option value="">Secin</option>
+            <option>Iron</option><option>Bronze</option><option>Silver</option><option>Gold</option>
+            <option>Platinum</option><option>Diamond</option><option>Ascendant</option><option>Immortal</option><option>Radiant</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Hedef Rank</label>
+          <select id="qTargetRank"><option value="">Secin</option>
+            <option>Iron</option><option>Bronze</option><option>Silver</option><option>Gold</option>
+            <option>Platinum</option><option>Diamond</option><option>Ascendant</option><option>Immortal</option><option>Radiant</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column:1/-1;"><label>Paket Turu</label><input type="text" id="qPackage" placeholder="10 Ders, 5 Ders vb."></div>
+      </div>
+      <button onclick="addToDiscordQueue()" style="margin-top:12px;padding:13px 28px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;font-size:15px;">Kuyruga Ekle</button>
+    </div>
+    <div class="data-table">
+      <div class="table-header">
+        <h3 class="table-title">Kayit Kuyrugu</h3>
+        <div style="display:flex;gap:10px;">
+          <select id="queueFilter" class="search-box" style="width:160px;" onchange="loadDiscordQueue()">
+            <option value="all">Tumu</option>
+            <option value="pending">Bekleyenler</option>
+            <option value="done">Tamamlananlar</option>
+          </select>
+          <button onclick="loadDiscordQueue()" style="padding:8px 16px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.35);color:#a5b4fc;border-radius:8px;cursor:pointer;font-size:13px;">Yenile</button>
+        </div>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Ad Soyad</th><th>Discord</th><th>Paket</th><th>Rank / Hedef</th><th>Eklenme</th><th>Durum</th>
+        </tr></thead>
+        <tbody id="discordQueueTableBody"><tr><td colspan="6" class="empty-state">Yukleniyor</td></tr></tbody>
+      </table>
+    </div>
+  `;
+
+  // ── Ogrenci Detay Modali ───────────────────────────────────────────────────
+  const studentDetailModal = document.createElement('div');
+  studentDetailModal.id = 'dcStudentModal';
+  studentDetailModal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;justify-content:center;align-items:center;';
+  studentDetailModal.innerHTML = `
+    <div style="background:#0f0f1a;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:32px;max-width:700px;width:95%;max-height:85vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+        <h2 id="dcStudentModalTitle" style="color:#fff;font-size:20px;font-weight:700;">Ogrenci Detayi</h2>
+        <button onclick="document.getElementById('dcStudentModal').style.display='none'" style="background:rgba(255,255,255,0.08);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;">x</button>
+      </div>
+      <div id="dcStudentModalBody"></div>
+    </div>
+  `;
+  studentDetailModal.addEventListener('click', function(e) { if(e.target===this) this.style.display='none'; });
+  document.body.appendChild(studentDetailModal);
+
+  // ── DOM'a seksiyon ekle ────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
     const mainContent = document.querySelector('.main-content');
     if (!mainContent) return;
 
-    // ── Discord Genel Bakış ──────────────────────────────────────
-    const discordOverviewSection = document.createElement('div');
-    discordOverviewSection.className = 'content-section';
-    discordOverviewSection.id = 'discordOverviewSection';
-    discordOverviewSection.innerHTML = `
-        <div class="page-header">
-            <h1 class="page-title">🤖 Discord Bot Genel Bakış</h1>
-            <p class="page-subtitle">AURA Coaching Discord botunun durumu ve istatistikleri</p>
-        </div>
+    [
+      ['discordOverviewSection', DISCORD_OVERVIEW_HTML],
+      ['botStudentsSection',     BOT_STUDENTS_HTML],
+      ['botLessonsSection',      BOT_LESSONS_HTML],
+      ['discordQueueSection',    DISCORD_QUEUE_HTML],
+    ].forEach(([id, html]) => {
+      if (!document.getElementById(id)) {
+        const div = document.createElement('div');
+        div.className = 'content-section';
+        div.id = id;
+        div.innerHTML = html;
+        mainContent.appendChild(div);
+      } else {
+        document.getElementById(id).innerHTML = html;
+      }
+    });
 
-        <!-- Bot Durum Kartı -->
-        <div id="botStatusCard" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px 30px;margin-bottom:30px;display:flex;align-items:center;gap:20px;">
-            <div id="botStatusDot" style="width:16px;height:16px;border-radius:50%;background:#94a3b8;flex-shrink:0;box-shadow:0 0 10px rgba(148,163,184,0.5);"></div>
-            <div>
-                <div id="botStatusText" style="font-size:18px;font-weight:600;color:#fff;">Bot Durumu Kontrol Ediliyor...</div>
-                <div id="botStatusSub" style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:3px;">Yükleniyor</div>
-            </div>
-            <button onclick="loadDiscordOverview()" style="margin-left:auto;padding:8px 18px;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);color:#a5b4fc;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">🔄 Yenile</button>
-        </div>
-
-        <!-- İstatistik Kartları -->
-        <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-bottom:30px;">
-            <div class="stat-card">
-                <div class="stat-value" id="dc_totalStudents">-</div>
-                <div class="stat-label">Kayıtlı Öğrenci</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="dc_monthLessons">-</div>
-                <div class="stat-label">Bu Ay Ders</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="dc_activeSessions">-</div>
-                <div class="stat-label">Aktif Ses Oturumu</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="dc_lowLessons" style="-webkit-text-fill-color:#f87171;color:#f87171;">-</div>
-                <div class="stat-label">⚠️ Dersi Bitmek Üzere</div>
-            </div>
-        </div>
-
-        <!-- Kategori Dağılımı -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:30px;">
-            <div class="data-table" style="padding:25px;">
-                <h3 style="color:#6366f1;margin-bottom:18px;font-size:16px;">📂 Kategori Dağılımı (Bu Ay)</h3>
-                <div id="dc_categoryBreakdown" style="display:flex;flex-direction:column;gap:12px;">
-                    <div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px;">Yükleniyor...</div>
-                </div>
-            </div>
-            <div class="data-table" style="padding:25px;">
-                <h3 style="color:#ec4899;margin-bottom:18px;font-size:16px;">⚠️ Dersi Bitmek Üzere</h3>
-                <div id="dc_lowLessonsList">
-                    <div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px;">Yükleniyor...</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Son Dersler -->
-        <div class="data-table">
-            <div class="table-header">
-                <h3 class="table-title">📚 Son 10 Ders</h3>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Öğrenci</th>
-                        <th>Kategori</th>
-                        <th>Süre</th>
-                        <th>Tarih</th>
-                        <th>Tip</th>
-                    </tr>
-                </thead>
-                <tbody id="dc_recentLessons">
-                    <tr><td colspan="6" class="empty-state">Yükleniyor...</td></tr>
-                </tbody>
-            </table>
-        </div>
-    `;
-    mainContent.appendChild(discordOverviewSection);
-
-    // ── Kayıt Kuyruğu ──────────────────────────────────────────
-    const discordQueueSection = document.createElement('div');
-    discordQueueSection.className = 'content-section';
-    discordQueueSection.id = 'discordQueueSection';
-    discordQueueSection.innerHTML = `
-        <div class="page-header">
-            <h1 class="page-title">⏳ Otomatik Kayıt Kuyruğu</h1>
-            <p class="page-subtitle">Admin panelinden eklenen öğrenciler — bot 60 saniyede bir kontrol eder</p>
-        </div>
-
-        <!-- Yeni Kayıt Ekle -->
-        <div class="data-table" style="padding:25px;margin-bottom:25px;">
-            <h3 style="color:#22c55e;margin-bottom:20px;">➕ Kuyruğa Öğrenci Ekle</h3>
-            <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:20px;">Buraya eklediğinizde bot, Discord sunucusunda bu kişiyi arayıp otomatik kayıt yapacak.</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                <div class="form-group"><label>Ad *</label><input type="text" id="qAd" placeholder="Örn: Ahmet"></div>
-                <div class="form-group"><label>Soyad *</label><input type="text" id="qSoyad" placeholder="Örn: Yılmaz"></div>
-                <div class="form-group"><label>Discord Username</label><input type="text" id="qDiscordTag" placeholder="Örn: ahmetyilmaz veya ahmet#1234"></div>
-                <div class="form-group"><label>Discord ID (daha güvenilir)</label><input type="text" id="qDiscordId" placeholder="Örn: 123456789012345678"></div>
-                <div class="form-group"><label>Mevcut Rank</label>
-                    <select id="qRank">
-                        <option value="">Seçin</option>
-                        <option>Iron</option><option>Bronze</option><option>Silver</option><option>Gold</option>
-                        <option>Platinum</option><option>Diamond</option><option>Ascendant</option><option>Immortal</option><option>Radiant</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Hedef Rank</label>
-                    <select id="qTargetRank">
-                        <option value="">Seçin</option>
-                        <option>Iron</option><option>Bronze</option><option>Silver</option><option>Gold</option>
-                        <option>Platinum</option><option>Diamond</option><option>Ascendant</option><option>Immortal</option><option>Radiant</option>
-                    </select>
-                </div>
-                <div class="form-group" style="grid-column:1/-1;"><label>Paket Türü</label><input type="text" id="qPackage" placeholder="Örn: 10 Ders, 5 Ders"></div>
-            </div>
-            <button onclick="addToDiscordQueue()" style="margin-top:10px;padding:14px 28px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;font-size:15px;">🚀 Kuyruğa Ekle</button>
-        </div>
-
-        <!-- Kuyruk Listesi -->
-        <div class="data-table">
-            <div class="table-header">
-                <h3 class="table-title">Kayıt Kuyruğu</h3>
-                <div style="display:flex;gap:10px;">
-                    <select id="queueFilter" class="search-box" style="width:160px;" onchange="loadDiscordQueue()">
-                        <option value="all">Tümü</option>
-                        <option value="pending">Bekleyenler</option>
-                        <option value="done">Tamamlananlar</option>
-                    </select>
-                    <button onclick="loadDiscordQueue()" style="padding:8px 16px;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);color:#a5b4fc;border-radius:8px;cursor:pointer;font-size:13px;">🔄</button>
-                </div>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Ad Soyad</th>
-                        <th>Discord</th>
-                        <th>Paket</th>
-                        <th>Rank → Hedef</th>
-                        <th>Eklenme</th>
-                        <th>Durum</th>
-                    </tr>
-                </thead>
-                <tbody id="discordQueueTableBody">
-                    <tr><td colspan="6" class="empty-state">Sekmeye tıklayınca yüklenir...</td></tr>
-                </tbody>
-            </table>
-        </div>
-    `;
-    mainContent.appendChild(discordQueueSection);
-
-    // ── showSection override — yeni seksiyonlar ────────────────
-    const _prevShowSection = window.showSection;
+    // showSection override
+    const _orig = window.showSection;
     window.showSection = function(section, event) {
-        _prevShowSection(section, event);
-        if (section === 'discordOverview') loadDiscordOverview();
-        else if (section === 'discordQueue') loadDiscordQueue();
+      _orig(section, event);
+      if (section === 'discordOverview') loadDiscordOverview();
+      else if (section === 'botStudents')   loadBotStudents();
+      else if (section === 'botLessons')    loadBotLessons(1);
+      else if (section === 'discordQueue')  loadDiscordQueue();
     };
-});
+  });
 
-// ── Discord Overview Loader ──────────────────────────────────────
-async function loadDiscordOverview() {
-    // Bot heartbeat kontrolü
+  // ── Chart yonetimi ─────────────────────────────────────────────────────────
+  const charts = {};
+  function makeChart(id, type, labels, datasets, opts = {}) {
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    if (charts[id]) charts[id].destroy();
+    charts[id] = new Chart(canvas, {
+      type,
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { labels: { color: 'rgba(255,255,255,0.6)', font: { size: 12 } } },
+          tooltip: { callbacks: {} },
+        },
+        scales: type === 'bar' || type === 'line' ? {
+          x: { ticks: { color: 'rgba(255,255,255,0.5)' }, grid: { color: 'rgba(255,255,255,0.06)' } },
+          y: { ticks: { color: 'rgba(255,255,255,0.5)' }, grid: { color: 'rgba(255,255,255,0.06)' }, beginAtZero: true },
+        } : undefined,
+        ...opts,
+      },
+    });
+  }
+
+  // ── Discord Overview ───────────────────────────────────────────────────────
+  window.loadDiscordOverview = async function() {
     try {
-        const hbRes = await fetch(`${API_URL}/api/discord/heartbeat`, { headers: apiHeaders() });
-        if (hbRes.ok) {
-            const hb = await hbRes.json();
-            const lastSeen = new Date(hb.lastSeen);
-            const diffSec = Math.floor((Date.now() - lastSeen) / 1000);
-            const online = diffSec < 120;
-            document.getElementById('botStatusDot').style.background = online ? '#22c55e' : '#ef4444';
-            document.getElementById('botStatusDot').style.boxShadow = online ? '0 0 12px rgba(34,197,94,0.6)' : '0 0 12px rgba(239,68,68,0.5)';
-            document.getElementById('botStatusText').textContent = online ? '🟢 Bot Online' : '🔴 Bot Offline';
-            document.getElementById('botStatusSub').textContent = online
-                ? `Son görülme: ${diffSec} saniye önce — AURA Coaching Bot#6709`
-                : `Son görülme: ${lastSeen.toLocaleString('tr-TR')} — 2 dakikadan uzun süredir yanıt yok`;
+      const hbRes = await fetch(`${API_URL}/api/discord/heartbeat`, { headers: apiHeaders() });
+      if (hbRes.ok) {
+        const hb = await hbRes.json();
+        if (hb.lastSeen) {
+          const diffSec = Math.floor((Date.now() - new Date(hb.lastSeen)) / 1000);
+          const online = diffSec < 120;
+          const dot = document.getElementById('botStatusDot');
+          dot.style.background = online ? '#22c55e' : '#ef4444';
+          dot.style.boxShadow = `0 0 10px ${online ? 'rgba(34,197,94,0.6)' : 'rgba(239,68,68,0.5)'}`;
+          document.getElementById('botStatusText').textContent = online ? 'Bot Online' : 'Bot Offline';
+          document.getElementById('botStatusSub').textContent = online
+            ? `Son gorme: ${diffSec} saniye once — AURA Coaching Bot#6709`
+            : `Son gorme: ${new Date(hb.lastSeen).toLocaleString('tr-TR')} — 2 dakikadan uzun suredir yanit yok`;
         }
-    } catch(e) {
-        document.getElementById('botStatusText').textContent = '⚠️ Bot durumu alınamadı';
-        document.getElementById('botStatusSub').textContent = e.message;
-    }
+      }
+    } catch(e) { console.warn('Heartbeat error:', e.message); }
 
-    // İstatistikler
     try {
-        const statsRes = await fetch(`${API_URL}/api/discord/stats`, { headers: apiHeaders() });
-        if (statsRes.ok) {
-            const stats = await statsRes.json();
-            document.getElementById('dc_totalStudents').textContent = stats.totalStudents ?? '-';
-            document.getElementById('dc_monthLessons').textContent = stats.monthLessons ?? '-';
-            document.getElementById('dc_activeSessions').textContent = stats.activeSessions ?? '0';
-            document.getElementById('dc_lowLessons').textContent = stats.lowLessons ?? '0';
+      const sRes = await fetch(`${API_URL}/api/discord/stats`, { headers: apiHeaders() });
+      if (sRes.ok) {
+        const s = await sRes.json();
+        document.getElementById('dc_totalStudents').textContent = s.totalStudents ?? '-';
+        document.getElementById('dc_monthLessons').textContent = s.monthLessons ?? '-';
+        document.getElementById('dc_activeSessions').textContent = s.activeSessions ?? '0';
+        document.getElementById('dc_lowLessons').textContent = s.lowLessons ?? '0';
 
-            // Kategori dağılımı
-            if (stats.categories) {
-                const catColors = { VOD:'#6366f1', GAMESENSE:'#ec4899', MOVEMENT:'#22c55e', AIM:'#f59e0b' };
-                const total = Object.values(stats.categories).reduce((s,v) => s+v, 0) || 1;
-                document.getElementById('dc_categoryBreakdown').innerHTML = Object.entries(stats.categories).map(([cat, cnt]) => `
-                    <div>
-                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;">
-                            <span style="color:${catColors[cat]||'#6366f1'};font-weight:600;">${cat}</span>
-                            <span style="color:rgba(255,255,255,0.7);">${cnt} ders</span>
-                        </div>
-                        <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:6px;overflow:hidden;">
-                            <div style="height:100%;background:${catColors[cat]||'#6366f1'};width:${Math.round(cnt/total*100)}%;"></div>
-                        </div>
-                    </div>
-                `).join('') || '<div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px;">Bu ay ders yok</div>';
-            }
-
-            // Dersi bitmek üzere olanlar
-            if (stats.lowLessonStudents && stats.lowLessonStudents.length) {
-                document.getElementById('dc_lowLessonsList').innerHTML = stats.lowLessonStudents.map(s => `
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:8px;margin-bottom:8px;">
-                        <div>
-                            <div style="font-weight:600;color:#fff;font-size:14px;">${s.name} ${s.surname}</div>
-                            <div style="font-size:12px;color:rgba(255,255,255,0.4);">&lt;@${s.discordId}&gt;</div>
-                        </div>
-                        <div style="background:rgba(239,68,68,0.2);color:#f87171;padding:4px 12px;border-radius:6px;font-weight:700;font-size:14px;">
-                            ${s.remainingLessons} kaldı
-                        </div>
-                    </div>
-                `).join('');
-            } else {
-                document.getElementById('dc_lowLessonsList').innerHTML = '<div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px;">Hepsi iyi durumda ✅</div>';
-            }
+        // Kategori pie chart
+        if (s.categories && Object.keys(s.categories).length) {
+          const cats = Object.keys(s.categories);
+          makeChart('dc_catChart', 'doughnut', cats,
+            [{ data: cats.map(c => s.categories[c]), backgroundColor: cats.map(c => CAT_COLORS[c] || '#6366f1'), borderWidth: 0 }]
+          );
+          const total = cats.reduce((sum,c) => sum + s.categories[c], 0) || 1;
+          document.getElementById('dc_catBars').innerHTML = cats.map(c => `
+            <div style="margin-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;">
+                <span style="color:${CAT_COLORS[c]||'#6366f1'};font-weight:700;">${c}</span>
+                <span style="color:rgba(255,255,255,0.6);">${s.categories[c]} ders</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.07);border-radius:4px;height:6px;">
+                <div style="height:100%;background:${CAT_COLORS[c]||'#6366f1'};border-radius:4px;width:${Math.round(s.categories[c]/total*100)}%;"></div>
+              </div>
+            </div>
+          `).join('');
         }
-    } catch(e) {
-        console.warn('Discord stats error:', e.message);
-    }
+
+        // Dersi bitmek uzere
+        if (s.lowLessonStudents && s.lowLessonStudents.length) {
+          document.getElementById('dc_lowList').innerHTML = s.lowLessonStudents.map(st => `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.18);border-radius:10px;margin-bottom:8px;">
+              <div>
+                <div style="font-weight:600;color:#fff;font-size:14px;">${st.name} ${st.surname}</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.35);">${st.discordId}</div>
+              </div>
+              <div style="background:rgba(239,68,68,0.18);color:#f87171;padding:4px 12px;border-radius:6px;font-weight:700;">${st.remainingLessons} kaldi</div>
+            </div>
+          `).join('');
+        } else {
+          document.getElementById('dc_lowList').innerHTML = '<div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px;">Hepsi iyi durumda</div>';
+        }
+      }
+    } catch(e) { console.warn('Stats error:', e.message); }
+
+    // Koc performansi
+    try {
+      const cRes = await fetch(`${API_URL}/api/discord/reports/coaches?period=month`, { headers: apiHeaders() });
+      if (cRes.ok) {
+        const cData = await cRes.json();
+        if (cData.coaches && cData.coaches.length) {
+          makeChart('dc_coachChart', 'bar',
+            cData.coaches.slice(0,8).map(c => c.coachUsername || c.coachId.slice(-6)),
+            [{ label: 'Ders Sayisi', data: cData.coaches.slice(0,8).map(c => parseInt(c.total)), backgroundColor: '#6366f188', borderColor: '#6366f1', borderWidth: 1, borderRadius: 6 }]
+          );
+        }
+      }
+    } catch(e) { console.warn('Coach chart error:', e.message); }
 
     // Son dersler
     try {
-        const lessonsRes = await fetch(`${API_URL}/api/discord/lessons/recent`, { headers: apiHeaders() });
-        if (lessonsRes.ok) {
-            const lData = await lessonsRes.json();
-            const catColors = { VOD:'#6366f1', GAMESENSE:'#ec4899', MOVEMENT:'#22c55e', AIM:'#f59e0b' };
-            const tbody = document.getElementById('dc_recentLessons');
-            if (lData.lessons && lData.lessons.length) {
-                tbody.innerHTML = lData.lessons.map(l => `
-                    <tr>
-                        <td style="color:rgba(255,255,255,0.4);font-size:13px;">#${l.lessonNumber}</td>
-                        <td style="font-weight:500;">${l.studentName || '-'}</td>
-                        <td><span style="background:${catColors[l.category]||'#6366f1'}33;color:${catColors[l.category]||'#6366f1'};padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600;">${l.category||'-'}</span></td>
-                        <td style="color:rgba(255,255,255,0.6);">${l.durationMins ? l.durationMins+'dk' : '-'}</td>
-                        <td style="color:rgba(255,255,255,0.5);font-size:13px;">${new Date(l.createdAt).toLocaleDateString('tr-TR')}</td>
-                        <td><span style="font-size:11px;padding:2px 8px;border-radius:4px;${l.isAutomatic ? 'background:rgba(99,102,241,0.2);color:#a5b4fc;' : 'background:rgba(34,197,94,0.2);color:#86efac;'}">${l.isAutomatic ? '🤖 Otomatik' : '✍️ Manuel'}</span></td>
-                    </tr>
-                `).join('');
-            } else {
-                tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Henüz ders yok</td></tr>';
-            }
-        }
-    } catch(e) {
-        console.warn('Recent lessons error:', e.message);
-    }
-}
-
-// ── Queue Loader ───────────────────────────────────────────────
-async function loadDiscordQueue() {
-    const tbody = document.getElementById('discordQueueTableBody');
-    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Yükleniyor...</td></tr>';
-    try {
-        const filter = document.getElementById('queueFilter')?.value || 'all';
-        const res = await fetch(`${API_URL}/api/discord/queue?filter=${filter}`, { headers: apiHeaders() });
-        if (!res.ok) throw new Error('API yanıt vermedi');
-        const data = await res.json();
-        const queue = data.queue || [];
-        if (!queue.length) {
-            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Kuyruk boş</td></tr>';
-            return;
-        }
-        tbody.innerHTML = queue.map(q => `
+      const lRes = await fetch(`${API_URL}/api/discord/lessons/recent`, { headers: apiHeaders() });
+      if (lRes.ok) {
+        const lData = await lRes.json();
+        const tbody = document.getElementById('dc_recentLessons');
+        if (lData.lessons && lData.lessons.length) {
+          let i = 0;
+          tbody.innerHTML = lData.lessons.map(l => `
             <tr>
-                <td style="font-weight:500;">${q.name} ${q.surname}</td>
-                <td style="font-size:13px;color:rgba(255,255,255,0.6);">${q.discordTag || q.discordId || '-'}</td>
-                <td>${q.packageType || '-'}</td>
-                <td>
-                    ${q.rank ? `<span class="rank-badge rank-${q.rank.toLowerCase()}">${q.rank}</span>` : '-'}
-                    ${q.rank && q.targetRank ? ' → ' : ''}
-                    ${q.targetRank ? `<span class="rank-badge rank-${q.targetRank.toLowerCase()}">${q.targetRank}</span>` : ''}
-                </td>
-                <td style="font-size:12px;color:rgba(255,255,255,0.4);">${new Date(q.createdAt).toLocaleDateString('tr-TR')}</td>
-                <td>
-                    ${q.processed
-                        ? `<span style="background:rgba(34,197,94,0.2);color:#86efac;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600;">✅ Tamamlandı</span>`
-                        : `<span style="background:rgba(245,158,11,0.2);color:#fcd34d;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600;">⏳ Bekliyor</span>`
-                    }
-                </td>
+              <td style="color:rgba(255,255,255,0.35);">${++i}</td>
+              <td style="font-weight:500;">${l.studentName || '-'} ${l.studentSurname || ''}</td>
+              <td style="color:rgba(255,255,255,0.5);font-size:13px;">${l.coachUsername || l.coachId?.slice(-8) || '-'}</td>
+              <td><span style="background:${CAT_COLORS[l.category]||'#6366f1'}33;color:${CAT_COLORS[l.category]||'#6366f1'};padding:3px 10px;border-radius:5px;font-size:12px;font-weight:700;">${l.category||'-'}</span></td>
+              <td style="color:rgba(255,255,255,0.6);">${l.durationMins ? l.durationMins+'dk' : '-'}</td>
+              <td style="color:rgba(255,255,255,0.4);font-size:12px;">${new Date(l.createdAt).toLocaleDateString('tr-TR')}</td>
+              <td><span style="font-size:11px;padding:2px 8px;border-radius:4px;${l.isAutomatic ? 'background:rgba(99,102,241,0.18);color:#a5b4fc;' : 'background:rgba(34,197,94,0.18);color:#86efac;'}">${l.isAutomatic ? 'Otomatik' : 'Manuel'}</span></td>
             </tr>
-        `).join('');
-    } catch(e) {
-        tbody.innerHTML = `<tr><td colspan="6" class="empty-state" style="color:#f87171;">Hata: ${e.message}</td></tr>`;
-    }
-}
+          `).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Henuz ders yok</td></tr>';
+        }
+      }
+    } catch(e) { console.warn('Recent lessons error:', e.message); }
+  };
 
-// ── Kuyruğa Ekle ──────────────────────────────────────────────
-async function addToDiscordQueue() {
-    const ad = document.getElementById('qAd').value.trim();
-    const soyad = document.getElementById('qSoyad').value.trim();
-    if (!ad || !soyad) { alert('Ad ve soyad zorunludur!'); return; }
-
-    const payload = {
-        name: ad,
-        surname: soyad,
-        discordTag: document.getElementById('qDiscordTag').value.trim() || null,
-        discordId: document.getElementById('qDiscordId').value.trim() || null,
-        rank: document.getElementById('qRank').value || null,
-        targetRank: document.getElementById('qTargetRank').value || null,
-        packageType: document.getElementById('qPackage').value.trim() || null,
-    };
-
+  // ── Bot Ogrencileri ────────────────────────────────────────────────────────
+  let dcStudentsPage = 1;
+  window.loadBotStudents = async function(page = 1) {
+    dcStudentsPage = page;
+    const tbody = document.getElementById('botStudentsTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="10" class="empty-state">Yukleniyor</td></tr>';
     try {
-        const res = await fetch(`${API_URL}/api/discord/queue`, {
-            method: 'POST',
-            headers: apiHeaders(),
-            body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        if (!data.success) throw new Error(data.error || 'Ekleme başarısız');
-        // Formu temizle
-        ['qAd','qSoyad','qDiscordTag','qDiscordId','qPackage'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('qRank').value = '';
-        document.getElementById('qTargetRank').value = '';
-        alert(`✅ "${ad} ${soyad}" kuyruğa eklendi! Bot 60 saniye içinde Discord'da arayacak.`);
-        loadDiscordQueue();
+      const search = document.getElementById('botStudentSearch')?.value || '';
+      const filter = document.getElementById('dcStudentFilter')?.value || '';
+      const params = new URLSearchParams({ page, limit: 20 });
+      if (search) params.set('search', search);
+      if (filter) params.set('filter', filter);
+      const res = await fetch(`${API_URL}/api/discord/students?${params}`, { headers: apiHeaders() });
+      const data = await res.json();
+      const students = data.students || [];
+      document.getElementById('botStudentCount').textContent = data.total || 0;
+
+      if (!students.length) {
+        tbody.innerHTML = '<tr><td colspan="10" class="empty-state">Ogrenci bulunamadi</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = students.map((s, idx) => {
+        const completed = Math.max(0, (s.totalLessons||0) - (s.remainingLessons||0));
+        const pct = s.totalLessons > 0 ? Math.round(completed/s.totalLessons*100) : 0;
+        const statusColor = s.isActive ? '#22c55e' : '#94a3b8';
+        const lowWarn = s.remainingLessons <= 3 && s.isActive ? 'style="color:#f87171;font-weight:700;"' : '';
+        return `<tr>
+          <td style="color:rgba(255,255,255,0.35);">${(page-1)*20+idx+1}</td>
+          <td style="font-weight:600;">${s.name} ${s.surname}</td>
+          <td style="font-size:12px;color:rgba(255,255,255,0.5);">${s.discordUsername || s.discordId}</td>
+          <td>${s.rank || '-'}</td>
+          <td>${s.targetRank || '-'}</td>
+          <td style="font-size:13px;">${s.packageType || '-'}</td>
+          <td style="text-align:center;">${completed}</td>
+          <td style="text-align:center;" ${lowWarn}>${s.remainingLessons}</td>
+          <td><span style="background:${s.isActive?'rgba(34,197,94,0.15)':'rgba(148,163,184,0.15)'};color:${statusColor};padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600;">${s.isActive?'Aktif':'Pasif'}</span></td>
+          <td>
+            <button onclick="openDcStudentDetail('${s.id}')" style="padding:4px 10px;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.35);color:#a5b4fc;border-radius:6px;cursor:pointer;font-size:12px;">Detay</button>
+          </td>
+        </tr>`;
+      }).join('');
+
+      // Pagination
+      const totalPages = Math.ceil((data.total||0) / 20);
+      renderPagination('botStudentsPagination', page, totalPages, 'loadBotStudents');
     } catch(e) {
-        alert('Hata: ' + e.message);
+      document.getElementById('botStudentsTableBody').innerHTML = `<tr><td colspan="10" class="empty-state" style="color:#f87171;">Hata: ${e.message}</td></tr>`;
     }
-}
+  };
+
+  window.openDcStudentDetail = async function(id) {
+    try {
+      const res = await fetch(`${API_URL}/api/discord/students/${id}`, { headers: apiHeaders() });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+      const s = data.student;
+      const lessons = data.lessons || [];
+      document.getElementById('dcStudentModalTitle').textContent = `${s.name} ${s.surname}`;
+      const completed = Math.max(0, (s.totalLessons||0)-(s.remainingLessons||0));
+      const pct = s.totalLessons > 0 ? Math.round(completed/s.totalLessons*100) : 0;
+      const barColor = s.remainingLessons <= 3 ? '#ef4444' : s.remainingLessons <= 7 ? '#f59e0b' : '#22c55e';
+
+      document.getElementById('dcStudentModalBody').innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;">
+          <div style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);border-radius:12px;padding:16px;text-align:center;">
+            <div style="font-size:26px;font-weight:700;color:#6366f1;">${s.totalLessons||0}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">Toplam Ders</div>
+          </div>
+          <div style="background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:16px;text-align:center;">
+            <div style="font-size:26px;font-weight:700;color:#22c55e;">${completed}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">Tamamlanan</div>
+          </div>
+          <div style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:16px;text-align:center;">
+            <div style="font-size:26px;font-weight:700;color:#f87171;">${s.remainingLessons||0}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">Kalan</div>
+          </div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:6px;">
+            <span>Ilerleme</span><span>${pct}%</span>
+          </div>
+          <div style="background:rgba(255,255,255,0.07);border-radius:6px;height:8px;">
+            <div style="height:100%;background:${barColor};border-radius:6px;width:${pct}%;transition:width .4s;"></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;font-size:13px;">
+          <div><span style="color:rgba(255,255,255,0.4);">Discord: </span><span style="color:#a5b4fc;">${s.discordUsername||'-'}</span></div>
+          <div><span style="color:rgba(255,255,255,0.4);">Discord ID: </span><span style="color:#fff;">${s.discordId}</span></div>
+          <div><span style="color:rgba(255,255,255,0.4);">Rank: </span><span style="color:#fde047;">${s.rank||'-'}</span></div>
+          <div><span style="color:rgba(255,255,255,0.4);">Hedef: </span><span style="color:#f9a8d4;">${s.targetRank||'-'}</span></div>
+          <div><span style="color:rgba(255,255,255,0.4);">Paket: </span><span>${s.packageType||'-'}</span></div>
+          <div><span style="color:rgba(255,255,255,0.4);">Kayit: </span><span>${new Date(s.registeredAt).toLocaleDateString('tr-TR')}</span></div>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;">Ders Gecmisi (Son 20)</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+            <th style="padding:8px;text-align:left;font-size:11px;color:rgba(255,255,255,0.4);">#</th>
+            <th style="padding:8px;text-align:left;font-size:11px;color:rgba(255,255,255,0.4);">KATEGORİ</th>
+            <th style="padding:8px;text-align:left;font-size:11px;color:rgba(255,255,255,0.4);">SURE</th>
+            <th style="padding:8px;text-align:left;font-size:11px;color:rgba(255,255,255,0.4);">TARİH</th>
+            <th style="padding:8px;text-align:left;font-size:11px;color:rgba(255,255,255,0.4);">TİP</th>
+          </tr></thead>
+          <tbody>
+            ${lessons.length ? lessons.map(l => `
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:9px;color:rgba(255,255,255,0.4);font-size:13px;">${l.lessonNumber}</td>
+                <td style="padding:9px;"><span style="background:${CAT_COLORS[l.category]||'#6366f1'}33;color:${CAT_COLORS[l.category]||'#6366f1'};padding:2px 8px;border-radius:4px;font-size:12px;font-weight:700;">${l.category||'-'}</span></td>
+                <td style="padding:9px;color:rgba(255,255,255,0.6);font-size:13px;">${l.durationMins ? l.durationMins+'dk' : '-'}</td>
+                <td style="padding:9px;color:rgba(255,255,255,0.5);font-size:12px;">${new Date(l.createdAt).toLocaleDateString('tr-TR')}</td>
+                <td style="padding:9px;font-size:11px;"><span style="${l.isAutomatic?'color:#a5b4fc;':'color:#86efac;'}">${l.isAutomatic?'Otomatik':'Manuel'}</span></td>
+              </tr>
+            `).join('') : '<tr><td colspan="5" style="padding:20px;text-align:center;color:rgba(255,255,255,0.3);">Ders bulunamadi</td></tr>'}
+          </tbody>
+        </table>
+      `;
+      document.getElementById('dcStudentModal').style.display = 'flex';
+    } catch(e) { alert('Hata: ' + e.message); }
+  };
+
+  // ── Bot Dersleri ───────────────────────────────────────────────────────────
+  window.loadBotLessons = async function(page = 1) {
+    const tbody = document.getElementById('botLessonsTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Yukleniyor</td></tr>';
+    try {
+      const cat = document.getElementById('blCatFilter')?.value || '';
+      const auto = document.getElementById('blAutoFilter')?.value || '';
+      const params = new URLSearchParams({ page, limit: 50 });
+      if (cat) params.set('category', cat);
+      if (auto !== '') params.set('auto', auto);
+      const res = await fetch(`${API_URL}/api/discord/lessons?${params}`, { headers: apiHeaders() });
+      const data = await res.json();
+      const lessons = data.lessons || [];
+      document.getElementById('botLessonCount').textContent = data.total || 0;
+
+      // Banner istatistikler
+      const now = new Date(), monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      const monthLessons = lessons.filter(l => new Date(l.createdAt) >= monthStart);
+      const totalMins = monthLessons.reduce((s,l) => s+(l.durationMins||0), 0);
+      const catCounts = {};
+      monthLessons.forEach(l => { catCounts[l.category] = (catCounts[l.category]||0)+1; });
+      const topCat = Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0];
+      const coachCounts = {};
+      monthLessons.forEach(l => { const k = l.coachUsername||l.coachId; coachCounts[k] = (coachCounts[k]||0)+1; });
+      const topCoach = Object.entries(coachCounts).sort((a,b)=>b[1]-a[1])[0];
+      document.getElementById('bl_total').textContent = monthLessons.length;
+      document.getElementById('bl_hours').textContent = Math.round(totalMins/60*10)/10 + 'h';
+      document.getElementById('bl_topCat').textContent = topCat ? topCat[0] : '-';
+      document.getElementById('bl_topCoach').textContent = topCoach ? topCoach[0] : '-';
+
+      if (!lessons.length) { tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Ders bulunamadi</td></tr>'; return; }
+
+      let i = 0;
+      tbody.innerHTML = lessons.map(l => `
+        <tr>
+          <td style="color:rgba(255,255,255,0.35);">${(page-1)*50+++i}</td>
+          <td style="color:rgba(255,255,255,0.5);font-size:12px;">${l.lessonNumber}</td>
+          <td style="font-weight:500;">${l.studentName||'-'} ${l.studentSurname||''}</td>
+          <td style="color:rgba(255,255,255,0.5);font-size:13px;">${l.coachUsername||l.coachId?.slice(-8)||'-'}</td>
+          <td><span style="background:${CAT_COLORS[l.category]||'#6366f1'}33;color:${CAT_COLORS[l.category]||'#6366f1'};padding:2px 9px;border-radius:5px;font-size:12px;font-weight:700;">${l.category||'-'}</span></td>
+          <td>${l.durationMins ? l.durationMins+'dk' : '-'}</td>
+          <td style="font-size:12px;color:rgba(255,255,255,0.45);">${new Date(l.createdAt).toLocaleDateString('tr-TR')}</td>
+          <td><span style="font-size:11px;padding:2px 8px;border-radius:4px;${l.isAutomatic?'background:rgba(99,102,241,0.18);color:#a5b4fc;':'background:rgba(34,197,94,0.18);color:#86efac;'}">${l.isAutomatic?'Otomatik':'Manuel'}</span></td>
+          <td><button onclick="deleteBotLesson('${l.id}')" style="padding:3px 8px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171;border-radius:5px;cursor:pointer;font-size:11px;">Sil</button></td>
+        </tr>
+      `).join('');
+      renderPagination('botLessonsPagination', page, Math.ceil((data.total||0)/50), 'loadBotLessons');
+    } catch(e) {
+      document.getElementById('botLessonsTableBody').innerHTML = `<tr><td colspan="9" class="empty-state" style="color:#f87171;">Hata: ${e.message}</td></tr>`;
+    }
+  };
+
+  window.deleteBotLesson = async function(id) {
+    if (!confirm('Bu dersi silmek istediginize emin misiniz?')) return;
+    try {
+      const res = await fetch(`${API_URL}/api/discord/lessons/${id}`, { method: 'DELETE', headers: apiHeaders() });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+      loadBotLessons(1);
+    } catch(e) { alert('Hata: ' + e.message); }
+  };
+
+  window.exportLessonsCSV = async function() {
+    try {
+      const cat = document.getElementById('blCatFilter')?.value || '';
+      const auto = document.getElementById('blAutoFilter')?.value || '';
+      const params = new URLSearchParams({ page: 1, limit: 9999 });
+      if (cat) params.set('category', cat);
+      if (auto !== '') params.set('auto', auto);
+      const res = await fetch(`${API_URL}/api/discord/lessons?${params}`, { headers: apiHeaders() });
+      const data = await res.json();
+      const lessons = data.lessons || [];
+      const header = 'Ders No,Ogrenci,Koc,Kategori,Sure(dk),Tarih,Tip\n';
+      const rows = lessons.map(l =>
+        `${l.lessonNumber},"${(l.studentName||'')+' '+(l.studentSurname||'')}","${l.coachUsername||l.coachId}",${l.category||''},${l.durationMins||''},${new Date(l.createdAt).toLocaleDateString('tr-TR')},${l.isAutomatic?'Otomatik':'Manuel'}`
+      ).join('\n');
+      const blob = new Blob(['\uFEFF'+header+rows], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `dersler_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+    } catch(e) { alert('CSV indirilemedi: ' + e.message); }
+  };
+
+  // ── Kayit Kuyrugu ──────────────────────────────────────────────────────────
+  window.loadDiscordQueue = async function() {
+    const tbody = document.getElementById('discordQueueTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Yukleniyor</td></tr>';
+    try {
+      const filter = document.getElementById('queueFilter')?.value || 'all';
+      const res = await fetch(`${API_URL}/api/discord/queue?filter=${filter}`, { headers: apiHeaders() });
+      const data = await res.json();
+      const queue = data.queue || [];
+      if (!queue.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Kuyruk bos</td></tr>'; return; }
+      tbody.innerHTML = queue.map(q => `
+        <tr>
+          <td style="font-weight:600;">${q.name} ${q.surname}</td>
+          <td style="font-size:12px;color:rgba(255,255,255,0.5);">${q.discordTag||q.discordId||'-'}</td>
+          <td>${q.packageType||'-'}</td>
+          <td style="font-size:13px;">${q.rank||'-'} ${q.rank&&q.targetRank?'->':''} ${q.targetRank||''}</td>
+          <td style="font-size:12px;color:rgba(255,255,255,0.4);">${new Date(q.createdAt).toLocaleDateString('tr-TR')}</td>
+          <td><span style="padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600;${q.processed?'background:rgba(34,197,94,0.18);color:#86efac;':'background:rgba(245,158,11,0.18);color:#fcd34d;'}">${q.processed?'Tamamlandi':'Bekliyor'}</span></td>
+        </tr>
+      `).join('');
+    } catch(e) {
+      document.getElementById('discordQueueTableBody').innerHTML = `<tr><td colspan="6" class="empty-state" style="color:#f87171;">Hata: ${e.message}</td></tr>`;
+    }
+  };
+
+  window.addToDiscordQueue = async function() {
+    const ad = document.getElementById('qAd')?.value.trim();
+    const soyad = document.getElementById('qSoyad')?.value.trim();
+    if (!ad || !soyad) { alert('Ad ve soyad zorunludur!'); return; }
+    try {
+      const res = await fetch(`${API_URL}/api/discord/queue`, {
+        method: 'POST',
+        headers: apiHeaders(),
+        body: JSON.stringify({
+          name: ad, surname: soyad,
+          discordTag: document.getElementById('qDiscordTag')?.value.trim() || null,
+          discordId: document.getElementById('qDiscordId')?.value.trim() || null,
+          rank: document.getElementById('qRank')?.value || null,
+          targetRank: document.getElementById('qTargetRank')?.value || null,
+          packageType: document.getElementById('qPackage')?.value.trim() || null,
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || 'Ekleme basarisiz');
+      ['qAd','qSoyad','qDiscordTag','qDiscordId','qPackage'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+      const rs = document.getElementById('qRank'), rt = document.getElementById('qTargetRank');
+      if(rs) rs.value=''; if(rt) rt.value='';
+      alert(`${ad} ${soyad} kuyruga eklendi! Bot 60 saniye icinde Discord'da arayacak.`);
+      loadDiscordQueue();
+    } catch(e) { alert('Hata: ' + e.message); }
+  };
+
+  // ── Yardimci: Pagination ───────────────────────────────────────────────────
+  function renderPagination(containerId, current, total, fn) {
+    const el = document.getElementById(containerId);
+    if (!el || total <= 1) { if(el) el.innerHTML=''; return; }
+    let html = '';
+    for (let p = 1; p <= Math.min(total, 10); p++) {
+      html += `<button onclick="${fn}(${p})" style="padding:6px 12px;border-radius:6px;border:1px solid ${p===current?'rgba(99,102,241,0.7)':'rgba(255,255,255,0.1)'};background:${p===current?'rgba(99,102,241,0.25)':'transparent'};color:${p===current?'#a5b4fc':'rgba(255,255,255,0.5)'};cursor:pointer;font-size:13px;">${p}</button>`;
+    }
+    el.innerHTML = html;
+  }
+
+})();
 </script>
 </body>
 </html>
