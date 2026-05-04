@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueCycle — Malzeme Listesi</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --surface: #111827;
+    --surface2: #1a2336;
+    --border: #1e2d45;
+    --border2: #243552;
+    --accent: #00c2ff;
+    --accent2: #0077b6;
+    --text: #e2eaf4;
+    --text2: #7a93b4;
+    --text3: #4a6280;
+    --green: #00e5a0;
+    --tag-bg: #0d1f35;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── Header ── */
+  header {
+    padding: 48px 40px 36px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #0d1929 0%, var(--bg) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(0,194,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .logo-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .logo-mark {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #fff;
+  }
+  h1 span { color: var(--accent); }
+  .subtitle {
+    font-size: 13px;
+    color: var(--text2);
+    font-family: 'DM Mono', monospace;
+    margin-top: 4px;
+  }
+  .header-stats {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .stat-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  /* ── Main ── */
+  main { padding: 32px 40px 60px; max-width: 1100px; }
+
+  /* ── Category header ── */
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 36px 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cat-icon { font-size: 16px; }
+  .cat-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .cat-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Card grid ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 14px;
+  }
+
+  /* ── Item card ── */
+  .item-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    position: relative;
+  }
+  .item-card:hover {
+    border-color: var(--accent2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px rgba(0,194,255,0.08);
+  }
+  .item-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(0,194,255,0.03), transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Photo area */
+  .card-photo {
+    width: 100%;
+    height: 160px;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 16px;
+    transition: transform .3s;
+  }
+  .item-card:hover .card-photo img { transform: scale(1.04); }
+  .photo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text3);
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    text-align: center;
+  }
+  .photo-placeholder .ph-icon { font-size: 32px; opacity: .4; }
+
+  .card-num {
+    position: absolute;
+    top: 10px; left: 10px;
+    background: rgba(10,15,26,.8);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    padding: 2px 7px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Card body */
+  .card-body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 8px;
+  }
+  .card-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .card-use {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  /* Card footer */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border-top: 1px solid var(--border);
+    padding: 10px 16px;
+    background: var(--surface2);
+  }
+  .price-group { display: flex; flex-direction: column; gap: 1px; }
+  .unit-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .total-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .qty-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    border-radius: 20px;
+    padding: 3px 10px;
+  }
+  .buy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: .03em;
+    padding: 6px 13px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: opacity .2s, transform .15s;
+    white-space: nowrap;
+  }
+  .buy-btn:hover { opacity: .85; transform: scale(.97); }
+  .buy-btn svg { flex-shrink: 0; }
+
+  /* ── Totals ── */
+  .totals {
+    margin-top: 40px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+  .total-row:last-child { border-bottom: none; }
+  .total-label {
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .total-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .total-sponsor {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    background: rgba(0,229,160,.08);
+    border: 1px solid rgba(0,229,160,.2);
+    border-radius: 6px;
+    padding: 4px 12px;
+  }
+
+  /* ── Note ── */
+  .note-box {
+    margin-top: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    font-size: 12.5px;
+    color: var(--text2);
+    line-height: 1.8;
+  }
+
+  @media (max-width: 680px) {
+    header { padding: 32px 20px 24px; }
+    main { padding: 20px 16px 48px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-row">
+    <div class="logo-mark">🌊</div>
+    <div>
+      <h1>Blue<span>Cycle</span></h1>
+      <div class="subtitle">// malzeme & bileşen listesi — v2.0</div>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="stat">
+      <span class="stat-val">17</span>
+      <span class="stat-label">Bileşen</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">~22.971 ₺</span>
+      <span class="stat-label">Elektronik Toplam</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── Görüntü İşleme & Kontrol ── -->
+  <div class="cat-header">
+    <span class="cat-icon">🧠</span>
+    <span class="cat-title">Görüntü İşleme & Kontrol</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="card-grid">
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#1</span>
+        <img src="img/01_raspberry_pi5.jpg" alt="Raspberry Pi 5" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#1</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>01_raspberry_pi5.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">Raspberry Pi 5 (4GB)</div>
+        <div class="card-use">Sistemin beyni — YOLOv8n modeli burada çalışır, atık tespiti yapar, Arduino'ya komut gönderir, navigasyonu yönetir</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">6.332 ₺ / adet</span>
+          <span class="total-price">6.332 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.robotistan.com/raspberry-pi-5-4-gb" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#2</span>
+        <img src="img/02_rpi_camera.jpg" alt="RPi Camera v2" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#2</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>02_rpi_camera.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">Raspberry Pi Camera Module v2</div>
+        <div class="card-use">8MP Sony IMX219 — su yüzeyini sürekli tarar, görüntüyü YOLOv8n modeline besler</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">992 ₺ / adet</span>
+          <span class="total-price">992 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.robotistan.com/raspberry-pi-camera-modul-camera-modul-for-raspberry-pi" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#3</span>
+        <img src="img/03_microsd.jpg" alt="MicroSD 64GB" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#3</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>03_microsd.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">MicroSD 64GB Samsung Evo Plus</div>
+        <div class="card-use">RPi işletim sistemi, YOLOv8n model dosyası ve atık veri logları burada saklanır</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">872 ₺ / adet</span>
+          <span class="total-price">872 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.hepsiburada.com/samsung-evo-plus-64gb-microsd-hafiza-karti-mb-mc64sa-apc-p-HBCV000068IHJ2?magaza=meretox&utm_source=epey&utm_medium=cpc&utm_campaign=sc:hb-ecom.sr:epey.md:pricecomp&wt_pc=epey&adj_t=1f4imnxj_1fnj6c85&adj_campaign=epey" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Kontrol & Elektronik ── -->
+  <div class="cat-header">
+    <span class="cat-icon">⚡</span>
+    <span class="cat-title">Kontrol & Elektronik</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="card-grid">
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#4</span>
+        <img src="img/04_arduino_mega.jpg" alt="Arduino Mega" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#4</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>04_arduino_mega.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">Arduino Mega 2560</div>
+        <div class="card-use">Motor kontrol birimi — RPi'den gelen komutları alır, thrusterleri, konveyör bandı ve servoları yönetir</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">893 ₺ / adet</span>
+          <span class="total-price">893 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.robotistan.com/arduino-mega2560-r3-klon-usb-kablo-hediyeli-usb-chip-ch340" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#5</span>
+        <img src="img/05_l298n.jpg" alt="L298N" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#5</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>05_l298n.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">L298N Çift Motor Sürücü</div>
+        <div class="card-use">Konveyör bant motorunu sürmek için — 2A kanal kapasitesi yeterli</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">100 ₺ / adet</span>
+          <span class="total-price">200 ₺</span>
+        </div>
+        <span class="qty-badge">×2</span>
+        <a class="buy-btn" href="https://www.robotistan.com/l298n-voltaj-regulatorlu-cift-motor-surucu-karti" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#6</span>
+        <img src="img/06_neo6m_gps.jpg" alt="NEO-6M GPS" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#6</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>06_neo6m_gps.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">NEO-6M GPS Modülü</div>
+        <div class="card-use">Araç konumu takibi ve istasyona dönüş rotası hesaplamak için — ~5m hassasiyet</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">207 ₺ / adet</span>
+          <span class="total-price">207 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.robotistan.com/gy-neo6mv2-gps-modulu-ucus-kontrol-sistem-gpsi" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#7</span>
+        <img src="img/07_hcsr04.jpg" alt="HC-SR04" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#7</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>07_hcsr04.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">HC-SR04 Ultrasonik Sensör</div>
+        <div class="card-use">Engel tespiti — 4 yöne yerleştirilir, çarpışmayı önler, istasyona hassas yanaşmayı sağlar</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">69 ₺ / adet</span>
+          <span class="total-price">276 ₺</span>
+        </div>
+        <span class="qty-badge">×4</span>
+        <a class="buy-btn" href="https://www.robotistan.com/hc-sr04-ultrasonik-mesafe-sensoru" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#8</span>
+        <img src="img/08_mg996r_servo.jpg" alt="MG996R Servo" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#8</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>08_mg996r_servo.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">MG996R Servo Motor</div>
+        <div class="card-use">Damper mekanizması — hazne dolunca devreye girer, atıkları ana konteynere boşaltır</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">212 ₺ / adet</span>
+          <span class="total-price">424 ₺</span>
+        </div>
+        <span class="qty-badge">×2</span>
+        <a class="buy-btn" href="https://www.robotistan.com/mg996-13-kg-servo-motor" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#9</span>
+        <img src="img/09_ftdi_ft232.jpg" alt="FTDI FT232RL" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#9</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>09_ftdi_ft232.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">FTDI FT232RL USB-UART Dönüştürücü</div>
+        <div class="card-use">RPi ↔ Arduino seri haberleşmesi — YZ kararlarını motor komutlarına dönüştüren köprü</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">86 ₺ / adet</span>
+          <span class="total-price">86 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.robotistan.com/ftdi-programlama-karti-33v-5v-secilebilir" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#10</span>
+        <img src="img/10_jumper_kablo.jpg" alt="Jumper Kablo Seti" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#10</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>10_jumper_kablo.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">500 Parça Jumper Kablo Seti</div>
+        <div class="card-use">Tüm bileşenlerin birbirine bağlantısı için</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">848 ₺ / adet</span>
+          <span class="total-price">848 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.robotistan.com/500-parca-jumper-kablo-seti" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── İtme Sistemi ── -->
+  <div class="cat-header">
+    <span class="cat-icon">🚀</span>
+    <span class="cat-title">İtme Sistemi</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="card-grid">
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#11</span>
+        <img src="img/11_apisqueen_u01.jpg" alt="ApisQueen U01" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#11</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>11_apisqueen_u01.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">ApisQueen U01 Sualtı Thruster — CW+CCW Set (ESC Dahil)</div>
+        <div class="card-use">Araç hareketi — 12-16V uyumlu, 2Kg itki, çift yönlü kontrol, ESC dahil gelir. CW sol gövdeye, CCW sağ gövdeye monte edilir</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">701 ₺ / adet</span>
+          <span class="total-price">1.402 ₺</span>
+        </div>
+        <span class="qty-badge">×2</span>
+        <a class="buy-btn" href="https://www.underwaterthruster.com/tr/products/u01-12v-16v-2kg-i%CC%87tici-fircasiz-sualti-i%CC%87tici-pervane-tahrik-cift-yonlu-kontrol-esc-ile-rov-teknesi-i%CC%87cin" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Enerji Sistemi ── -->
+  <div class="cat-header">
+    <span class="cat-icon">🔋</span>
+    <span class="cat-title">Enerji Sistemi</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="card-grid">
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#12</span>
+        <img src="img/12_lipo_5000mah.jpg" alt="LiPo 3S 5000mAh" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#12</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>12_lipo_5000mah.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">11.1V 3S LiPo 5000mAh 65C</div>
+        <div class="card-use">Ana güç kaynağı — tüm elektronik ve motorları besler, yüksek deşarj kapasitesi thruster için gerekli</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">3.532 ₺ / adet</span>
+          <span class="total-price">3.532 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.robotistan.com/111v-3s-lipo-pil-batarya-5000mah-65c" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#13</span>
+        <img src="img/13_imax_b6ac.jpg" alt="iMAX B6AC" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#13</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>13_imax_b6ac.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">iMAX B6AC LiPo Şarj Cihazı</div>
+        <div class="card-use">LiPo bataryayı güvenli ve dengeli şarj eder — hücre dengeleme özellikli</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">2.061 ₺ / adet</span>
+          <span class="total-price">2.061 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.dronmarket.com/urun/imax-b6-ac-lipo-batarya-sarj-aleti" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#14</span>
+        <img src="img/14_gunes_paneli.jpg" alt="Güneş Paneli 20W" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#14</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>14_gunes_paneli.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">20W Monokristal Güneş Paneli</div>
+        <div class="card-use">İstasyonun enerji kaynağı — MPPT üzerinden bataryayı şarj eder, sistem bağımsızlığı sağlar</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">877 ₺ / adet</span>
+          <span class="total-price">877 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.atakale.com.tr/index.php?route=product/product&product_id=91" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#15</span>
+        <img src="img/15_victron_mppt.jpg" alt="Victron SmartSolar MPPT" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#15</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>15_victron_mppt.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">Victron SmartSolar MPPT 75/10</div>
+        <div class="card-use">Güneş şarj kontrolcüsü — panelden gelen enerjiyi optimum verimle bataryaya aktarır</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">3.911 ₺ / adet</span>
+          <span class="total-price">3.911 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.pttavm.com/victron-energy-smartsolar-mppt-75-10-scc075010060r-p-1337698672?utm_source=akakce.com&utm_medium=fiyat-kiyaslama&utm_campaign=akakce&v=1.81.1" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#16</span>
+        <img src="img/16_lm2596.jpg" alt="LM2596" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#16</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>16_lm2596.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">LM2596 Gerilim Regülatörü</div>
+        <div class="card-use">11.1V'u 5V'a düşürür — biri RPi, biri Arduino için güvenli besleme sağlar</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">54 ₺ / adet</span>
+          <span class="total-price">108 ₺</span>
+        </div>
+        <span class="qty-badge">×2</span>
+        <a class="buy-btn" href="https://www.robotistan.com/mini-ayarlanabilir-3a-voltaj-regulator-karti-lm2596-adj" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-photo">
+        <span class="card-num">#17</span>
+        <img src="img/17_voltmetre.jpg" alt="Dijital Voltmetre" onerror="this.parentElement.innerHTML='<span class=\'card-num\'>#17</span><div class=\'photo-placeholder\'><div class=\'ph-icon\'>📷</div><span>17_voltmetre.jpg</span></div>'">
+      </div>
+      <div class="card-body">
+        <div class="card-name">Dijital Panel Voltmetre DC 0-100V</div>
+        <div class="card-use">Batarya voltajını 3 haneli ekranda anlık gösterir — şarj durumu takibi için</div>
+      </div>
+      <div class="card-footer">
+        <div class="price-group">
+          <span class="unit-price">150 ₺ / adet</span>
+          <span class="total-price">150 ₺</span>
+        </div>
+        <span class="qty-badge">×1</span>
+        <a class="buy-btn" href="https://www.robotistan.com/dijital-voltmetre-dc-0-100v-digital-voltmeter-dc-0-100-v" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Satın Al
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Totals ── -->
+  <div class="totals" style="margin-top:48px">
+    <div class="total-row">
+      <span class="total-label">Elektronik Toplam</span>
+      <span class="total-val">~22.971 ₺</span>
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>
